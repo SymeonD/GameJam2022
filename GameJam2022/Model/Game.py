@@ -1,11 +1,11 @@
 import pygame
+import pygame_ai.steering.kinematic
 import pytmx
 import pyscroll
 
-import Player
 import NPC_Werewolf
-import NPC
 import bouton
+from GameJam2022.Model import Player1, CircleNPC
 
 
 class Game:
@@ -22,7 +22,8 @@ class Game:
 
         #Spawn player
         player_position = tmx_data.get_object_by_name('player')
-        self.player = Player.Player(player_position.x, player_position.y, "Player1")
+        #self.player = Player.Player(player_position.x, player_position.y, "Player1")
+        self.player = Player1.Player()
 
         #Spawn Werewolfs
         werewolf_positions = []
@@ -33,17 +34,18 @@ class Game:
             werewolf_positions.append(werewolf_position)
 
         for werewolf_spawn in werewolf_positions:
-            npc = NPC.NPC(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf')
-            #werewolf = NPC_Werewolf.NPC_Werewolf(npc)
-            self.werewolfs.append(npc)
+            werewolf = NPC_Werewolf.NPC_Werewolf(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf')
+            self.werewolfs.append(werewolf)
 
+        """
         #Add entities to the screen
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
         self.group.add(self.player)
 
         for werewolf in self.werewolfs:
-            print(werewolf.name)
             self.group.add(werewolf)
+
+
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()
@@ -61,23 +63,64 @@ class Game:
             self.player.change_animation('left')
         elif pressed[pygame.K_p]:
             self.paused()
+    """
+
+    def handle_input(self, player_steering): #Version GameObject
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_w]:
+            player_steering.linear[1] -= self.player.max_accel
+            self.player.change_animation('up')
+        if keys[pygame.K_a]:
+            player_steering.linear[0] -= self.player.max_accel
+            self.player.change_animation('left')
+        if keys[pygame.K_s]:
+            player_steering.linear[1] += self.player.max_accel
+            self.player.change_animation('down')
+        if keys[pygame.K_d]:
+            self.player.change_animation('right')
+            player_steering.linear[0] += self.player.max_accel
+        if keys[pygame.K_p]:
+            self.paused()
 
     def run(self):
         clock = pygame.time.Clock()
         running = True
 
+        #Create player steering
+        player_steering = pygame_ai.steering.kinematic.SteeringOutput()
+
+        #Game Objects
+        player = Player1.Player(pos = (1024//2, 768//2))
+        circle = CircleNPC.CircleNPC(pos = (1024//4, 768//4))
+
+        circle.ai = pygame_ai.steering.kinematic.Arrive(circle, player)
+
         while running:
-            self.handle_input()
-            self.group.update()
-            self.group.center(self.player.rect)
-            self.group.draw(self.screen)
+            tick = clock.tick(60) / 1000
+            player_steering.reset()
+
+            #self.handle_input()
+            self.handle_input(player_steering) #Version GameObject
+            #self.group.update()
+            #self.group.center(self.player.rect)
+            #self.group.draw(self.screen)
             pygame.display.flip()
+
+            #create drag
+            drag = pygame_ai.steering.kinematic.Drag(15)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
 
-            clock.tick(60)
+            player.update(player_steering, tick)
+            circle.update(tick)
+
+            player.steer(drag.get_steering(player), tick)
+            circle.steer(drag.get_steering(circle), tick)
+
+            self.screen.blit(player.image, player.rect)
+            self.screen.blit(circle.image, circle.rect)
 
         pygame.quit()
 
