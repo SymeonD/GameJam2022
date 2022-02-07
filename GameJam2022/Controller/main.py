@@ -1,6 +1,5 @@
 import pygame
 import sys
-from GameJam2022.Model.Game import Game
 
 #ajout du repertoire modele au systempath
 
@@ -8,6 +7,7 @@ sys.path.insert(0, '../Model')
 
 #importation de la classe bouton
 import bouton
+import Game
 
 pygame.init()
 
@@ -30,26 +30,42 @@ exit_img = pygame.image.load('../Ressources/exit_btn.png').convert_alpha()
 start_button = bouton.Button(100, 200, start_img, 0.5)
 exit_button = bouton.Button(600, 200, exit_img, 0.5)
 
-run = True
-while run:
+def mainMenu():
+	run = True
+	while run:
 
-	#affiche l'image de fond
-	screen.blit(background_img, (0, 0))
+		#affiche l'image de fond
+		screen.blit(background_img, (0, 0))
 
-	#dessine les boutons crees precedemment
-	if start_button.draw(screen):
-		print('Lance le jeu')
-		game = Game()
-		game.run()
-	if exit_button.draw(screen):
-		run = False
-
-	#gestion des evenements
-	for ev in pygame.event.get():
-		#quitte le jeu
-		if ev.type == pygame.QUIT:
+		#dessine les boutons crees precedemment
+		if start_button.draw(screen):
+			print('Lance le jeu')
+			game()
+		if exit_button.draw(screen):
 			run = False
 
-	pygame.display.update()
+		#gestion des evenements
+		for ev in pygame.event.get():
+			#quitte le jeu
+			if ev.type == pygame.QUIT:
+				run = False
 
-pygame.quit()
+		pygame.display.update()
+
+	pygame.quit()
+
+def game():
+	run = True
+	while run:
+
+		screen.blit(background_img, (0, 0))
+
+
+		for ev in pygame.event.get():
+			#quitte le jeu
+			if ev.type == pygame.QUIT:
+				run = False
+
+		pygame.display.update()
+
+	pygame.quit()
