@@ -1,9 +1,9 @@
 import pygame
+import pygame_ai as pai
 
-class NPC(pygame.sprite.Sprite):
+class NPC(pai.gameobject.GameObject):
 
     def __init__(self, x, y, name):
-        super().__init__()
         self.sprite_sheet = pygame.image.load('../Ressources/player.png')
         self.image = self.get_image(0,0)
         self.image.set_colorkey([0, 0, 0])
@@ -22,8 +22,22 @@ class NPC(pygame.sprite.Sprite):
         self.skin = 1
         self.level = 1
 
-    def update(self):
-        self.rect.topleft = self.position
+        # GameObject
+        super(NPC, self).__init__(
+            img_surf=self.image,
+            pos=self.position,
+            max_speed=25,
+            max_accel=40,
+            max_rotation=40,
+            max_angular_accel=30
+        )
+
+        self.ai = pai.steering.kinematic.NullSteering()
+
+    def update(self, tick):
+        steering = self.ai.get_steering()
+        self.steer(steering, tick)
+        self.rect.move_ip(self.velocity)
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])
