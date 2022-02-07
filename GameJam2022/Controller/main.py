@@ -11,7 +11,7 @@ sys.path.insert(0, '../Model')
 
 #importation de la classe bouton
 import bouton
-import Player1
+import Player
 import NPC_Werewolf
 
 pygame.init()
@@ -75,7 +75,7 @@ def gameMain():
 
 	#Instatiate player
 	player_position = tmx_data.get_object_by_name('player')
-	player = Player1.Player(pos = (player_position.x, player_position.y))
+	player = Player.Player(pos = (player_position.x, player_position.y))
 
 	#Instantiate werewolfs
 	werewolf_positions = []

@@ -36,7 +36,6 @@ class NPC(pai.gameobject.GameObject):
 
     def update(self, tick):
         steering = self.ai.get_steering()
-        print(steering.linear[1])
         if steering.linear[1] < 0 :
             self.change_animation('up')
         else :
