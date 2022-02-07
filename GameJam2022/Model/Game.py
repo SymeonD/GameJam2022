@@ -3,6 +3,8 @@ import pytmx
 import pyscroll
 
 import Player
+import NPC_Werewolf
+import NPC
 
 
 class Game:
@@ -17,11 +19,30 @@ class Game:
         map_data = pyscroll.data.TiledMapData(tmx_data);
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size());
 
+        #Spawn player
         player_position = tmx_data.get_object_by_name('player')
         self.player = Player.Player(player_position.x, player_position.y, "Player1")
 
+        #Spawn Werewolfs
+        werewolf_positions = []
+        self.werewolfs = []
+        for i in range(4):
+            name = 'LG'+str(i)
+            werewolf_position = tmx_data.get_object_by_name(name)
+            werewolf_positions.append(werewolf_position)
+
+        for werewolf_spawn in werewolf_positions:
+            npc = NPC.NPC(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf')
+            #werewolf = NPC_Werewolf.NPC_Werewolf(npc)
+            self.werewolfs.append(npc)
+
+        #Add entities to the screen
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
         self.group.add(self.player)
+
+        for werewolf in self.werewolfs:
+            print(werewolf.name)
+            self.group.add(werewolf)
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()

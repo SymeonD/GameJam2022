@@ -223,19 +223,16 @@
   <object id="1" name="player" x="595.556" y="422.222">
    <point/>
   </object>
-  <object id="2" x="508.889" y="-102.222">
+  <object id="4" name="LG0" x="193.333" y="115.556">
    <point/>
   </object>
-  <object id="4" x="193.333" y="115.556">
+  <object id="5" name="LG2" x="444.444" y="742.222">
    <point/>
   </object>
-  <object id="5" x="444.444" y="742.222">
+  <object id="6" name="LG1" x="540" y="88.8889">
    <point/>
   </object>
-  <object id="6" x="540" y="88.8889">
-   <point/>
-  </object>
-  <object id="7" x="80" y="584.444">
+  <object id="7" name="LG3" x="80" y="584.444">
    <point/>
   </object>
  </objectgroup>
