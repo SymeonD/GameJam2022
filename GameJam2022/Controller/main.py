@@ -1,7 +1,9 @@
 import pygame
 import sys
+from GameJam2022.Model.Game import Game
 
 #ajout du repertoire modele au systempath
+
 sys.path.insert(0, '../Model')
 
 #importation de la classe bouton
@@ -37,6 +39,8 @@ while run:
 	#dessine les boutons crees precedemment
 	if start_button.draw(screen):
 		print('Lance le jeu')
+		game = Game()
+		game.run()
 	if exit_button.draw(screen):
 		run = False
 
