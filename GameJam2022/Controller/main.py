@@ -7,7 +7,7 @@ sys.path.insert(0, '../Model')
 
 #importation de la classe bouton
 import bouton
-import Game
+from GameJam2022.Model.Game import Game
 
 pygame.init()
 
@@ -40,7 +40,7 @@ def mainMenu():
 		#dessine les boutons crees precedemment
 		if start_button.draw(screen):
 			print('Lance le jeu')
-			game()
+			gameMain()
 		if exit_button.draw(screen):
 			run = False
 
@@ -54,12 +54,13 @@ def mainMenu():
 
 	pygame.quit()
 
-def game():
+def gameMain():
 	run = True
+	gameImport = Game()
 	while run:
 
 		screen.blit(background_img, (0, 0))
-
+		gameImport.run()
 
 		for ev in pygame.event.get():
 			#quitte le jeu
@@ -69,3 +70,5 @@ def game():
 		pygame.display.update()
 
 	pygame.quit()
+
+mainMenu()

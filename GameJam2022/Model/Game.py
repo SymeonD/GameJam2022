@@ -17,7 +17,7 @@ class Game:
         map_data = pyscroll.data.TiledMapData(tmx_data);
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size());
 
-        self.player = Player("Player1", 30, 40)
+        self.player = Player(30, 40, "Player1")
 
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=1)
         self.group.add(self.player)
