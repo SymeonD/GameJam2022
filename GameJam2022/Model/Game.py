@@ -2,7 +2,7 @@ import pygame
 import pytmx
 import pyscroll
 
-from GameJam2022.Model.Player import Player
+import Player
 
 
 class Game:

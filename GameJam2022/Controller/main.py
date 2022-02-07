@@ -7,7 +7,7 @@ sys.path.insert(0, '../Model')
 
 #importation de la classe bouton
 import bouton
-from GameJam2022.Model.Game import Game
+import Game
 
 pygame.init()
 
@@ -56,7 +56,7 @@ def mainMenu():
 
 def gameMain():
 	run = True
-	gameImport = Game()
+	gameImport = Game.Game()
 	while run:
 
 		screen.blit(background_img, (0, 0))
