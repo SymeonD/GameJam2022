@@ -36,8 +36,23 @@ class NPC(pai.gameobject.GameObject):
 
     def update(self, tick):
         steering = self.ai.get_steering()
+        print(steering.linear[1])
+        if steering.linear[1] < 0 :
+            self.change_animation('up')
+        else :
+            self.change_animation('down')
+        if steering.linear[0] < 0 and (steering.linear[1] < 20 and steering.linear[1] > -20):
+            self.change_animation('left')
+        elif steering.linear[0] > 0 and (steering.linear[1] < 20 and steering.linear[1] > -20):
+            self.change_animation('right')
+        if steering.linear[0] == 0 or steering.linear[0] == 0:
+            self.change_animation('down')
         self.steer(steering, tick)
         self.rect.move_ip(self.velocity)
+
+    def change_animation(self, name):
+        self.image.set_colorkey((0,0,0))
+        self.image = self.images[name]
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])
