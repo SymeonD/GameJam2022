@@ -10,7 +10,7 @@ class Game:
     def __init__(self):
 
         self.screen = pygame.display.set_mode((1024, 768));
-        pygame.display.set_caption("Pygame-WereWolf");
+        pygame.display.set_caption("WereWolf");
 
         # Charger la carte du jeu
         tmx_data = pytmx.util_pygame.load_pygame("../Ressources/MapTest.tmx");
