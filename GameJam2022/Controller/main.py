@@ -22,6 +22,13 @@ pygame.init()
 
 
 dossier = os.path.dirname(__file__)[:-11]
+if dossier == "":
+	dossier = os.path.realpath('..')
+	print(dossier[:-11])
+if dossier[-11:] != "GameJam2022":
+	dossier = dossier+'/GameJam2022'
+print(os.path.dirname(__file__))
+print(dossier)
 
 #dimension de la fenetre
 SCREEN_WIDTH = 1024
