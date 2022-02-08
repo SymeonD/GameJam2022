@@ -1,5 +1,6 @@
 import pygame
-import inventory
+
+from Model.inventory import Inventory
 
 
 class Player(pygame.sprite.Sprite):
@@ -23,7 +24,7 @@ class Player(pygame.sprite.Sprite):
         self.name = "player"
         self.health = 200
         self.skin = 1
-        self.inventory = inventory.Inventory()
+        self.inventory = Inventory()
 
     def move_player(self, type):
         self.image = self.images[type]

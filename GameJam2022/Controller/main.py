@@ -4,17 +4,19 @@ import pygame
 import pytmx
 import pyscroll
 
+import os
 import sys
+import inspect
 
 #ajout du repertoire modele au systempath
 
-sys.path.insert(0, '../Model')
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 #importation de la classe bouton
-from bouton import Button
-from Player import Player
-from NPC_Werewolf import NPC_Werewolf
-from inventory import Inventory
+from Model.bouton import Button
+from Model.Player import Player
+from Model.NPC_Werewolf import NPC_Werewolf
+from Model.inventory import Inventory
 
 pygame.init()
 

@@ -1,4 +1,4 @@
-from NPC import NPC as parent
+from Model.NPC import NPC as parent
 import pygame
 import math
 
