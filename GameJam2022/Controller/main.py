@@ -4,19 +4,23 @@ import pygame
 import pytmx
 import pyscroll
 
+import os
 import sys
+import inspect
 
 #ajout du repertoire modele au systempath
 
-sys.path.insert(0, '../Model')
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 #importation de la classe bouton
-from bouton import Button
-from Player import Player
-from NPC_Werewolf import NPC_Werewolf
-from inventory import Inventory
+from Model.bouton import Button
+from Model.Player import Player
+from Model.NPC_Werewolf import NPC_Werewolf
+from Model.inventory import Inventory
 
 pygame.init()
+
+dossier = os.path.realpath('..')
 
 #dimension de la fenetre
 SCREEN_WIDTH = 1024
@@ -27,11 +31,11 @@ screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('WereWolf')
 
 #chargement de l'image de fond
-background_img = pygame.image.load('../Ressources/bg.jpg').convert_alpha()
+background_img = pygame.image.load(dossier+'/Ressources/bg.jpg').convert_alpha()
 
 #chargement des images pour boutons
-start_img = pygame.image.load('../Ressources/start_btn.png').convert_alpha()
-exit_img = pygame.image.load('../Ressources/exit_btn.png').convert_alpha()
+start_img = pygame.image.load(dossier+'/Ressources/start_btn.png').convert_alpha()
+exit_img = pygame.image.load(dossier+'/Ressources/exit_btn.png').convert_alpha()
 
 #creer les boutons
 start_button = Button(100, 200, start_img, 0.5)
@@ -71,7 +75,7 @@ def gameMain():
 	cycleMoon = 0
 
 	# Charger la carte du jeu
-	tmx_data = pytmx.util_pygame.load_pygame("../Ressources/MapTest.tmx")
+	tmx_data = pytmx.util_pygame.load_pygame(dossier+"/Ressources/MapTest.tmx")
 	map_data = pyscroll.data.TiledMapData(tmx_data)
 	map_layer = pyscroll.orthographic.BufferedRenderer(map_data, screen.get_size())
 
@@ -158,11 +162,11 @@ def gameMain():
 		if keys[pygame.K_p]:
 			runPause = True
 			# chargement de l'image de fond
-			background_img = pygame.image.load('../Ressources/bg.jpg').convert_alpha()
+			background_img = pygame.image.load(dossier+'/Ressources/bg.jpg').convert_alpha()
 
 			# chargement des images pour boutons
-			resume_img = pygame.image.load('../Ressources/start_btn.png').convert_alpha()
-			leave_img = pygame.image.load('../Ressources/exit_btn.png').convert_alpha()
+			resume_img = pygame.image.load(dossier+'/Ressources/start_btn.png').convert_alpha()
+			leave_img = pygame.image.load(dossier+'/Ressources/exit_btn.png').convert_alpha()
 
 			# creer les boutons
 			resume_button = Button(100, 200, resume_img, 0.5)
