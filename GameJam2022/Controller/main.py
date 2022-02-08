@@ -112,7 +112,7 @@ def gameMain():
 
 		#Change daycycle state every 5 minute
 		seconds = (pygame.time.get_ticks()-start_ticks)//1000
-		if seconds > 300:
+		if seconds > 10:
 			print("Changement de cycle")
 			start_ticks = pygame.time.get_ticks()
 			if cycleState == "jour":
@@ -129,6 +129,9 @@ def gameMain():
 					werewolf.transform(cycleMoon)
 			else:
 				cycleState = "jour"
+
+				for werewolf in werewolfs:
+					werewolf.transform(6)
 
 		#Update map et centre
 		group.update()
@@ -155,8 +158,9 @@ def gameMain():
 			Inventory.open(screen, player1.inventory)
 
 		#Werewolf update
-		for werewolf in werewolfs:
-			werewolf.move_npc(player1)
+		if cycleState == "nuit":
+			for werewolf in werewolfs:
+				werewolf.move_npc(player1)
 
 		#Menu pause
 		if keys[pygame.K_p]:

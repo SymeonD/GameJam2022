@@ -12,10 +12,15 @@ class NPC_Werewolf(parent):
         print(moonCycle)
         self.type = 'speed'
         self.target = None
+        self.state = 'NPC'
 
     def transform(self, cycleMoon):
-        if cycleMoon >= self.moonCycle:
+        if cycleMoon == 6:
+            self.updateImage('../Ressources/player.png', 32)
+            self.state = 'NPC'
+        elif cycleMoon >= self.moonCycle:
             self.updateImage('../Ressources/loup Garou.png', 80)
+            self.state = 'WW'
 
     def updateTarget(self, player1):
         if self.target:
@@ -30,22 +35,23 @@ class NPC_Werewolf(parent):
                                          self.position[1] - self.target.position[1])
 
     def move_npc(self, player1):
-        self.updateTarget(player1)
-        rotation = 75
-        if self.targetDistance < 200 :
-            if self.position[1] > self.target.position[1]:
-                self.position[1] -= self.speed
-                self.change_animation("up")
-            if self.position[1] < self.target.position[1]:
-                self.position[1] += self.speed
+        if self.state == 'WW':
+            self.updateTarget(player1)
+            rotation = 75
+            if self.targetDistance < 200 :
+                if self.position[1] > self.target.position[1]:
+                    self.position[1] -= self.speed
+                    self.change_animation("up")
+                if self.position[1] < self.target.position[1]:
+                    self.position[1] += self.speed
+                    self.change_animation("down")
+                if self.position[0] > self.target.position[0]:
+                    self.position[0] -= self.speed
+                    if self.position[1] - self.target.position[1] < rotation and self.position[1] - self.target.position[1] > -rotation:
+                        self.change_animation("left")
+                if self.position[0] < self.target.position[0]:
+                    self.position[0] += self.speed
+                    if self.position[1] - self.target.position[1] < rotation and self.position[1] - self.target.position[1] > -rotation:
+                        self.change_animation("right")
+            else:
                 self.change_animation("down")
-            if self.position[0] > self.target.position[0]:
-                self.position[0] -= self.speed
-                if self.position[1] - self.target.position[1] < rotation and self.position[1] - self.target.position[1] > -rotation:
-                    self.change_animation("left")
-            if self.position[0] < self.target.position[0]:
-                self.position[0] += self.speed
-                if self.position[1] - self.target.position[1] < rotation and self.position[1] - self.target.position[1] > -rotation:
-                    self.change_animation("right")
-        else:
-            self.change_animation("down")
