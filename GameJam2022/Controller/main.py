@@ -113,7 +113,7 @@ def gameMain():
 			werewolf.ai = pai.steering.kinematic.Arrive(werewolf, player2)
 
 	# create drag
-	drag = pai.steering.kinematic.Drag(15)
+	drag = pai.steering.kinematic.Drag(30)
 
 	while run:
 
