@@ -68,7 +68,7 @@ def gameMain():
 	cycleState = "jour"
 
 	# Etat du cycle des lunes
-	cycleMoon = 1
+	cycleMoon = 0
 
 	# Charger la carte du jeu
 	tmx_data = pytmx.util_pygame.load_pygame("../Ressources/MapTest.tmx")
@@ -132,11 +132,16 @@ def gameMain():
 			start_ticks = pygame.time.get_ticks()
 			if cycleState == "jour":
 				cycleState = "nuit"
+
 				#Mooncycle update
 				cycleMoon += 1
 				if cycleMoon > 5:
 					cycleMoon = 1
 					#Add special effects (super werewolves...)
+
+				# Change to werewolf
+				for werewolf in werewolfs:
+					werewolf.transform(cycleMoon)
 			else:
 				cycleState = "jour"
 

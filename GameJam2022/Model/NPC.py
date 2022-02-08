@@ -4,18 +4,11 @@ import pygame_ai as pai
 class NPC(pai.gameobject.GameObject):
 
     def __init__(self, x, y, name):
-        self.sprite_sheet = pygame.image.load('../Ressources/player.png')
-        self.image = self.get_image(0,0)
-        self.image.set_colorkey([0, 0, 0])
+        self.updateImage('../Ressources/player.png', 32)
+        self.speed = 3
+
         self.rect = self.image.get_rect()
         self.position = [x, y]
-        self.images = {
-            'down': self.get_image(0, 0),
-            'up': self.get_image(0, 96),
-            'right': self.get_image(0, 64),
-            'left': self.get_image(0, 32)
-        }
-        self.speed = 3
 
         self.name = name
         self.health = 100
@@ -54,6 +47,18 @@ class NPC(pai.gameobject.GameObject):
         self.image = self.images[name]
 
     def get_image(self, x, y):
-        image = pygame.Surface([32, 32])
-        image.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
+        image = pygame.Surface([self.sprite_size, self.sprite_size])
+        image.blit(self.sprite_sheet, (0, 0), (x, y, self.sprite_size, self.sprite_size))
         return image
+
+    def updateImage(self, ressource, sprite_size):
+        self.sprite_sheet = pygame.image.load(ressource)
+        self.sprite_size = sprite_size
+        self.image = self.get_image(0, 0)
+        self.image.set_colorkey([0, 0, 0])
+        self.images = {
+            'down': self.get_image(0, 0),
+            'up': self.get_image(0, 3 * self.sprite_size),
+            'right': self.get_image(0, 2 * self.sprite_size),
+            'left': self.get_image(0, self.sprite_size)
+        }
