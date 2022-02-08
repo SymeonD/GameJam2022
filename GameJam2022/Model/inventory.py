@@ -57,10 +57,10 @@ class Inventory:
             return False
         return True
 
-    def run(screen, inventoryHandle):
+    def open(screen, inventoryHandle):
 
-        runInventory = True
-        while runInventory:
+        openInventory = True
+        while openInventory:
             screen.fill((0,0,0))
             inventoryHandle.draw(screen)
             mousex, mousey = pygame.mouse.get_pos()

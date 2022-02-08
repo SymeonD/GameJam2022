@@ -176,7 +176,7 @@ def gameMain():
 			player_steering1.linear[0] += player1.max_accel
 			player1.change_animation('right')
 		if keys[pygame.K_i]:
-			inventory.Inventory.run(screen, player1.inventory)
+			inventory.Inventory.open(screen, player1.inventory)
 
 		if keys[pygame.K_UP]:
 			player_steering2.linear[1] -= player2.max_accel
@@ -190,6 +190,8 @@ def gameMain():
 		if keys[pygame.K_RIGHT]:
 			player_steering2.linear[0] += player2.max_accel
 			player2.change_animation('right')
+		if keys[pygame.K_k]:
+			inventory.Inventory.open(screen, player2.inventory)
 
 		#Menu pause
 		if keys[pygame.K_p]:
