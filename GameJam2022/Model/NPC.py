@@ -1,11 +1,18 @@
 import pygame
+import os
+
+dossier = os.path.dirname(__file__)[:-20]
+if dossier == "":
+    dossier = os.path.realpath('..')
+if dossier[-11:] != "GameJam2022":
+    dossier = dossier + '/GameJam2022'
 
 
 class NPC(pygame.sprite.Sprite):
 
     def __init__(self, x, y, name):
         super(NPC, self).__init__()
-        self.updateImage('../Ressources/player.png', 32)
+        self.updateImage(dossier + '/Ressources/player.png', 32)
 
         self.rect = self.image.get_rect()
         self.position = [x, y]
@@ -19,24 +26,8 @@ class NPC(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.position
 
-        """
-        steering = self.ai.get_steering()
-        if steering.linear[1] < 0 :
-            self.change_animation('up')
-        else :
-            self.change_animation('down')
-        if steering.linear[0] < 0 and (steering.linear[1] < 20 and steering.linear[1] > -20):
-            self.change_animation('left')
-        elif steering.linear[0] > 0 and (steering.linear[1] < 20 and steering.linear[1] > -20):
-            self.change_animation('right')
-        if steering.linear[0] == 0 or steering.linear[0] == 0:
-            self.change_animation('down')
-        self.steer(steering, tick)
-        self.rect.move_ip(self.velocity)
-        """
-
     def change_animation(self, name):
-        self.image.set_colorkey((0,0,0))
+        self.image.set_colorkey((0, 0, 0))
         self.image = self.images[name]
 
     def get_image(self, x, y):
@@ -55,4 +46,3 @@ class NPC(pygame.sprite.Sprite):
             'right': self.get_image(0, 2 * self.sprite_size),
             'left': self.get_image(0, self.sprite_size)
         }
-
