@@ -15,6 +15,7 @@ sys.path.insert(0, '../Model')
 import bouton
 import Player
 import NPC_Werewolf
+import inventory
 
 pygame.init()
 
@@ -115,6 +116,9 @@ def gameMain():
 	# create drag
 	drag = pai.steering.kinematic.Drag(30)
 
+	# create inventory
+	player_inventory = inventory.Inventory()
+
 	while run:
 
 		#Limit to 60 fps
@@ -210,6 +214,23 @@ def gameMain():
 					runPause = False
 				if leave_button.draw(screen):
 					sys.exit(2)
+
+				for event in pygame.event.get():
+					if event.type == pygame.QUIT:
+						sys.exit(2)
+
+				pygame.display.update()
+
+		#inventaire
+		if keys[pygame.K_i]:
+			runInventory = True
+
+			screen.fill((0,0,0))
+			player_inventory.draw(screen)
+			
+			mousex, mousey = inventory.pygame.mouse.get_pos()
+
+			while runInventory:
 
 				for event in pygame.event.get():
 					if event.type == pygame.QUIT:
