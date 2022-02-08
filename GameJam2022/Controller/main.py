@@ -1,7 +1,6 @@
 import random
 
 import pygame
-import pygame_ai as pai
 import pytmx
 import pyscroll
 
