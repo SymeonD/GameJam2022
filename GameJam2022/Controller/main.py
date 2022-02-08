@@ -1,3 +1,5 @@
+import random
+
 import pygame
 import pygame_ai as pai
 import pytmx
@@ -79,12 +81,14 @@ def gameMain():
 	# Get tick
 	start_ticks=pygame.time.get_ticks()
 
-	# Create player steering
-	player_steering = pai.steering.kinematic.SteeringOutput()
+	# Create players steering
+	player_steering1 = pai.steering.kinematic.SteeringOutput()
+	player_steering2 = pai.steering.kinematic.SteeringOutput()
 
-	#Instatiate player
+	#Instatiate players
 	player_position = tmx_data.get_object_by_name('player')
-	player = Player.Player(pos = (player_position.x, player_position.y))
+	player1 = Player.Player(pos = (player_position.x, player_position.y))
+	player2 = Player.Player(pos=(player_position.x, player_position.y))
 
 	#Instantiate werewolfs
 	werewolf_positions = []
@@ -102,7 +106,11 @@ def gameMain():
 
 	#Add entity ai
 	for werewolf in werewolfs:
-		werewolf.ai = pai.steering.kinematic.Arrive(werewolf, player)
+		a=random.randint(1,2)
+		if a == 1:
+			werewolf.ai = pai.steering.kinematic.Arrive(werewolf, player1)
+		else:
+			werewolf.ai = pai.steering.kinematic.Arrive(werewolf, player2)
 
 	# create drag
 	drag = pai.steering.kinematic.Drag(15)
@@ -133,11 +141,12 @@ def gameMain():
 				cycleState = "jour"
 
 		#Reset player steering (pilotage)
-		player_steering.reset()
+		player_steering1.reset()
+		player_steering2.reset()
 
 		#Update map et centre
 		group.update()
-		group.center(player.rect)
+		group.center(player1.rect) #Attention centrage seulement sur le joueur 1
 		group.draw(screen)
 
 		#Quit
@@ -146,20 +155,33 @@ def gameMain():
 			if ev.type == pygame.QUIT:
 				sys.exit(2)
 
-		#Player control
+		#Players control
 		keys = pygame.key.get_pressed()
 		if keys[pygame.K_w]:
-			player_steering.linear[1] -= player.max_accel
-			player.change_animation('up')
+			player_steering1.linear[1] -= player1.max_accel
+			player1.change_animation('up')
 		if keys[pygame.K_a]:
-			player_steering.linear[0] -= player.max_accel
-			player.change_animation('left')
+			player_steering1.linear[0] -= player1.max_accel
+			player1.change_animation('left')
 		if keys[pygame.K_s]:
-			player_steering.linear[1] += player.max_accel
-			player.change_animation('down')
+			player_steering1.linear[1] += player1.max_accel
+			player1.change_animation('down')
 		if keys[pygame.K_d]:
-			player_steering.linear[0] += player.max_accel
-			player.change_animation('right')
+			player_steering1.linear[0] += player1.max_accel
+			player1.change_animation('right')
+
+		if keys[pygame.K_UP]:
+			player_steering2.linear[1] -= player2.max_accel
+			player2.change_animation('up')
+		if keys[pygame.K_LEFT]:
+			player_steering2.linear[0] -= player2.max_accel
+			player2.change_animation('left')
+		if keys[pygame.K_DOWN]:
+			player_steering2.linear[1] += player2.max_accel
+			player2.change_animation('down')
+		if keys[pygame.K_RIGHT]:
+			player_steering2.linear[0] += player2.max_accel
+			player2.change_animation('right')
 
 		#Menu pause
 		if keys[pygame.K_p]:
@@ -191,17 +213,20 @@ def gameMain():
 				pygame.display.update()
 
 		#Update entities
-		player.update(player_steering, tick)
+		player1.update(player_steering1, tick)
+		player2.update(player_steering2, tick)
 		for werewolf in werewolfs:
 			werewolf.update(tick)
 
 		#Apply drag
-		player.steer(drag.get_steering(player), tick)
+		player1.steer(drag.get_steering(player1), tick)
+		player2.steer(drag.get_steering(player2), tick)
 		for werewolf in werewolfs:
 			werewolf.steer(drag.get_steering(werewolf), tick)
 
 		#Blit entities
-		screen.blit(player.image, player.rect)
+		screen.blit(player1.image, player1.rect)
+		screen.blit(player2.image, player2.rect)
 		for werewolf in werewolfs:
 			screen.blit(werewolf.image, werewolf.rect)
 
