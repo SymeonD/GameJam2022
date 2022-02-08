@@ -62,6 +62,12 @@ def mainMenu():
 def gameMain():
 	run = True
 
+	# Etat du cycle jour nuit
+	cycleState = "jour"
+
+	# Etat du cycle des lunes
+	cycleMoon = 1
+
 	# Charger la carte du jeu
 	tmx_data = pytmx.util_pygame.load_pygame("../Ressources/MapTest.tmx")
 	map_data = pyscroll.data.TiledMapData(tmx_data)
@@ -69,6 +75,9 @@ def gameMain():
 
 	#create clock
 	clock = pygame.time.Clock()
+
+	# Get tick
+	start_ticks=pygame.time.get_ticks()
 
 	# Create player steering
 	player_steering = pai.steering.kinematic.SteeringOutput()
@@ -106,6 +115,23 @@ def gameMain():
 		#set tick
 		tick = clock.tick(60) / 1000
 
+		#Change daycycle state every 5 minute
+		seconds = (pygame.time.get_ticks()-start_ticks)//1000
+		if seconds%60 == 0:
+			print("Une minute de plus, "+str(seconds//60))
+		if seconds > 300:
+			print("Changement de cycle")
+			start_ticks = pygame.time.get_ticks()
+			if cycleState == "jour":
+				cycleState = "nuit"
+				#Mooncycle update
+				cycleMoon += 1
+				if cycleMoon > 5:
+					cycleMoon = 1
+					#Add special effects (super werewolves...)
+			else:
+				cycleState = "jour"
+
 		#Reset player steering (pilotage)
 		player_steering.reset()
 
@@ -134,6 +160,7 @@ def gameMain():
 		if keys[pygame.K_d]:
 			player_steering.linear[0] += player.max_accel
 			player.change_animation('right')
+
 		#Menu pause
 		if keys[pygame.K_p]:
 			runPause = True
