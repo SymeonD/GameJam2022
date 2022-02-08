@@ -61,9 +61,14 @@ class Inventory:
 
         openInventory = True
         while openInventory:
-            screen.fill((0,0,0))
+
             inventoryHandle.draw(screen)
             mousex, mousey = pygame.mouse.get_pos()
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_ESCAPE]:
+                openInventory = False
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
