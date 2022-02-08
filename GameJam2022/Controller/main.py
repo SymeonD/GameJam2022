@@ -158,6 +158,8 @@ def gameMain():
 			player1.move_player('down')
 		if keys[pygame.K_d]:
 			player1.move_player('right')
+		if keys[pygame.K_i]:
+			inventory.Inventory.open(screen, player1.inventory)
 
 		if keys[pygame.K_UP]:
 			player2.move_player('up')
@@ -167,6 +169,9 @@ def gameMain():
 			player2.move_player('down')
 		if keys[pygame.K_RIGHT]:
 			player2.move_player('right')
+		if keys[pygame.K_k]:
+			inventory.Inventory.open(screen, player1.inventory)
+
 
 		#Werewolf update
 		for werewolf in werewolfs:
