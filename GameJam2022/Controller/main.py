@@ -75,7 +75,7 @@ def gameMain():
 	cycleMoon = 0
 
 	# Charger la carte du jeu
-	tmx_data = pytmx.util_pygame.load_pygame(dossier+"/Ressources/MapTest.tmx")
+	tmx_data = pytmx.util_pygame.load_pygame(dossier+"/Ressources/MapTestFormat.tmx")
 	map_data = pyscroll.data.TiledMapData(tmx_data)
 	map_layer = pyscroll.orthographic.BufferedRenderer(map_data, screen.get_size())
 
@@ -99,7 +99,7 @@ def gameMain():
 		werewolf_positions.append(werewolf_position)
 
 	for werewolf_spawn in werewolf_positions:
-		werewolf = NPC_Werewolf(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf')
+		werewolf = NPC_Werewolf(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf', random.randint(1,5))
 		werewolfs.append(werewolf)
 
 	#Create map group

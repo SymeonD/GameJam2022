@@ -5,10 +5,11 @@ import math
 
 class NPC_Werewolf(parent):
 
-    def __init__(self, x, y, name):
+    def __init__(self, x, y, name, moonCycle):
         super().__init__(x, y, name)
         self.updateImage('../Ressources/player.png', 32)
-        self.moonCycle = 1
+        self.moonCycle = moonCycle
+        print(moonCycle)
         self.type = 'speed'
         self.target = None
 
