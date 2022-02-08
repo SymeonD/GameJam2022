@@ -29,7 +29,7 @@ class Game:
 
         #chargement du joueur
         player_position = tmx_data.get_object_by_name('player')
-        self.player = Player(player_position.x, player_position.y)
+        self.player = Player(player_position.x, player_position.y, self.screen)
 
         #chargement des PNJ
         self.werewolf_positions = []

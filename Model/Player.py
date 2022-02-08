@@ -7,7 +7,7 @@ from Model.inventory import Inventory
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, screen):
         super(Player, self).__init__()
         self.sprite_sheet = pygame.image.load('Ressources/player.png')
         self.image = self.get_image(0, 0)
@@ -23,8 +23,10 @@ class Player(pygame.sprite.Sprite):
         self.speed = 3
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
 
+        self.screen = screen
+
         self.name = "player"
-        self.health = 200
+        self.health = 150
         self.skin = 1
         self.inventory = Inventory()
 
@@ -43,8 +45,13 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
+        # Update health bar
+        pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, 200, 20), 3)
+        pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, 200, 20))
+        self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])
         image.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
         return image
+

@@ -4,7 +4,6 @@ import math
 import os
 
 
-
 class NPC_Werewolf(parent):
 
     def __init__(self, x, y, name, moonCycle):
@@ -27,8 +26,10 @@ class NPC_Werewolf(parent):
     def updateTarget(self, player1):
         if self.target:
             if math.hypot(self.position[0] - player1.position[0],
-                          self.position[1] - player1.position[1]) < math.hypot(
-                self.position[0] - self.target.position[0], self.position[1] - self.target.position[1]):
+                          self.position[1] - player1.position[1]) < math.hypot(self.position[0] -
+                                                                               self.target.position[0],
+                                                                               self.position[1] -
+                                                                               self.target.position[1]):
                 if self.target != player1:
                     self.target = player1
         else:
