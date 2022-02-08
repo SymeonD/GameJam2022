@@ -11,10 +11,10 @@ import sys
 sys.path.insert(0, '../Model')
 
 #importation de la classe bouton
-import bouton
-import Player
-import NPC_Werewolf
-import inventory
+from bouton import Button
+from Player import Player
+from NPC_Werewolf import NPC_Werewolf
+from inventory import Inventory
 
 pygame.init()
 
@@ -34,8 +34,8 @@ start_img = pygame.image.load('../Ressources/start_btn.png').convert_alpha()
 exit_img = pygame.image.load('../Ressources/exit_btn.png').convert_alpha()
 
 #creer les boutons
-start_button = bouton.Button(100, 200, start_img, 0.5)
-exit_button = bouton.Button(600, 200, exit_img, 0.5)
+start_button = Button(100, 200, start_img, 0.5)
+exit_button = Button(600, 200, exit_img, 0.5)
 
 def mainMenu():
 	run = True
@@ -83,7 +83,7 @@ def gameMain():
 
 	#Instatiate players
 	player_position = tmx_data.get_object_by_name('player')
-	player1 = Player.Player(player_position.x, player_position.y)
+	player1 = Player(player_position.x, player_position.y)
 
 	#Instantiate werewolfs
 	werewolf_positions = []
@@ -95,7 +95,7 @@ def gameMain():
 		werewolf_positions.append(werewolf_position)
 
 	for werewolf_spawn in werewolf_positions:
-		werewolf = NPC_Werewolf.NPC_Werewolf(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf')
+		werewolf = NPC_Werewolf(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf')
 		werewolfs.append(werewolf)
 
 	#Create map group
@@ -148,7 +148,7 @@ def gameMain():
 		if keys[pygame.K_d]:
 			player1.move_player('right')
 		if keys[pygame.K_i]:
-			inventory.Inventory.open(screen, player1.inventory)
+			Inventory.open(screen, player1.inventory)
 
 		#Werewolf update
 		for werewolf in werewolfs:
@@ -165,8 +165,8 @@ def gameMain():
 			leave_img = pygame.image.load('../Ressources/exit_btn.png').convert_alpha()
 
 			# creer les boutons
-			resume_button = bouton.Button(100, 200, resume_img, 0.5)
-			leave_button = bouton.Button(600, 200, leave_img, 0.5)
+			resume_button = Button(100, 200, resume_img, 0.5)
+			leave_button = Button(600, 200, leave_img, 0.5)
 
 			while runPause:
 
