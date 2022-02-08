@@ -20,7 +20,8 @@ from Model.inventory import Inventory
 
 pygame.init()
 
-dossier = os.path.realpath('..')
+
+dossier = os.path.dirname(__file__)[:-11]
 
 #dimension de la fenetre
 SCREEN_WIDTH = 1024
