@@ -1,5 +1,6 @@
 import pygame_ai.gameobject
 import pygame
+import inventory
 
 
 class Player(pygame_ai.gameobject.GameObject, pygame.sprite.Sprite):
@@ -20,7 +21,7 @@ class Player(pygame_ai.gameobject.GameObject, pygame.sprite.Sprite):
         self.name = "player"
         self.health = 200
         self.skin = 1
-        self.inventory = []
+        self.inventory = inventory.Inventory()
 
         # GameObject init
         super(Player, self).__init__(

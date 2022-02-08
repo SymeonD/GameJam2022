@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 class Inventory:
     def __init__(self):
@@ -56,3 +57,16 @@ class Inventory:
             return False
         return True
 
+    def run(screen, inventoryHandle):
+
+        runInventory = True
+        while runInventory:
+            screen.fill((0,0,0))
+            inventoryHandle.draw(screen)
+            mousex, mousey = pygame.mouse.get_pos()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit(2)
+
+            pygame.display.update()

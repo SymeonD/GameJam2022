@@ -116,9 +116,6 @@ def gameMain():
 	# create drag
 	drag = pai.steering.kinematic.Drag(30)
 
-	# create inventory
-	player_inventory = inventory.Inventory()
-
 	while run:
 
 		#Limit to 60 fps
@@ -178,6 +175,8 @@ def gameMain():
 		if keys[pygame.K_d]:
 			player_steering1.linear[0] += player1.max_accel
 			player1.change_animation('right')
+		if keys[pygame.K_i]:
+			inventory.Inventory.run(screen, player1.inventory)
 
 		if keys[pygame.K_UP]:
 			player_steering2.linear[1] -= player2.max_accel
@@ -214,23 +213,6 @@ def gameMain():
 					runPause = False
 				if leave_button.draw(screen):
 					sys.exit(2)
-
-				for event in pygame.event.get():
-					if event.type == pygame.QUIT:
-						sys.exit(2)
-
-				pygame.display.update()
-
-		#inventaire
-		if keys[pygame.K_i]:
-			runInventory = True
-
-			screen.fill((0,0,0))
-			player_inventory.draw(screen)
-			
-			mousex, mousey = inventory.pygame.mouse.get_pos()
-
-			while runInventory:
 
 				for event in pygame.event.get():
 					if event.type == pygame.QUIT:
