@@ -16,20 +16,20 @@ class NPC_Werewolf(parent):
         if cycleMoon >= self.moonCycle:
             self.updateImage('../Ressources/loup Garou.png', 80)
 
-    def updateTarget(self, player1, player2):
-        if math.hypot(self.position[0] - player2.position[0],
-                      self.position[1] - player2.position[1]) < math.hypot(
-                self.position[0] - player1.position[0], self.position[1] - player1.position[1]):
-            if self.target != player2:
-                self.target = player2
+    def updateTarget(self, player1):
+        if self.target:
+            if math.hypot(self.position[0] - player1.position[0],
+                          self.position[1] - player1.position[1]) < math.hypot(
+                    self.position[0] - self.target.position[0], self.position[1] - self.target.position[1]):
+                if self.target != player1:
+                    self.target = player1
         else:
-            if self.target != player1:
-                self.target = player1
+            self.target = player1
         self.targetDistance = math.hypot(self.position[0] - self.target.position[0],
-                      self.position[1] - self.target.position[1])
+                                         self.position[1] - self.target.position[1])
 
-    def move_npc(self, player1, player2):
-        self.updateTarget(player1, player2)
+    def move_npc(self, player1):
+        self.updateTarget(player1)
         rotation = 75
         if self.targetDistance < 200 :
             if self.position[1] > self.target.position[1]:
@@ -46,4 +46,5 @@ class NPC_Werewolf(parent):
                 self.position[0] += self.speed
                 if self.position[1] - self.target.position[1] < rotation and self.position[1] - self.target.position[1] > -rotation:
                     self.change_animation("right")
-
+        else:
+            self.change_animation("down")

@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="be9068ad-94bc-49bd-a2f9-a4e1b58b6620" name="Changes" comment="Structuration">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameJam2022/Controller/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameJam2022/Controller/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameJam2022/Model/NPC_Werewolf.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameJam2022/Model/NPC_Werewolf.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

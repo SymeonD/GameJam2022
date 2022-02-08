@@ -84,7 +84,6 @@ def gameMain():
 	#Instatiate players
 	player_position = tmx_data.get_object_by_name('player')
 	player1 = Player.Player(player_position.x, player_position.y)
-	player2 = Player.Player(player_position.x, player_position.y)
 
 	#Instantiate werewolfs
 	werewolf_positions = []
@@ -101,16 +100,6 @@ def gameMain():
 
 	#Create map group
 	group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
-
-	"""
-	#Add entity ai
-	for werewolf in werewolfs:
-		a=random.randint(1,2)
-		if a == 1:
-			werewolf.ai = pai.steering.kinematic.Arrive(werewolf, player1)
-		else:
-			werewolf.ai = pai.steering.kinematic.Arrive(werewolf, player2)
-	"""
 
 	while run:
 
@@ -161,21 +150,9 @@ def gameMain():
 		if keys[pygame.K_i]:
 			inventory.Inventory.open(screen, player1.inventory)
 
-		if keys[pygame.K_UP]:
-			player2.move_player('up')
-		if keys[pygame.K_LEFT]:
-			player2.move_player('left')
-		if keys[pygame.K_DOWN]:
-			player2.move_player('down')
-		if keys[pygame.K_RIGHT]:
-			player2.move_player('right')
-		if keys[pygame.K_k]:
-			inventory.Inventory.open(screen, player1.inventory)
-
-
 		#Werewolf update
 		for werewolf in werewolfs:
-			werewolf.move_npc(player1, player2)
+			werewolf.move_npc(player1)
 
 		#Menu pause
 		if keys[pygame.K_p]:
@@ -208,13 +185,11 @@ def gameMain():
 
 		#Update entities
 		player1.update()
-		player2.update()
 		for werewolf in werewolfs:
 			werewolf.update()
 
 		#Blit entities
 		screen.blit(player1.image, player1.rect)
-		screen.blit(player2.image, player2.rect)
 		for werewolf in werewolfs:
 			screen.blit(werewolf.image, werewolf.rect)
 
