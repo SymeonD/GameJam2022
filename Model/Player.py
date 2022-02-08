@@ -3,18 +3,13 @@ import os
 
 from Model.inventory import Inventory
 
-dossier = os.path.dirname(__file__)[:-20]
-if dossier == "":
-    dossier = os.path.realpath('..')
-if dossier[-11:] != "GameJam2022":
-    dossier = dossier + '/GameJam2022'
 
 
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, x, y):
         super(Player, self).__init__()
-        self.sprite_sheet = pygame.image.load(dossier + '/Ressources/player.png')
+        self.sprite_sheet = pygame.image.load('Ressources/player.png')
         self.image = self.get_image(0, 0)
         self.image.set_colorkey([0, 0, 0])
         self.rect = self.image.get_rect()

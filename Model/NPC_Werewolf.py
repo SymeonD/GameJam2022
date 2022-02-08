@@ -3,18 +3,13 @@ import pygame
 import math
 import os
 
-dossier = os.path.dirname(__file__)[:-20]
-if dossier == "":
-    dossier = os.path.realpath('..')
-if dossier[-11:] != "GameJam2022":
-    dossier = dossier + '/GameJam2022'
 
 
 class NPC_Werewolf(parent):
 
     def __init__(self, x, y, name, moonCycle):
         super().__init__(x, y, name)
-        self.updateImage(dossier + '/Ressources/player.png', 32)
+        self.updateImage('Ressources/player.png', 32)
         self.moonCycle = moonCycle
         print(moonCycle)
         self.type = 'speed'
@@ -23,10 +18,10 @@ class NPC_Werewolf(parent):
 
     def transform(self, cycleMoon):
         if cycleMoon == 6:
-            self.updateImage(dossier + '/Ressources/player.png', 32)
+            self.updateImage('Ressources/player.png', 32)
             self.state = 'NPC'
         elif cycleMoon >= self.moonCycle:
-            self.updateImage(dossier + '/Ressources/loup Garou.png', 80)
+            self.updateImage('Ressources/loup Garou.png', 80)
             self.state = 'WW'
 
     def updateTarget(self, player1):

@@ -1,18 +1,13 @@
 import pygame
 import os
 
-dossier = os.path.dirname(__file__)[:-20]
-if dossier == "":
-    dossier = os.path.realpath('..')
-if dossier[-11:] != "GameJam2022":
-    dossier = dossier + '/GameJam2022'
 
 
 class NPC(pygame.sprite.Sprite):
 
     def __init__(self, x, y, name):
         super(NPC, self).__init__()
-        self.updateImage(dossier + '/Ressources/player.png', 32)
+        self.updateImage('Ressources/player.png', 32)
 
         self.rect = self.image.get_rect()
         self.position = [x, y]
