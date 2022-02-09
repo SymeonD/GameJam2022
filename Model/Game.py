@@ -161,9 +161,9 @@ class Game:
 
     def refresh(self):
         #Update entities
-        self.player.update()
-        for werewolf in self.werewolf_group:
-            werewolf.update()
+
+        self.group.update()
+        self.werewolf_group.update()
 
         #Blit entities
         self.screen.blit(self.player.image, self.player.rect)
@@ -186,7 +186,7 @@ class Game:
                 #Degats sur le joueur
                 for werewolf in self.werewolf_group:
                     if self.player.rect.colliderect(werewolf.rect) and werewolf.state == "WW":
-                        self.player.damage(werewolf.damage, werewolf.position[0], werewolf.position[1])
+                        self.player.take_damage(werewolf.damage, werewolf.position[0], werewolf.position[1])
 
     def pause(self):
         runPause = True
