@@ -5,6 +5,7 @@ import pytmx
 import pyscroll
 import sys
 import math
+from pygame import mixer
 
 from Model.bouton import Button
 from Model.Player import Player
@@ -75,10 +76,19 @@ class Game:
 
         #Définition du tick de départ de l'horloge
         self.start_ticks = pygame.time.get_ticks()
+
+        # initialisation musique de fond (jour)
+        mixer.init()
+        mixer.music.load("Ressources/music/background_day.mp3")
+        mixer.music.set_volume(1)
+        
+        
         
     
     def run(self):
         running = True
+
+        mixer.music.play() #lecture de la musique
 
         while running:
             #Limiter à 60 fps
@@ -209,10 +219,14 @@ class Game:
         resume_button = Button(100, 200, resume_img, 0.5)
         leave_button = Button(600, 200, leave_img, 0.5)
 
+        # musique en pause 
+        mixer.music.pause()
+
         while runPause:
             self.screen.blit(background_img, (0, 0))
             if resume_button.draw(self.screen):
                 runPause = False
+                mixer.music.unpause() #musique à nouveau active
             if leave_button.draw(self.screen):
                 sys.exit(2)
 
