@@ -29,13 +29,15 @@ class NPC(pygame.sprite.Sprite):
         self.rect.topleft = self.position
         self.draw_health(self.screen)
         if self.hit_countdown:
-            if self.hit_countdown == 0:
-                self.image = self.original_image
-            elif self.hit_countdown % 2:
+            if self.hit_countdown % 2:
                 self.image = self.damage_image  # (or other suitable pre-loaded image)
             else:
                 self.image = self.original_image
             self.hit_countdown = max(0, self.hit_countdown - 1)
+        elif self.hit_countdown == 0:
+            self.image = self.original_image
+            self.hit_countdown = None
+
 
     def change_animation(self, name):
         self.image.set_colorkey((0, 0, 0))

@@ -83,5 +83,5 @@ class Player(pygame.sprite.Sprite):
     def attack(self, werewolf):
         werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
                                        self.position[1] - werewolf.position[1])
-        if werewolf_distance < 50:
+        if werewolf_distance < 100:
             werewolf.take_damage(self.weapon_damage)
