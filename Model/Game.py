@@ -185,11 +185,11 @@ class Game:
         runPause = True
 
         # chargement de l'image de fond
-        background_img = pygame.image.load('Ressources/bg.jpg').convert_alpha()
+        background_img = pygame.image.load('Ressources/menu/bg.jpg').convert_alpha()
 
         # chargement des images pour boutons
-        resume_img = pygame.image.load('Ressources/start_btn.png').convert_alpha()
-        leave_img = pygame.image.load('Ressources/exit_btn.png').convert_alpha()
+        resume_img = pygame.image.load('Ressources/menu/start_btn.png').convert_alpha()
+        leave_img = pygame.image.load('Ressources/menu/exit_btn.png').convert_alpha()
 
         # creer les boutons
         resume_button = Button(100, 200, resume_img, 0.5)

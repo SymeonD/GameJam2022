@@ -12,7 +12,7 @@ class NPC(pygame.sprite.Sprite):
 
         self.damage_image = (self.image.copy()).convert_alpha()
         self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
-        self.damage_image.fill((255, 0, 0), None, pygame.BLEND_RGBA_ADD)
+        self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
 
         self.rect = self.image.get_rect()
         self.position = [x, y]
@@ -23,13 +23,15 @@ class NPC(pygame.sprite.Sprite):
         self.health = 100
         self.skin = 1
         self.level = 1
-        self.hit_countdown = None
+        self.hit_countdown = 0
 
     def update(self):
         self.rect.topleft = self.position
         self.draw_health(self.screen)
         if self.hit_countdown:
-            if self.hit_countdown % 2:
+            if self.hit_countdown == 0:
+                self.image = self.original_image
+            elif self.hit_countdown % 2:
                 self.image = self.damage_image  # (or other suitable pre-loaded image)
             else:
                 self.image = self.original_image
@@ -38,6 +40,7 @@ class NPC(pygame.sprite.Sprite):
     def change_animation(self, name):
         self.image.set_colorkey((0, 0, 0))
         self.image = self.images[name]
+        self.original_image = self.image
 
     def get_image(self, x, y):
         image = pygame.Surface([self.sprite_size, self.sprite_size])
@@ -58,7 +61,8 @@ class NPC(pygame.sprite.Sprite):
 
     def take_damage(self, amount):
         self.health -= amount
-        self.hit_countdown = 6
+        self.original_image = self.image
+        self.hit_countdown = 10
         if self.health <= 0:
             self.kill()
 
