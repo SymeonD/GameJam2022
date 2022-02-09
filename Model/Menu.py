@@ -14,11 +14,11 @@ class Menu:
 
     def __init__(self):
         #chargement de l'image de fond
-        self.background_img = pygame.image.load('Ressources/bg.jpg').convert_alpha()
+        self.background_img = pygame.image.load('Ressources/menu/bg.jpg').convert_alpha()
 
         #chargement des images pour boutons
-        self.start_img = pygame.image.load('Ressources/start_btn.png').convert_alpha()
-        self.exit_img = pygame.image.load('Ressources/exit_btn.png').convert_alpha()
+        self.start_img = pygame.image.load('Ressources/menu/start_btn.png').convert_alpha()
+        self.exit_img = pygame.image.load('Ressources/menu/exit_btn.png').convert_alpha()
 
         #creer les boutons
         self.start_button = Button(100, 200, self.start_img, 0.5)

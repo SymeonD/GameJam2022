@@ -109,13 +109,13 @@ class Game:
             
     def handle_input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_UP]:
+        if keys[pygame.K_z]:
             self.player.move_player('up')
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_q]:
             self.player.move_player('left')
-        if keys[pygame.K_DOWN]:
+        if keys[pygame.K_s]:
             self.player.move_player('down')
-        if keys[pygame.K_RIGHT]:
+        if keys[pygame.K_d]:
             self.player.move_player('right')
         if keys[pygame.K_p]:
             self.pause()
