@@ -87,7 +87,7 @@ class Game:
             self.group.draw(self.screen)
             #sauvegarde localisation joueur
             self.player.save_location()
-            #gestion des déplacements
+            #gestion des touches
             self.handle_input()
             #maj des loups
             self.move_werewolfs()
@@ -109,13 +109,13 @@ class Game:
             
     def handle_input(self):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
+        if keys[pygame.K_UP]:
             self.player.move_player('up')
-        if keys[pygame.K_a]:
+        if keys[pygame.K_LEFT]:
             self.player.move_player('left')
-        if keys[pygame.K_s]:
+        if keys[pygame.K_DOWN]:
             self.player.move_player('down')
-        if keys[pygame.K_d]:
+        if keys[pygame.K_RIGHT]:
             self.player.move_player('right')
         if keys[pygame.K_p]:
             self.pause()
