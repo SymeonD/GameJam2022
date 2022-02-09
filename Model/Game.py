@@ -122,18 +122,23 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
 
-                    # Attaque
-                    clicked_sprites = [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
-                    for werewolf in clicked_sprites:
-                        attackSound = mixer.Sound("Ressources/sounds/player_attack.ogg")
-                        attackSound.play()
-                        self.player.attack(werewolf)
-
+                    clicked_sprites = [s for s in self.group if s.rect.collidepoint(pos)] + [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
                     if itemSelected:
+                        for sprite in clicked_sprites:
+                            if itemSelected[0].name == "Potion de Vie":
+                                sprite.heal(50)
                         itemSelected = None
+                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
+
+                    # Attaque
+                    clicked_werewolf = [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
+                    for werewolf in clicked_werewolf:
+                        attackSound = mixer.Sound("Ressources/sounds/player_attack.ogg")
+                        attackSound.play()
+                        self.player.attack(werewolf)
 
                     # Clique sur l'inventaire
                     if self.player.inventory.in_grid(pos[0], pos[1]):

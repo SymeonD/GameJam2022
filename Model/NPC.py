@@ -25,6 +25,7 @@ class NPC(pygame.sprite.Sprite):
 
         self.name = name
         self.health = 100
+        self.max_health = 100
         self.skin = 1
         self.level = 1
         self.hit_countdown = 0
@@ -96,9 +97,14 @@ class NPC(pygame.sprite.Sprite):
     def draw_health(self, surf):
         health_rect = pygame.Rect(0, 0, self.original_image.get_width(), 7)
         health_rect.midbottom = self.rect.centerx, self.rect.top
-        max_health = 100
         self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
-                        self.health / max_health)
+                        self.health / self.max_health)
+
+    def heal(self, amount):
+        if self.health + amount > self.max_health:
+            self.health = self.max_health
+        else:
+            self.health += amount
 
     def startDialog(self):
         """

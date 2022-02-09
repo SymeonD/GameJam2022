@@ -35,6 +35,7 @@ class Player(pygame.sprite.Sprite):
 
         self.name = "player"
         self.health = 200
+        self.max_health = 200
         self.skin = 1
         self.inventory = Inventory()
         self.inventory.add(item.itemList[0])
@@ -69,8 +70,8 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
         # Update health bar
-        pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, 200, 20), 3)
-        pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, 200, 20))
+        pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, self.max_health, 20), 3)
+        pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, self.max_health, 20))
         self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
 
         #blink if damaged
@@ -115,4 +116,10 @@ class Player(pygame.sprite.Sprite):
                                        self.position[1] - werewolf.position[1])
         if werewolf_distance < 100:
             werewolf.take_damage(self.weapon_damage, self.position[0], self.position[1])
+
+    def heal(self, amount):
+        if self.health + amount > self.max_health:
+            self.health = self.max_health
+        else:
+            self.health += amount
 
