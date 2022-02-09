@@ -58,5 +58,23 @@ class Inventory:
         return True
 
     def open(screen, inventoryHandle):
-
+        selected = None
         inventoryHandle.draw(screen)
+
+        font = pygame.font.Font(pygame.font.match_font("calibri"),22)
+        mousex, mousey = pygame.mouse.get_pos()
+
+        #dessine l'item sélectionner à côte de la souris
+        if selected:
+            screen.blit(selected[0].resize(30),(mousex,mousey))
+            obj = font.render(str(selected[1]),True,(0,0,0))
+            screen.blit(obj,(mousex + 15, mousey + 15))
+
+            #récupere la position de la souris dans l'inventaire (quelle case ?)
+            pos = inventoryHandle.Get_pos()
+            if inventoryHandle.In_grid(pos[0],pos[1]):
+                if selected:
+                    selected = inventoryHandle.Add(selected,pos)
+                elif inventoryHandle.items[pos[0]][pos[1]]:
+                    selected = inventoryHandle.items[pos[0]][pos[1]]
+                    inventoryHandle.items[pos[0]][pos[1]] = None
