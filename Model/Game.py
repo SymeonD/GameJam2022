@@ -41,7 +41,7 @@ class Game:
             self.werewolf_positions.append(werewolf_position)
 
         for werewolf_spawn in self.werewolf_positions:
-            werewolf = NPC_Werewolf(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf', random.randint(1,5))
+            werewolf = NPC_Werewolf(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf', self.screen, random.randint(1,5))
             self.werewolfs.append(werewolf)
 
         # Les collisions
