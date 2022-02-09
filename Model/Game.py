@@ -13,7 +13,7 @@ from Model.NPC_Werewolf import NPC_Werewolf
 from Model.inventory import Inventory
 
 class Game:
-    
+
     def __init__(self):
         #creation de la fenetre du jeu
             #dimension de la fenetre
@@ -82,10 +82,10 @@ class Game:
         mixer.init()
         mixer.music.load("Ressources/music/background_day.mp3")
         mixer.music.set_volume(1)
-        
-        
-        
-    
+
+
+
+
     def run(self):
         running = True
 
@@ -109,25 +109,35 @@ class Game:
             self.handle_npc_interaction()
             #maj des loups
             self.move_werewolfs()
-            
+
             self.refresh()
 
+            #event handler
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
 
-                # attack
+
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
 
+                    # Attaque
                     clicked_sprites = [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
                     for werewolf in clicked_sprites:
                         attackSound = mixer.Sound("Ressources/sounds/player_attack.ogg")
                         attackSound.play()
                         self.player.attack(werewolf)
-                        
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+
+                    #Clique sur l'inventaire
+                    #if self.player.inventory.In_grid(self.player.inventory.Get_pos()[0],
+                    #                                 self.player.inventory.Get_pos()[1]):
+                    #    print(self.player.inventory.Get_pos())
+
         pygame.quit
-            
+
     def handle_input(self):
         keys = pygame.key.get_pressed()
         if keys[pygame.K_z]:
@@ -167,7 +177,7 @@ class Game:
                 # Change to werewolf
                 for werewolf in self.werewolf_group:
                     werewolf.transform(self.cycleMoon)
-            
+
             else:
                 self.cycleState = "jour"
 
@@ -191,7 +201,7 @@ class Game:
             self.screen.blit(werewolf.image, werewolf.rect)
 
         #afficher l'inventaire
-        Inventory.open(self.screen, self.player.inventory)
+        Inventory.update(self.player.inventory, self.screen, self.player.inventory)
 
         # Vérification des collisions
         for sprite in self.group.sprites():
@@ -224,7 +234,7 @@ class Game:
         resume_button = Button(100, 200, resume_img, 0.5)
         leave_button = Button(600, 200, leave_img, 0.5)
 
-        # musique en pause 
+        # musique en pause
         mixer.music.pause()
 
         while runPause:
@@ -238,5 +248,5 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit(2)
-            
+
             pygame.display.update()
