@@ -1,5 +1,7 @@
 import pygame
 import os
+from Model import item
+import random
 
 
 
@@ -77,6 +79,9 @@ class NPC(pygame.sprite.Sprite):
         if self.position[1] - yEnnemy > 0:
             self.position[1] += self.speed * jump_back
         if self.health <= 0:
+            randomItem = random.choice(item.itemList) #une fois le npc mort on choisi un item au hasard parmi ceux dans la liste
+            randomItem.draw(self.screen, self.position[0], self.position[1]) #on affiche l'item au lieu de la mort du NPC
+            print('test')
             self.kill()
 
     def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):
