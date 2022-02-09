@@ -80,6 +80,7 @@ class NPC(pygame.sprite.Sprite):
             self.position[1] += self.speed * jump_back
         if self.health <= 0:
             randomItem = random.choice(item.itemList) #une fois le npc mort on choisi un item au hasard parmi ceux dans la liste
+            print(randomItem.name)
             randomItem.draw(self.screen, self.position[0], self.position[1]) #on affiche l'item au lieu de la mort du NPC
             print('test')
             self.kill()
@@ -99,13 +100,15 @@ class NPC(pygame.sprite.Sprite):
                         self.health / max_health)
 
     def startDialog(self):
+        """
         dialog_circle = pygame.draw.circle(self.screen,  (255, 255, 255), (self.rect.centerx, self.rect.top), 7)
         dialog_circle.midbottom = self.rect.centerx, self.rect.top
 
-        pygame.draw.rect(surface, color_background, (dialog_circle, *size))
-        pygame.draw.rect(surface, color_border, (dialog_circle, *size), 1)
+        pygame.draw.rect(surface, color_background, (dialog_circle, dialog_circle.size))
+        pygame.draw.rect(surface, color_border, (dialog_circle, dialog_circle.size), 1)
         innerPos = (position[0] + 1, position[1] + 1)
         innerSize = (int((size[0] - 2) * progress), size[1] - 2)
         pygame.draw.rect(surface, color_health, (*innerPos, *innerSize))
+        """
 
 

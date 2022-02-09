@@ -26,7 +26,7 @@ class Game:
         self.map = "town"
 
         #chargement de la map(tmx)
-        tmx_data = pytmx.util_pygame.load_pygame("Ressources/MapTestFormat.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("Ressources/town_day.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         #map_layer.zoom = 2
@@ -59,7 +59,7 @@ class Game:
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         #grouper les calques
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=2)
+        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=0)
         self.group.add(self.player)
         self.werewolf_group = pygame.sprite.Group()
         self.werewolf_group.add(self.werewolfs)
