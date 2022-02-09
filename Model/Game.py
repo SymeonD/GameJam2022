@@ -4,6 +4,7 @@ import pygame
 import pytmx
 import pyscroll
 import sys
+import math
 
 from Model.bouton import Button
 from Model.Player import Player
@@ -93,6 +94,8 @@ class Game:
             self.player.save_location()
             #gestion des touches
             self.handle_input()
+            #gestion des interactions PNJ
+            self.handle_npc_interaction()
             #maj des loups
             self.move_werewolfs()
             
@@ -125,6 +128,12 @@ class Game:
         if keys[pygame.K_p]:
             self.pause()
 
+    def handle_npc_interaction(self):
+        for werewolf in self.werewolf_group:
+            playerDistance = math.hypot(werewolf.position[0] - self.player.position[0],
+                                             werewolf.position[1] - self.player.position[1])
+            if playerDistance < 50 and werewolf.state == "NPC":
+                werewolf.startDialog()
 
     def switch_cycle(self):
 

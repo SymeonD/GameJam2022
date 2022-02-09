@@ -93,4 +93,14 @@ class NPC(pygame.sprite.Sprite):
         self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
                         self.health / max_health)
 
+    def startDialog(self):
+        dialog_circle = pygame.draw.circle(self.screen,  (255, 255, 255), (self.rect.centerx, self.rect.top), 7)
+        dialog_circle.midbottom = self.rect.centerx, self.rect.top
+
+        pygame.draw.rect(surface, color_background, (dialog_circle, *size))
+        pygame.draw.rect(surface, color_border, (dialog_circle, *size), 1)
+        innerPos = (position[0] + 1, position[1] + 1)
+        innerSize = (int((size[0] - 2) * progress), size[1] - 2)
+        pygame.draw.rect(surface, color_health, (*innerPos, *innerSize))
+
 
