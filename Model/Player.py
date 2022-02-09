@@ -5,7 +5,6 @@ import math
 from Model.inventory import Inventory
 
 
-
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, x, y, screen):
@@ -70,20 +69,19 @@ class Player(pygame.sprite.Sprite):
         self.health -= amount
         jump_back = 10
         if self.position[0] - xEnnemy < 0:
-            self.position[0] -= self.speed*jump_back
+            self.position[0] -= self.speed * jump_back
         if self.position[0] - xEnnemy > 0:
-            self.position[0] += self.speed*jump_back
+            self.position[0] += self.speed * jump_back
         if self.position[1] - yEnnemy < 0:
-            self.position[1] -= self.speed*jump_back
+            self.position[1] -= self.speed * jump_back
         if self.position[1] - yEnnemy > 0:
-            self.position[1] += self.speed*jump_back
+            self.position[1] += self.speed * jump_back
         if self.health <= 0:
             print("Game Over")
         self.update()
 
     def attack(self, werewolf):
         werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
-                   self.position[1] - werewolf.position[1])
-        if werewolf_distance < 50:
+                                       self.position[1] - werewolf.position[1])
+        if werewolf_distance < 100:
             werewolf.take_damage(self.weapon_damage)
-
