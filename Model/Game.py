@@ -85,8 +85,6 @@ class Game:
             #gestion des cycles jour/nui
             self.switch_cycle()
 
-            #maj des calques
-            self.group.update()
             #centrer la caméra sur le joueur
             self.group.center(self.player.rect)
             #dessiner les calques
@@ -103,6 +101,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+
                 # attack
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
@@ -160,9 +159,9 @@ class Game:
 
     def refresh(self):
         #Update entities
-        self.player.update()
-        for werewolf in self.werewolf_group:
-            werewolf.update()
+
+        self.group.update()
+        self.werewolf_group.update()
 
         #Blit entities
         self.screen.blit(self.player.image, self.player.rect)
@@ -171,10 +170,6 @@ class Game:
 
         #afficher l'inventaire
         Inventory.open(self.screen, self.player.inventory)
-
-        #actualisation
-        #pygame.display.flip()
-        pygame.display.update()
 
         # Vérification des collisions
         for sprite in self.group.sprites():
@@ -185,7 +180,11 @@ class Game:
                 #Degats sur le joueur
                 for werewolf in self.werewolf_group:
                     if self.player.rect.colliderect(werewolf.rect) and werewolf.state == "WW":
-                        self.player.damage(werewolf.damage, werewolf.position[0], werewolf.position[1])
+                        self.player.take_damage(werewolf.damage, werewolf.position[0], werewolf.position[1])
+
+        # actualisation
+        # pygame.display.flip()
+        pygame.display.update()
 
     def pause(self):
         runPause = True

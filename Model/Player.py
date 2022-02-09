@@ -12,6 +12,12 @@ class Player(pygame.sprite.Sprite):
         self.sprite_sheet = pygame.image.load('Ressources/perso/player.png')
         self.image = self.get_image(0, 0)
         self.image.set_colorkey([0, 0, 0])
+        self.original_image = self.image
+
+        self.damage_image = (self.image.copy()).convert_alpha()
+        self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
+        self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
+
         self.rect = self.image.get_rect()
         self.position = [x, y]
         self.images = {
@@ -25,6 +31,7 @@ class Player(pygame.sprite.Sprite):
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
 
         self.screen = screen
+        self.hit_countdown = None
 
         self.name = "player"
         self.health = 200
@@ -52,6 +59,7 @@ class Player(pygame.sprite.Sprite):
             self.position[0] += self.speed
         elif type == "left":
             self.position[0] -= self.speed
+        self.original_image = self.image
 
     def update(self):
         self.rect.topleft = self.position
@@ -60,6 +68,17 @@ class Player(pygame.sprite.Sprite):
         pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, 200, 20), 3)
         pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, 200, 20))
         self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
+
+        #blink if damaged
+        if self.hit_countdown:
+            if self.hit_countdown % 2:
+                self.image = self.damage_image  # (or other suitable pre-loaded image)
+            else:
+                self.image = self.original_image
+            self.hit_countdown = max(0, self.hit_countdown - 1)
+        elif self.hit_countdown == 0:
+            self.image = self.original_image
+            self.hit_countdown = None
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])
@@ -70,8 +89,10 @@ class Player(pygame.sprite.Sprite):
         self.position = self.old_position
         self.update()
 
-    def damage(self, amount, xEnnemy, yEnnemy):
+    def take_damage(self, amount, xEnnemy, yEnnemy):
         self.health -= amount
+        self.original_image = self.image
+        self.hit_countdown = 10
         jump_back = 10
         if self.position[0] - xEnnemy < 0:
             self.position[0] -= self.speed * jump_back
@@ -89,4 +110,4 @@ class Player(pygame.sprite.Sprite):
         werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
                                        self.position[1] - werewolf.position[1])
         if werewolf_distance < 100:
-            werewolf.take_damage(self.weapon_damage)
+            werewolf.take_damage(self.weapon_damage, self.position[0], self.position[1])

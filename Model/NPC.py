@@ -9,7 +9,8 @@ class NPC(pygame.sprite.Sprite):
 
     def __init__(self, x, y, name, screen):
         super(NPC, self).__init__()
-        self.updateImage('Ressources/player.png', 32)
+        self.image = None
+        self.updateImage('Ressources/player.png', 32, 32)
         self.original_image = self.image
 
         self.damage_image = (self.image.copy()).convert_alpha()
@@ -47,26 +48,36 @@ class NPC(pygame.sprite.Sprite):
         self.original_image = self.image
 
     def get_image(self, x, y):
-        image = pygame.Surface([self.sprite_size, self.sprite_size])
-        image.blit(self.sprite_sheet, (0, 0), (x, y, self.sprite_size, self.sprite_size))
+        image = pygame.Surface([self.sprite_size_x, self.sprite_size_y])
+        image.blit(self.sprite_sheet, (0, 0), (x, y, self.sprite_size_x, self.sprite_size_y))
         return image
 
-    def updateImage(self, ressource, sprite_size):
-        self.sprite_size = sprite_size
+    def updateImage(self, ressource, sprite_size_x, sprite_size_y):
+        self.sprite_size_x = sprite_size_x
+        self.sprite_size_y = sprite_size_y
         self.sprite_sheet = pygame.image.load(ressource)
         self.image = self.get_image(0, 0)
         self.image.set_colorkey([0, 0, 0])
         self.images = {
             'down': self.get_image(0, 0),
-            'up': self.get_image(0, 3 * self.sprite_size),
-            'right': self.get_image(0, 2 * self.sprite_size),
-            'left': self.get_image(0, self.sprite_size)
+            'up': self.get_image(0, 3 * self.sprite_size_y),
+            'right': self.get_image(0, 2 * self.sprite_size_y),
+            'left': self.get_image(0, self.sprite_size_y)
         }
 
-    def take_damage(self, amount):
+    def take_damage(self, amount, xEnnemy, yEnnemy):
         self.health -= amount
         self.original_image = self.image
         self.hit_countdown = 10
+        jump_back = 10
+        if self.position[0] - xEnnemy < 0:
+            self.position[0] -= self.speed * jump_back
+        if self.position[0] - xEnnemy > 0:
+            self.position[0] += self.speed * jump_back
+        if self.position[1] - yEnnemy < 0:
+            self.position[1] -= self.speed * jump_back
+        if self.position[1] - yEnnemy > 0:
+            self.position[1] += self.speed * jump_back
         if self.health <= 0:
             randomItem = random.choice(item.itemList) #une fois le npc mort on choisi un item au hasard parmi ceux dans la liste
             randomItem.draw(self.screen, self.position[0], self.position[1]) #on affiche l'item au lieu de la mort du NPC
