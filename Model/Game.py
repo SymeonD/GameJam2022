@@ -54,7 +54,8 @@ class Game:
         #grouper les calques
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=2)
         self.group.add(self.player)
-        self.group.add(self.werewolfs)
+        self.werewolf_group = pygame.sprite.Group()
+        self.werewolf_group.add(self.werewolfs)
 
         #Création d'une clock pour les FPS
         self.clock = pygame.time.Clock()
@@ -96,6 +97,13 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                # attack
+                if event.type == pygame.MOUSEBUTTONUP:
+                    pos = pygame.mouse.get_pos()
+
+                    clicked_sprites = [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
+                    for werewolf in clicked_sprites:
+                        self.player.attack(werewolf)
 
         pygame.quit
             
@@ -112,17 +120,6 @@ class Game:
         if keys[pygame.K_p]:
             self.pause()
 
-        # Mouse input
-        event_list = pygame.event.get()
-        for event in event_list:
-            if event.type == pygame.MOUSEBUTTONUP:
-                pos = pygame.mouse.get_pos()
-                print(pos)
-
-                clicked_sprites = [s for s in self.werewolfs if s.rect.collidepoint(pos)]
-                for werewolf in clicked_sprites:
-                    print(werewolf)
-                    self.player.attack(werewolf)
 
     def switch_cycle(self):
 
@@ -141,29 +138,29 @@ class Game:
                     #Add special effects (super werewolves...)
 
                 # Change to werewolf
-                for werewolf in self.werewolfs:
+                for werewolf in self.werewolf_group:
                     werewolf.transform(self.cycleMoon)
             
             else:
                 self.cycleState = "jour"
 
-                for werewolf in self.werewolfs:
+                for werewolf in self.werewolf_group:
                     werewolf.transform(6)
 
     def move_werewolfs(self):
         if self.cycleState == "nuit":
-            for werewolf in self.werewolfs:
+            for werewolf in self.werewolf_group:
                 werewolf.move_npc(self.player)
 
     def refresh(self):
         #Update entities
         self.player.update()
-        for werewolf in self.werewolfs:
+        for werewolf in self.werewolf_group:
             werewolf.update()
 
         #Blit entities
         self.screen.blit(self.player.image, self.player.rect)
-        for werewolf in self.werewolfs:
+        for werewolf in self.werewolf_group:
             self.screen.blit(werewolf.image, werewolf.rect)
 
         #afficher l'inventaire
@@ -180,11 +177,9 @@ class Game:
                     sprite.move_back()
 
                 #Degats sur le joueur
-                for werewolfSprite in self.group.sprites():
-                    if werewolfSprite in self.werewolfs:
-                        if sprite.rect.colliderect(werewolfSprite.rect) and werewolfSprite.state == "WW":
-                            self.player.damage(werewolfSprite.damage, werewolfSprite.position[0],
-                                               werewolfSprite.position[1])
+                for werewolf in self.werewolf_group:
+                    if self.player.rect.colliderect(werewolf.rect) and werewolf.state == "WW":
+                        self.player.damage(werewolf.damage, werewolf.position[0], werewolf.position[1])
 
     def pause(self):
         runPause = True

@@ -57,5 +57,8 @@ class NPC(pygame.sprite.Sprite):
     def take_damage(self, amount):
         self.health -= amount
         self.hit_countdown = 6
-        print(self.health)
+        if self.health <= 0:
+            self.kill()
+
+
 
