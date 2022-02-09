@@ -20,8 +20,6 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
             #titre de la fenetre
         pygame.display.set_caption('WereWolf')
-            #définir le logo du jeu
-        pygame.display.set_icon(self.player.get())
 
         #map de base
         self.map = "town"
@@ -35,6 +33,9 @@ class Game:
         #chargement du joueur
         player_position = tmx_data.get_object_by_name('player')
         self.player = Player(player_position.x, player_position.y, self.screen)
+
+            #définir le logo du jeu
+        pygame.display.set_icon(self.player.get())
 
         #chargement des PNJ
         self.werewolf_positions = []
