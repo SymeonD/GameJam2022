@@ -85,8 +85,6 @@ class Game:
             #gestion des cycles jour/nui
             self.switch_cycle()
 
-            #maj des calques
-            self.group.update()
             #centrer la caméra sur le joueur
             self.group.center(self.player.rect)
             #dessiner les calques
@@ -173,10 +171,6 @@ class Game:
         #afficher l'inventaire
         Inventory.open(self.screen, self.player.inventory)
 
-        #actualisation
-        #pygame.display.flip()
-        pygame.display.update()
-
         # Vérification des collisions
         for sprite in self.group.sprites():
             if sprite not in self.werewolfs:
@@ -187,6 +181,10 @@ class Game:
                 for werewolf in self.werewolf_group:
                     if self.player.rect.colliderect(werewolf.rect) and werewolf.state == "WW":
                         self.player.take_damage(werewolf.damage, werewolf.position[0], werewolf.position[1])
+
+        # actualisation
+        # pygame.display.flip()
+        pygame.display.update()
 
     def pause(self):
         runPause = True
