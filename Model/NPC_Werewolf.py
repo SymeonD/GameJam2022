@@ -17,12 +17,10 @@ class NPC_Werewolf(parent):
             '5': ['Ressources/WereWolfs.png', 48, 52, 6*48, 4*52],
         }
         self.moonCycle = moonCycle
-        print(self.werewolf_skins[str(self.moonCycle)][0])
-
         self.type = 'speed'
         self.target = None
         self.state = 'NPC'
-        self.damage = 10
+        self.damage = self.moonCycle*10
 
     def transform(self, cycleMoon):
         if cycleMoon == 6:
