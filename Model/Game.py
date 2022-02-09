@@ -91,6 +91,8 @@ class Game:
 
         mixer.music.play() #lecture de la musique
 
+        itemSelected = None
+
         while running:
             #Limiter à 60 fps
             self.clock.tick(60)
@@ -127,25 +129,42 @@ class Game:
                         attackSound.play()
                         self.player.attack(werewolf)
 
+                    if itemSelected:
+                        itemSelected = None
+
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
 
                     # Clique sur l'inventaire
                     if self.player.inventory.in_grid(pos[0], pos[1]):
-                        self.player.inventory.getItem(pos[0], pos[1])
+                        itemSelected = self.player.inventory.getItem(pos[0], pos[1])
+                        #self.player.inventory.removeItem(itemSelected[0], "all")
+                    else:
+                        itemSelected = None
+                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
                 if event.type == pygame.MOUSEMOTION:
                     pos = pygame.mouse.get_pos()
 
                     # Passe sur l'inventaire
                     if self.player.inventory.in_grid(pos[0], pos[1]):
+
+                        #Item survolé
                         itemDesc = self.player.inventory.getItem(pos[0], pos[1])
-                        if itemDesc:
-                            self.player.inventory.toggleDesc(True, self.screen, itemDesc.name, pos[0], pos[1])
+
+                        #Si il y a un item séléctionné
+                        if itemSelected:
+                            self.player.inventory.toggleDesc("item", self.screen, itemSelected[0].image, pos[0], pos[1])
+
+                        #Afficher la description
+                        elif itemDesc:
+                            self.player.inventory.toggleDesc("desc", self.screen, itemDesc[0].name, pos[0], pos[1])
                         else:
-                            self.player.inventory.toggleDesc(False, self.screen, "", pos[0], pos[1])
+                            self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
+                    elif itemSelected:
+                        self.player.inventory.toggleDesc("item", self.screen, itemSelected[0].image, pos[0], pos[1])
                     else:
-                        self.player.inventory.toggleDesc(False, self.screen, "", pos[0], pos[1])
+                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
         pygame.quit
 
 

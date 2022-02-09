@@ -20,6 +20,7 @@ class Inventory:
         self.descX = None
         self.descY = None
         self.showDesc = False
+        self.itemShow = None
 
     def add(self, newItem):
         add = None
@@ -35,8 +36,15 @@ class Inventory:
         elif self.capacity < itemNum:
             print("inventaire plein")
 
-        for items in self.items:
-            print(items[0].name + " : " + str(items[1]))
+    def removeItem(self, itemRemove, amount):
+        for item in self.items:
+            # si la liste n'est pas vide
+            if item:
+                if itemRemove == item[0]:
+                    if amount == "all" or item[1] < amount:
+                        item.remove()
+                    else:
+                        item[1] -= amount
 
     def drawInventory(self, screen):
         pygame.draw.rect(screen, (100, 100, 100), self.rect)
@@ -59,10 +67,12 @@ class Inventory:
 
     def update(self, screen, inventory):
         self.drawInventory(screen)
-        if self.showDesc:
+        if self.showDesc == "desc":
             font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
             obj = font.render(self.itemDesc, True, (0, 0, 0), (255, 255, 255))
             self.screen.blit(obj, (self.descX + 15, self.descY + 15))
+        elif self.showDesc == "item":
+            self.screen.blit(self.itemShow, (self.descX + 15, self.descY + 15))
 
     #check if the mouse is in tge grid
     def in_grid(self, posX, posY):
@@ -80,21 +90,30 @@ class Inventory:
         else:
             case = ((posX - 650) // (336 / 9)*2)+1
         if len(self.items) >= case:
-            return self.items[int(case)-1][0]
+            return self.items[int(case)-1]
 
     def toggleDesc(self, state, screen, itemDesc, posX, posY):
-        if state:
+        if state == "desc":
             self.screen = screen
             self.itemDesc = itemDesc
             self.descX = posX
             self.descY = posY
-            self.showDesc = True
+            self.showDesc = "desc"
+            self.itemShow = None
+        elif state == "item":
+            self.screen = screen
+            self.itemDesc = None
+            self.descX = posX
+            self.descY = posY
+            self.showDesc = "item"
+            self.itemShow = itemDesc
         else:
             self.screen = None
             self.itemDesc = None
             self.descX = None
             self.descY = None
             self.showDesc = False
+            self.itemShow = None
 
 
     """
