@@ -61,6 +61,8 @@ class Game:
 
         #mixer.music.play() #lecture de la musique
 
+        itemSelected = None
+
         while running:
             #Limiter à 60 fps
             self.clock.tick(60)
@@ -77,25 +79,67 @@ class Game:
 
             self.update()
 
-            #event handler
+            # event handler
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
 
-
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
 
+<<<<<<< HEAD
+=======
+                    clicked_sprites = [s for s in self.group if s.rect.collidepoint(pos)] + [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
+                    if itemSelected:
+                        for sprite in clicked_sprites:
+                            if itemSelected[0].name == "Potion de Vie":
+                                sprite.heal(50)
+                        itemSelected = None
+                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
 
-                    #Clique sur l'inventaire
-                    #if self.player.inventory.In_grid(self.player.inventory.Get_pos()[0],
-                    #                                 self.player.inventory.Get_pos()[1]):
-                    #    print(self.player.inventory.Get_pos())
+                    # Attaque
+                    clicked_werewolf = [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
+                    for werewolf in clicked_werewolf:
+                        attackSound = mixer.Sound("Ressources/sounds/player_attack.ogg")
+                        attackSound.play()
+                        self.player.attack(werewolf)
+>>>>>>> c4553f395362efc071ba3e76cedd107550e8e34a
 
+                    # Clique sur l'inventaire
+                    if self.player.inventory.in_grid(pos[0], pos[1]):
+                        itemSelected = self.player.inventory.getItem(pos[0], pos[1])
+                        #self.player.inventory.removeItem(itemSelected[0], "all")
+                    else:
+                        itemSelected = None
+                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
+
+                if event.type == pygame.MOUSEMOTION:
+                    pos = pygame.mouse.get_pos()
+
+                    # Passe sur l'inventaire
+                    if self.player.inventory.in_grid(pos[0], pos[1]):
+
+                        #Item survolé
+                        itemDesc = self.player.inventory.getItem(pos[0], pos[1])
+
+                        #Si il y a un item séléctionné
+                        if itemSelected:
+                            self.player.inventory.toggleDesc("item", self.screen, itemSelected[0].image, pos[0], pos[1])
+
+                        #Afficher la description
+                        elif itemDesc:
+                            self.player.inventory.toggleDesc("desc", self.screen, itemDesc[0].name, pos[0], pos[1])
+                        else:
+                            self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
+                    elif itemSelected:
+                        self.player.inventory.toggleDesc("item", self.screen, itemSelected[0].image, pos[0], pos[1])
+                    else:
+                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
         pygame.quit
+
 
     def handle_input(self):
         keys = pygame.key.get_pressed()

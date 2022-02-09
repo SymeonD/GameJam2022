@@ -1,18 +1,26 @@
 import pygame
 import sys
 
+
 class Inventory:
     def __init__(self):
         self.rows = 2
-        self.col = 9
-        self.capacity = self.rows * self.col
+        self.cols = 9
+        self.capacity = self.rows * self.cols
         self.items = []
         self.box_size = 34
         self.x = 650
         self.y = 650
         self.border = 3
-        self.rect = (self.x,self.y,(self.box_size + self.border)*self.col + self.border,(self.box_size + self.border)*self.rows + self.border)
+        self.rect = (self.x, self.y, (self.box_size + self.border) * self.cols + self.border,
+                     (self.box_size + self.border) * self.rows + self.border)
 
+        self.screen = None
+        self.itemDesc = None
+        self.descX = None
+        self.descY = None
+        self.showDesc = False
+        self.itemShow = None
 
     def add(self, newItem):
         add = None
@@ -28,32 +36,84 @@ class Inventory:
         elif self.capacity < itemNum:
             print("inventaire plein")
 
-        for items in self.items:
-            print(items[0].name+" : "+str(items[1]))
+    def removeItem(self, itemRemove, amount):
+        for item in self.items:
+            # si la liste n'est pas vide
+            if item:
+                if itemRemove == item[0]:
+                    if amount == "all" or item[1] < amount:
+                        item.remove()
+                    else:
+                        item[1] -= amount
 
     def drawInventory(self, screen):
         pygame.draw.rect(screen, (100, 100, 100), self.rect)
         numcase = 0
         font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
 
-        for x in range(self.col):
+        for x in range(self.cols):
             for y in range(self.rows):
                 caseRect = (self.x + (self.box_size + self.border) * x + self.border,
-                        self.x + (self.box_size + self.border) * y + self.border, self.box_size, self.box_size)
+                            self.x + (self.box_size + self.border) * y + self.border, self.box_size, self.box_size)
                 pygame.draw.rect(screen, (180, 180, 180), caseRect)
 
-                #Si il y a un item dans la case
+                # Si il y a un item dans la case
                 if numcase < len(self.items):
                     screen.blit(self.items[numcase][0].image, caseRect)
                     amount = font.render(str(self.items[numcase][1]), True, (0, 0, 0))
-                    screen.blit(amount, (caseRect[0] + self.box_size//2, caseRect[1] + self.box_size//2))
+                    screen.blit(amount, (caseRect[0] + self.box_size // 2, caseRect[1] + self.box_size // 2))
 
                 numcase += 1
 
     def update(self, screen, inventory):
         self.drawInventory(screen)
+        if self.showDesc == "desc":
+            font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+            obj = font.render(self.itemDesc, True, (0, 0, 0), (255, 255, 255))
+            self.screen.blit(obj, (self.descX + 15, self.descY + 15))
+        elif self.showDesc == "item":
+            self.screen.blit(self.itemShow, (self.descX + 15, self.descY + 15))
 
+    #check if the mouse is in tge grid
+    def in_grid(self, posX, posY):
+        if self.x > posX or posX > self.x+(self.cols+1)*self.border+self.cols*self.box_size:
+            return False
+        if self.y > posY or posY > self.y+(self.rows+1)*self.border+self.rows*self.box_size:
+            return False
+        return True
 
+    #return item in position
+    def getItem(self, posX, posY):
+        case = 0
+        if (posY-650)//38.5 >= 1:
+            case = ((posX-650)//(336/9))*2+2
+        else:
+            case = ((posX - 650) // (336 / 9)*2)+1
+        if len(self.items) >= case:
+            return self.items[int(case)-1]
+
+    def toggleDesc(self, state, screen, itemDesc, posX, posY):
+        if state == "desc":
+            self.screen = screen
+            self.itemDesc = itemDesc
+            self.descX = posX
+            self.descY = posY
+            self.showDesc = "desc"
+            self.itemShow = None
+        elif state == "item":
+            self.screen = screen
+            self.itemDesc = None
+            self.descX = posX
+            self.descY = posY
+            self.showDesc = "item"
+            self.itemShow = itemDesc
+        else:
+            self.screen = None
+            self.itemDesc = None
+            self.descX = None
+            self.descY = None
+            self.showDesc = False
+            self.itemShow = None
 
 
     """

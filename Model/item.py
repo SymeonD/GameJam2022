@@ -7,6 +7,7 @@ class Item(pygame.sprite.Sprite):
         self.name = name #nom de l'item
         self.roll = roll #chance de drop
         self.image = image #image de l'item
+        self.effect = None
         self.rect = self.image.get_rect()
 
     def draw(self, screen, posx, posy):
