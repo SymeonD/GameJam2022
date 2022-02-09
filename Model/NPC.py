@@ -2,6 +2,7 @@ import pygame
 import os
 from Model import item
 import random
+from pygame import mixer
 
 
 

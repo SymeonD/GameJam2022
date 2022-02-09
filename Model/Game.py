@@ -78,6 +78,7 @@ class Game:
         self.start_ticks = pygame.time.get_ticks()
 
         # initialisation musique de fond (jour)
+        mixer.pre_init(44100, 16, 2, 4096)
         mixer.init()
         mixer.music.load("Ressources/music/background_day.mp3")
         mixer.music.set_volume(1)
@@ -121,8 +122,10 @@ class Game:
 
                     clicked_sprites = [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
                     for werewolf in clicked_sprites:
+                        attackSound = mixer.Sound("Ressources/sounds/player_attack.ogg")
+                        attackSound.play()
                         self.player.attack(werewolf)
-
+                        
         pygame.quit
             
     def handle_input(self):
@@ -200,6 +203,8 @@ class Game:
                 for werewolf in self.werewolf_group:
                     if self.player.rect.colliderect(werewolf.rect) and werewolf.state == "WW":
                         self.player.take_damage(werewolf.damage, werewolf.position[0], werewolf.position[1])
+                        damageSound = mixer.Sound("Ressources/sounds/player_hit.ogg")
+                        damageSound.play()
 
         # actualisation
         # pygame.display.flip()
