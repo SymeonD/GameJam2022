@@ -20,6 +20,11 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
             #titre de la fenetre
         pygame.display.set_caption('WereWolf')
+            #définir le logo du jeu
+        pygame.display.set_icon(self.player.get())
+
+        #map de base
+        self.map = "town"
 
         #chargement de la map(tmx)
         tmx_data = pytmx.util_pygame.load_pygame("Ressources/MapTestFormat.tmx")
