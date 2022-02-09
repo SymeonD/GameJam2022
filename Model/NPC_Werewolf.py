@@ -18,9 +18,11 @@ class NPC_Werewolf(parent):
     def transform(self, cycleMoon):
         if cycleMoon == 6:
             self.updateImage('Ressources/player.png', 32)
+            self.rect = self.image.get_rect()
             self.state = 'NPC'
         elif cycleMoon >= self.moonCycle:
             self.updateImage('Ressources/loup Garou.png', 80)
+            self.rect = self.image.get_rect()
             self.state = 'WW'
 
     def updateTarget(self, player1):
