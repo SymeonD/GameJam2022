@@ -25,7 +25,7 @@ class Game:
         self.map = "town"
 
         #chargement de la map(tmx)
-        tmx_data = pytmx.util_pygame.load_pygame("Ressources/town.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("Ressources/town_day.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
         #map_layer.zoom = 2
