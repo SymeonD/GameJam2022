@@ -3,17 +3,17 @@ import sys
 
 class Inventory:
     def __init__(self):
-        self.rows = 3
+        self.rows = 2
         self.col = 9
         self.items = [[None for _ in range(self.rows)] for _ in range(self.col)]
-        self.box_size = 40
-        self.x = 600
-        self.y = 600
+        self.box_size = 34
+        self.x = 650
+        self.y = 650
         self.border = 3
     
     #draw everything
     def draw(self, screen):
-        font = pygame.font.Font(pygame.font.match_font("calibri"),26)
+        font = pygame.font.Font(pygame.font.match_font("calibri"),22)
         #draw background
         pygame.draw.rect(screen,(100,100,100),
                          (self.x,self.y,(self.box_size + self.border)*self.col + self.border,(self.box_size + self.border)*self.rows + self.border))
