@@ -132,9 +132,8 @@ class Game:
                     pos = pygame.mouse.get_pos()
 
                     #Clique sur l'inventaire
-                    #if self.player.inventory.In_grid(self.player.inventory.Get_pos()[0],
-                    #                                 self.player.inventory.Get_pos()[1]):
-                    #    print(self.player.inventory.Get_pos())
+                    if self.player.inventory.in_grid(pos[0], pos[1]):
+                        self.player.inventory.getItem(pos[0], pos[1])
 
         pygame.quit
 
