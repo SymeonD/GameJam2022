@@ -37,7 +37,10 @@ class Player(pygame.sprite.Sprite):
         self.health = 200
         self.skin = 1
         self.inventory = Inventory()
-        #self.inventory.Add(item.itemList[0], (1,1))
+        self.inventory.add(item.itemList[0])
+        self.inventory.add(item.itemList[0])
+        self.inventory.add(item.itemList[1])
+        self.inventory.add(item.itemList[2])
         self.weapon = "sword"
         self.weapon_damage = 20
 

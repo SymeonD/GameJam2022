@@ -101,17 +101,27 @@ class Game:
             
             self.refresh()
 
+            #event handler
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
 
-                # attack
+
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
 
+                    # Attaque
                     clicked_sprites = [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
                     for werewolf in clicked_sprites:
                         self.player.attack(werewolf)
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pos = pygame.mouse.get_pos()
+
+                    #Clique sur l'inventaire
+                    #if self.player.inventory.In_grid(self.player.inventory.Get_pos()[0],
+                    #                                 self.player.inventory.Get_pos()[1]):
+                    #    print(self.player.inventory.Get_pos())
 
         pygame.quit
             
@@ -178,7 +188,7 @@ class Game:
             self.screen.blit(werewolf.image, werewolf.rect)
 
         #afficher l'inventaire
-        Inventory.open(self.screen, self.player.inventory)
+        Inventory.update(self.player.inventory, self.screen, self.player.inventory)
 
         # Vérification des collisions
         for sprite in self.group.sprites():
