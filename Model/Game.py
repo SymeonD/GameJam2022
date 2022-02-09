@@ -112,11 +112,10 @@ class Game:
 
             self.refresh()
 
-            #event handler
+            # event handler
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
-
 
                 if event.type == pygame.MOUSEBUTTONUP:
                     pos = pygame.mouse.get_pos()
@@ -131,11 +130,24 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pos = pygame.mouse.get_pos()
 
-                    #Clique sur l'inventaire
+                    # Clique sur l'inventaire
                     if self.player.inventory.in_grid(pos[0], pos[1]):
                         self.player.inventory.getItem(pos[0], pos[1])
 
+                if event.type == pygame.MOUSEMOTION:
+                    pos = pygame.mouse.get_pos()
+
+                    # Passe sur l'inventaire
+                    if self.player.inventory.in_grid(pos[0], pos[1]):
+                        itemDesc = self.player.inventory.getItem(pos[0], pos[1])
+                        if itemDesc:
+                            self.player.inventory.toggleDesc(True, self.screen, itemDesc.name, pos[0], pos[1])
+                        else:
+                            self.player.inventory.toggleDesc(False, self.screen, "", pos[0], pos[1])
+                    else:
+                        self.player.inventory.toggleDesc(False, self.screen, "", pos[0], pos[1])
         pygame.quit
+
 
     def handle_input(self):
         keys = pygame.key.get_pressed()

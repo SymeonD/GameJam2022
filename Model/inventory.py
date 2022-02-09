@@ -15,6 +15,12 @@ class Inventory:
         self.rect = (self.x, self.y, (self.box_size + self.border) * self.cols + self.border,
                      (self.box_size + self.border) * self.rows + self.border)
 
+        self.screen = None
+        self.itemDesc = None
+        self.descX = None
+        self.descY = None
+        self.showDesc = False
+
     def add(self, newItem):
         add = None
         itemNum = 0
@@ -53,6 +59,10 @@ class Inventory:
 
     def update(self, screen, inventory):
         self.drawInventory(screen)
+        if self.showDesc:
+            font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+            obj = font.render(self.itemDesc, True, (0, 0, 0), (255, 255, 255))
+            self.screen.blit(obj, (self.descX + 15, self.descY + 15))
 
     #check if the mouse is in tge grid
     def in_grid(self, posX, posY):
@@ -72,6 +82,19 @@ class Inventory:
         if len(self.items) >= case:
             return self.items[int(case)-1][0]
 
+    def toggleDesc(self, state, screen, itemDesc, posX, posY):
+        if state:
+            self.screen = screen
+            self.itemDesc = itemDesc
+            self.descX = posX
+            self.descY = posY
+            self.showDesc = True
+        else:
+            self.screen = None
+            self.itemDesc = None
+            self.descX = None
+            self.descY = None
+            self.showDesc = False
 
 
     """
