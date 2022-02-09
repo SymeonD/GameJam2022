@@ -20,15 +20,19 @@ class Player(pygame.sprite.Sprite):
             'right': self.get_image(0, 64),
             'left': self.get_image(0, 32)
         }
+        self.old_position = self.position.copy()
         self.speed = 3
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
 
         self.screen = screen
 
         self.name = "player"
-        self.health = 150
+        self.health = 200
         self.skin = 1
         self.inventory = Inventory()
+
+    def save_location(self):
+        self.old_position = self.position.copy()
 
     def move_player(self, type):
         self.image = self.images[type]
@@ -54,4 +58,24 @@ class Player(pygame.sprite.Sprite):
         image = pygame.Surface([32, 32])
         image.blit(self.sprite_sheet, (0, 0), (x, y, 32, 32))
         return image
+
+    def move_back(self):
+        self.position = self.old_position
+        self.update()
+
+    def damage(self, amount, xEnnemy, yEnnemy):
+        if self.health >= amount:
+            self.health -= amount
+            jump_back = 10
+            if self.position[0] - xEnnemy < 0:
+                self.position[0] -= self.speed*jump_back
+            if self.position[0] - xEnnemy > 0:
+                self.position[0] += self.speed*jump_back
+            if self.position[1] - yEnnemy < 0:
+                self.position[1] -= self.speed*jump_back
+            if self.position[1] - yEnnemy > 0:
+                self.position[1] += self.speed*jump_back
+        if self.health == 0:
+            print("Game Over")
+        self.update()
 

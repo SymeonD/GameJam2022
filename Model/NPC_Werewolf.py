@@ -10,10 +10,10 @@ class NPC_Werewolf(parent):
         super().__init__(x, y, name)
         self.updateImage('Ressources/player.png', 32)
         self.moonCycle = moonCycle
-        print(moonCycle)
         self.type = 'speed'
         self.target = None
         self.state = 'NPC'
+        self.damage = 10
 
     def transform(self, cycleMoon):
         if cycleMoon == 6:

@@ -44,6 +44,13 @@ class Game:
             werewolf = NPC_Werewolf(werewolf_spawn.x, werewolf_spawn.y, 'Werewolf', random.randint(1,5))
             self.werewolfs.append(werewolf)
 
+        # Les collisions
+        self.walls = []
+
+        for obj in tmx_data.objects:
+            if obj.type == "collision":
+                self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
+
         #grouper les calques
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=2)
         self.group.add(self.player)
@@ -77,6 +84,8 @@ class Game:
             self.group.center(self.player.rect)
             #dessiner les calques
             self.group.draw(self.screen)
+            #sauvegarde localisation joueur
+            self.player.save_location()
             #gestion des déplacements
             self.handle_input()
             #maj des loups
@@ -115,13 +124,13 @@ class Game:
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
 
-				#Mooncycle update
+                #Mooncycle update
                 self.cycleMoon += 1
                 if self.cycleMoon > 5:
                     self.cycleMoon = 1
-					#Add special effects (super werewolves...)
+                    #Add special effects (super werewolves...)
 
-				# Change to werewolf
+                # Change to werewolf
                 for werewolf in self.werewolfs:
                     werewolf.transform(self.cycleMoon)
             
@@ -151,17 +160,30 @@ class Game:
         #pygame.display.flip()
         pygame.display.update()
 
+        # Vérification des collisions
+        for sprite in self.group.sprites():
+            if sprite not in self.werewolfs:
+                if sprite.feet.collidelist(self.walls) > -1:
+                    sprite.move_back()
+
+                #Degats sur le joueur
+                for werewolfSprite in self.group.sprites():
+                    if werewolfSprite in self.werewolfs:
+                        if sprite.rect.colliderect(werewolfSprite.rect) and werewolfSprite.state == "WW":
+                            self.player.damage(werewolfSprite.damage, werewolfSprite.position[0],
+                                               werewolfSprite.position[1])
+
     def pause(self):
         runPause = True
 
-		# chargement de l'image de fond
+        # chargement de l'image de fond
         background_img = pygame.image.load('Ressources/bg.jpg').convert_alpha()
 
-		# chargement des images pour boutons
+        # chargement des images pour boutons
         resume_img = pygame.image.load('Ressources/start_btn.png').convert_alpha()
         leave_img = pygame.image.load('Ressources/exit_btn.png').convert_alpha()
 
-		# creer les boutons
+        # creer les boutons
         resume_button = Button(100, 200, resume_img, 0.5)
         leave_button = Button(600, 200, leave_img, 0.5)
 

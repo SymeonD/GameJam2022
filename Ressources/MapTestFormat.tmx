@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="10">
+<map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="9" nextobjectid="29">
  <tileset firstgid="1" name="Nature" tilewidth="16" tileheight="16" tilecount="720" columns="40">
   <image source="TileSets/RPG Nature Tileset.png" width="641" height="288"/>
  </tileset>
@@ -107,6 +107,21 @@
 207,208,207,208,207,208,207,208,207,208,207,207,208,208,208,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208,207,208
 </data>
  </layer>
+ <objectgroup id="8" name="Collision">
+  <object id="13" type="collision" x="432.742" y="33.2377" width="47.5756" height="205.292"/>
+  <object id="14" type="collision" x="224.844" y="352.581" width="255.474" height="49.5308"/>
+  <object id="15" type="collision" x="224.844" y="403.415" width="46.9239" height="43.6653"/>
+  <object id="16" type="collision" x="225.495" y="449.035" width="30.6309" height="15.6413"/>
+  <object id="17" type="collision" x="288.712" y="481.621" width="207.899" height="46.9239"/>
+  <object id="18" type="collision" x="240.485" y="497.914" width="48.2273" height="29.9791"/>
+  <object id="19" type="collision" x="224.844" y="513.556" width="15.6413" height="14.9896"/>
+  <object id="20" type="collision" x="432.742" y="304.353" width="48.2273" height="49.5308"/>
+  <object id="21" type="collision" x="432.091" y="273.071" width="16.9447" height="30.6309"/>
+  <object id="22" type="collision" x="449.035" y="289.364" width="14.3379" height="15.6413"/>
+  <object id="26" type="collision" x="448.384" y="529.197" width="48.2273" height="48.2273"/>
+  <object id="27" type="collision" x="448.698" y="609.117" width="367.694" height="48.4435"/>
+  <object id="28" type="collision" x="848.952" y="609.911" width="142.948" height="46.061"/>
+ </objectgroup>
  <layer id="4" name="Trees" width="64" height="48">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
