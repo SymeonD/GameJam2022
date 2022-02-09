@@ -54,17 +54,17 @@ class NPC(pygame.sprite.Sprite):
         image.blit(self.sprite_sheet, (0, 0), (x, y, self.sprite_size_x, self.sprite_size_y))
         return image
 
-    def updateImage(self, ressource, sprite_size_x, sprite_size_y):
+    def updateImage(self, ressource, sprite_size_x, sprite_size_y, decal_x=0, decal_y=0):
         self.sprite_size_x = sprite_size_x
         self.sprite_size_y = sprite_size_y
         self.sprite_sheet = pygame.image.load(ressource)
         self.image = self.get_image(0, 0)
         self.image.set_colorkey([0, 0, 0])
         self.images = {
-            'down': self.get_image(0, 0),
-            'up': self.get_image(0, 3 * self.sprite_size_y),
-            'right': self.get_image(0, 2 * self.sprite_size_y),
-            'left': self.get_image(0, self.sprite_size_y)
+            'down': self.get_image(0+decal_x, 0+decal_y),
+            'up': self.get_image(0+decal_x, (3 * self.sprite_size_y)+decal_y),
+            'right': self.get_image(0+decal_x, (2 * self.sprite_size_y)+decal_y),
+            'left': self.get_image(0+decal_x, self.sprite_size_y+decal_y)
         }
 
     def take_damage(self, amount, xEnnemy, yEnnemy):
