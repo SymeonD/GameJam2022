@@ -6,8 +6,8 @@ import os
 
 class NPC_Werewolf(parent):
 
-    def __init__(self, x, y, name, moonCycle):
-        super().__init__(x, y, name)
+    def __init__(self, x, y, name, screen, moonCycle):
+        super().__init__(x, y, name, screen)
         self.updateImage('Ressources/player.png', 32)
         self.moonCycle = moonCycle
         self.type = 'speed'

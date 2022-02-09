@@ -5,7 +5,7 @@ import os
 
 class NPC(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, name):
+    def __init__(self, x, y, name, screen):
         super(NPC, self).__init__()
         self.updateImage('Ressources/player.png', 32)
         self.original_image = self.image
@@ -17,6 +17,7 @@ class NPC(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.position = [x, y]
         self.speed = 1
+        self.screen = screen
 
         self.name = name
         self.health = 100
@@ -26,6 +27,7 @@ class NPC(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.topleft = self.position
+        self.draw_health(self.screen)
         if self.hit_countdown:
             if self.hit_countdown % 2:
                 self.image = self.damage_image  # (or other suitable pre-loaded image)
@@ -60,5 +62,18 @@ class NPC(pygame.sprite.Sprite):
         if self.health <= 0:
             self.kill()
 
+    def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):
+        pygame.draw.rect(surface, color_background, (*position, *size))
+        pygame.draw.rect(surface, color_border, (*position, *size), 1)
+        innerPos = (position[0] + 1, position[1] + 1)
+        innerSize = (int((size[0] - 2) * progress), size[1] - 2)
+        pygame.draw.rect(surface, color_health, (*innerPos, *innerSize))
+
+    def draw_health(self, surf):
+        health_rect = pygame.Rect(0, 0, self.original_image.get_width(), 7)
+        health_rect.midbottom = self.rect.centerx, self.rect.top
+        max_health = 100
+        self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
+                        self.health / max_health)
 
 
