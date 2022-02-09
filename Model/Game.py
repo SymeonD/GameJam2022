@@ -109,8 +109,6 @@ class Game:
             self.player.move_player('down')
         if keys[pygame.K_d]:
             self.player.move_player('right')
-        if keys[pygame.K_i]:
-            Inventory.open(self.screen, self.player.inventory)
         if keys[pygame.K_p]:
             self.pause()
 
@@ -167,6 +165,9 @@ class Game:
         self.screen.blit(self.player.image, self.player.rect)
         for werewolf in self.werewolfs:
             self.screen.blit(werewolf.image, werewolf.rect)
+
+        #afficher l'inventaire
+        Inventory.open(self.screen, self.player.inventory)
 
         #actualisation
         #pygame.display.flip()
