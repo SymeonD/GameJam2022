@@ -114,6 +114,18 @@ class Game:
         if keys[pygame.K_p]:
             self.pause()
 
+        # Mouse input
+        event_list = pygame.event.get()
+        for event in event_list:
+            if event.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+                print(pos)
+
+                clicked_sprites = [s for s in self.werewolfs if s.rect.collidepoint(pos)]
+                for werewolf in clicked_sprites:
+                    print(werewolf)
+                    self.player.attack(werewolf)
+
     def switch_cycle(self):
 
         #Récupère les secondes

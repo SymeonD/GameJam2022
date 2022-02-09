@@ -1,5 +1,6 @@
 import pygame
 import os
+import math
 
 from Model.inventory import Inventory
 
@@ -30,6 +31,8 @@ class Player(pygame.sprite.Sprite):
         self.health = 200
         self.skin = 1
         self.inventory = Inventory()
+        self.weapon = "sword"
+        self.weapon_damage = 20
 
     def save_location(self):
         self.old_position = self.position.copy()
@@ -78,4 +81,10 @@ class Player(pygame.sprite.Sprite):
         if self.health == 0:
             print("Game Over")
         self.update()
+
+    def attack(self, werewolf):
+        werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
+                   self.position[1] - werewolf.position[1])
+        if werewolf_distance < 20:
+            werewolf.take_damage(self.weapon_damage)
 
