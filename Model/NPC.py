@@ -11,7 +11,7 @@ class NPC(pygame.sprite.Sprite):
     def __init__(self, x, y, name, screen):
         super(NPC, self).__init__()
         self.image = None
-        self.updateImage('Ressources/player.png', 32, 32)
+        self.updateImage('Ressources/perso/NPC1.png', 32, 32)
         self.original_image = self.image
 
         self.damage_image = (self.image.copy()).convert_alpha()
