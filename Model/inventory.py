@@ -7,8 +7,8 @@ class Inventory:
         self.col = 9
         self.items = [[None for _ in range(self.rows)] for _ in range(self.col)]
         self.box_size = 40
-        self.x = 50
-        self.y = 50
+        self.x = 600
+        self.y = 600
         self.border = 3
     
     #draw everything
@@ -59,19 +59,4 @@ class Inventory:
 
     def open(screen, inventoryHandle):
 
-        openInventory = True
-        while openInventory:
-
-            inventoryHandle.draw(screen)
-            mousex, mousey = pygame.mouse.get_pos()
-
-            keys = pygame.key.get_pressed()
-            if keys[pygame.K_ESCAPE]:
-                openInventory = False
-
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit(2)
-
-            pygame.display.update()
+        inventoryHandle.draw(screen)
