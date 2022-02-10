@@ -193,7 +193,7 @@ class Game:
 
                     # Afficher la description
                     if itemDesc:
-                        self.map_manager.trader.inventory.toggleDesc("desc", self.screen, itemDesc[0].name, pos[0], pos[1])
+                        self.map_manager.trader.inventory.toggleDesc("sellitem", self.screen, itemDesc[0], pos[0], pos[1])
                     else:
                         self.map_manager.trader.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
                 else:
