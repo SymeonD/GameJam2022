@@ -28,11 +28,14 @@ class Game:
         #map de base
         self.map = "town_day"
 
+        #Etat cycle jour/nuit
+        self.cycleState = "jour"
+
         #chargement du joueur
         self.player = Player(0, 0, self.screen)
 
         #Map manager
-        self.map_manager = MapManager(self.screen, self.player)
+        self.map_manager = MapManager(self.screen, self.player, self.cycleState)
 
         #définir le logo du jeu
         pygame.display.set_icon(self.player.get())
@@ -40,8 +43,6 @@ class Game:
         #Création d'une clock pour les FPS
         self.clock = pygame.time.Clock()
 
-        #Etat cycle jour/nuit
-        self.cycleState = "jour"
 
         #Etat du cycle des lunes
         self.cycleMoon = 0
@@ -175,6 +176,7 @@ class Game:
             self.player.move_player('stop')
 
 
+
     def switch_cycle(self):
         
 
@@ -185,6 +187,7 @@ class Game:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
+                self.map_manager.timeState = "nuit"
 
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
@@ -198,6 +201,7 @@ class Game:
 
             else:
                 self.cycleState = "jour"
+                self.map_manager.timeState = "jour"
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
                         sprite.transform(6)

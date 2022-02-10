@@ -23,10 +23,11 @@ class Map:
 
 class MapManager:
 
-    def __init__(self, screen, player):
+    def __init__(self, screen, player, timeState):
         self.maps = dict() # town_day -> Map("town_day", walls, group)
         self.screen = screen
         self.player = player
+        self.timeState = timeState
         self.current_map = "town_night"
 
         #chargement des maps
@@ -35,7 +36,8 @@ class MapManager:
         self.register_map("town_day", portals=[
             Portal(from_world="town_day", origin_point="enter_medium_house", target_world="medium_house", teleport_point="spawn_medium_house"),
             Portal(from_world="town_day", origin_point="enter_small_house", target_world="small_house", teleport_point="spawn_small_house"),
-            Portal(from_world="town_day", origin_point="enter_big_house", target_world="big_house", teleport_point="spawn_big_house")
+            Portal(from_world="town_day", origin_point="enter_big_house", target_world="big_house", teleport_point="spawn_big_house"),
+            Portal(from_world="town_day", origin_point="enter_forest_day", target_world="forest_day", teleport_point="spawn_forest_day")
         ])
         self.register_map("town_night", portals=[
             Portal(from_world="town_night", origin_point="enter_medium_house", target_world="medium_house", teleport_point="spawn_medium_house"),
@@ -46,6 +48,9 @@ class MapManager:
 
         self.register_map("forest_night", portals=[
             Portal(from_world="forest_night", origin_point="exit_forest_night", target_world="town_night", teleport_point="spawn_exit_forest_night")
+        ])
+        self.register_map("forest_day", portals=[
+            Portal(from_world="forest_day", origin_point="exit_forest_day", target_world="town_day", teleport_point="spawn_exit_forest_day")
         ])
 
         self.register_map("medium_house", portals=[
@@ -81,9 +86,9 @@ class MapManager:
         #Gestion des npc
             if obj.type == "spawn_point":
                 if random.randint(1, 2) == 1:
-                    npc_list.append(NPC(obj.x, obj.y, "npc", self.screen))
+                    npc_list.append(NPC(obj.x, obj.y, "npc", self.screen, self.player))
                 else:
-                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1,5)))
+                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1,5), self.player))
 
         #group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         group = pygame.sprite.Group()
@@ -171,9 +176,14 @@ class MapManager:
     - Update de la map
     '''
     def update(self):
+        #draw background map
         self.screen.blit(self.renderedmap, (0, 0))
+
         self.get_group().update()
         self.check_collisions()
+        #self.check_time()
+
+        #draw top layer
         for x, y, tile in self.get_map().tmx_data.get_layer_by_name("top").tiles():
             tile.set_colorkey([0, 0, 0])
             self.screen.blit(tile, (x*16, y*16))
@@ -207,3 +217,27 @@ class MapManager:
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:
                 sprite.move_back()
+
+    def change_time(self):
+        #position = self.player.save_location()
+        if self.timeState == "jour" and self.current_map == "town_night" or self.current_map == "forest_night":
+            if self.current_map == "town_night":
+                self.current_map = "town_day"
+                #self.teleport_player(position)
+            elif self.current_map == "forest_night":
+                self.current_map = "forest_day"
+                #self.teleport_player(position)
+
+        if self.timeState == "nuit" and self.current_map == "town_day" or self.current_map == "forest_day":
+            if self.current_map == "town_day":
+                self.current_map = "town_night"
+                #self.teleport_player(position)
+            elif self.current_map == "forest_day":
+                self.current_map = "forest_night"
+                #self.teleport_player(position)
+
+        self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data)
+        self.rendered_elements = self.maps[self.current_map].tmx_data_element
+        
+            
+
