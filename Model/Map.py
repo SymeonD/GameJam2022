@@ -32,7 +32,7 @@ class MapManager:
         self.screen = screen
         self.player = player
         self.trader = None
-        self.timeState = 0
+        self.timeState = 1
         self.current_map = "town"
 
         # Pour les sous
@@ -133,12 +133,11 @@ class MapManager:
 
             # Gestion des npc
             if obj.type == "spawn_point":
-                '''if random.randint(1, 2) == 1:
+                if random.randint(1, 2) == 1:
                     npc_list.append(NPC(obj.x, obj.y, "npc", self.screen, self.player))
                 else:
                     npc_list.append(
-                        NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1, 5), self.player))'''
-                npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, 1, self.player))
+                        NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1, 5), self.player))
 
             if obj.type == 'spawn_trader':
                 self.trader = NPC_Trader(obj.x, obj.y, "npc", self.screen, self.player)
@@ -294,7 +293,7 @@ class MapManager:
                     self.teleport_player(copy_portal.teleport_point)
 
         for sprite in self.get_group().sprites():
-            if sprite.feet.collidelist(self.get_walls()) > -1:
+            if sprite.feet.collidelist(self.get_walls()) > -1 and sprite.type != "basic":
                 sprite.move_back()
             elif sprite.type == "werewolf":
                 sprite.move_forth()
