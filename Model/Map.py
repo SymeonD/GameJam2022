@@ -128,11 +128,12 @@ class MapManager:
 
             # Gestion des npc
             if obj.type == "spawn_point":
-                if random.randint(1, 2) == 1:
+                '''if random.randint(1, 2) == 1:
                     npc_list.append(NPC(obj.x, obj.y, "npc", self.screen, self.player))
                 else:
                     npc_list.append(
-                        NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1, 5), self.player))
+                        NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1, 5), self.player))'''
+                npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, 1, self.player))
 
         # group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         group = pygame.sprite.Group()
@@ -240,6 +241,7 @@ class MapManager:
 
         self.get_group().update()
         self.check_collisions()
+
         # self.check_time()
 
         # draw top layer
@@ -278,6 +280,13 @@ class MapManager:
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:
                 sprite.move_back()
+                if sprite.type == "werewolf":
+                    print("werewolf")
+                    #sprite.blitW()
+            elif sprite.type == "werewolf":
+                sprite.move_forth()
+                #sprite.blitW()
+                print("werewolf")
 
     def change_time(self):
         if self.timeState == 1:

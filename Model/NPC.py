@@ -25,7 +25,6 @@ class NPC(pygame.sprite.Sprite):
         self.position = [x, y]
         self.speed = 1
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
-        self.old_position = self.position.copy()
         self.screen = screen
 
         self.name = name
@@ -47,7 +46,10 @@ class NPC(pygame.sprite.Sprite):
         self.itemShow = None
 
     def update(self):
-        self.rect.topleft = self.position
+        if self.type != "werewolf":
+            self.rect.topleft = self.position
+            self.feet.midbottom = self.rect.midbottom
+
         self.draw_health(self.screen)
         if self.hit_countdown:
             if self.hit_countdown % 2:
@@ -167,13 +169,6 @@ class NPC(pygame.sprite.Sprite):
             self.health = self.max_health
         else:
             self.health += amount
-
-    def save_location(self):
-        self.old_position = self.position.copy()
-
-    def move_back(self):
-        self.position = self.old_position
-        self.update()
 
     def startDialog(self):
         """
