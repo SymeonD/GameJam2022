@@ -66,7 +66,7 @@ class Game:
 
     def run(self):
 
-        #mixer.music.play() #lecture de la musique
+        mixer.music.play() #lecture de la musique
 
         while self.running:
 
@@ -185,6 +185,11 @@ class Game:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
+                mixer.music.stop()
+                mixer.music.unload()
+                mixer.music.load("Ressources/music/background_night_v1.mp3")
+                mixer.music.set_volume(1)
+                mixer.music.play()
 
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
@@ -198,6 +203,11 @@ class Game:
 
             else:
                 self.cycleState = "jour"
+                mixer.music.stop()
+                mixer.music.unload()
+                mixer.music.load("Ressources/music/background_day.mp3")
+                mixer.music.set_volume(1)
+                mixer.music.play()
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
                         sprite.transform(6)
