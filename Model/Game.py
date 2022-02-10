@@ -79,8 +79,11 @@ class Game:
             #gestion des cycles jour/nui
             self.switch_cycle()
 
+
+            '''
             # Dessin de la map + centrage
             self.map_manager.draw()
+            '''
 
             #sauvegarde localisation joueur
             self.player.save_location()

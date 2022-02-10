@@ -149,7 +149,8 @@ class MapManager:
     '''
     def draw(self):
         #self.get_group().center(self.player.rect.center)
-        self.get_group().draw(self.screen)
+        #self.get_group().draw(self.screen)
+        print("draw")
         
     '''
     - Update de la map
@@ -157,6 +158,7 @@ class MapManager:
     def update(self):
         self.screen.blit(self.renderedmap, (0, 0))
         for sprite in self.get_group().sprites():
+            self.player.update()
             self.screen.blit(sprite.image, sprite.rect)
         for x, y, tile in self.get_map().tmx_data.get_layer_by_name("top").tiles():
             self.screen.blit(tile, (x*16, y*16))
