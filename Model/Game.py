@@ -51,7 +51,7 @@ class Game:
         mixer.pre_init(44100, 16, 2, 4096)
         mixer.init()
         mixer.music.load("Ressources/music/background_day.mp3")
-        mixer.music.set_volume(1)
+        mixer.music.set_volume(0.2)
 
         #Variable de gestion du drag and drop
         self.itemSelected = None
@@ -92,6 +92,12 @@ class Game:
             #update events
             self.handle_event(pygame.event.get())
 
+            if self.running and self.player.is_dead:
+                self.running = False
+                print("Vous etes mort")
+            elif self.running and self.get_npc_alive_count() <= 3:
+                self.running = False
+                print("Presque tous vos villageois sont morts")
 
 
         pygame.quit
@@ -220,15 +226,15 @@ class Game:
         #Récupère les secondes
         seconds = (pygame.time.get_ticks()-self.start_ticks)//1000
 
-        if seconds > 10:
+        if seconds > 60:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
                 self.map_manager.change_time()
                 mixer.music.stop()
                 mixer.music.unload()
-                mixer.music.load("Ressources/music/background_night_v1.mp3")
-                mixer.music.set_volume(1)
+                mixer.music.load("Ressources/music/background_night.mp3")
+                mixer.music.set_volume(0.2)
                 mixer.music.play()
 
                 for sprite in self.map_manager.get_group_npc():
@@ -248,7 +254,7 @@ class Game:
                 mixer.music.stop()
                 mixer.music.unload()
                 mixer.music.load("Ressources/music/background_day.mp3")
-                mixer.music.set_volume(1)
+                mixer.music.set_volume(0.2)
                 mixer.music.play()
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
@@ -266,6 +272,13 @@ class Game:
         for npc in self.map_manager.get_group_npc():
             money += npc.generate_money()
         self.player.money += int(money/2)
+
+    def get_npc_alive_count(self):
+        number = 0
+        for npc in self.map_manager.get_group_npc().sprites():
+            if npc.type == "basic":
+                number+=1
+        return number
 
     def pause(self):
         runPause = True
@@ -297,3 +310,4 @@ class Game:
                     sys.exit(2)
 
             pygame.display.update()
+

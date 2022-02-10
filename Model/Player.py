@@ -63,6 +63,8 @@ class Player(pygame.sprite.Sprite):
         self.strength = 10
         self.defense = 10
 
+        self.is_dead = False
+
     def get(self):
         self.image = self.images["down"][0]
         self.image.set_colorkey([0, 0, 0])
@@ -148,9 +150,13 @@ class Player(pygame.sprite.Sprite):
         self.health -= amount/(self.defense/10)
         self.original_image = self.image
         self.hit_countdown = 10
-        jump_back = 10
+
         playerHitSound = mixer.Sound('Ressources/sounds/player_hit.ogg')
         playerHitSound.play()
+
+        # jump_back = 10
+
+        '''
         if self.position[0] - xEnnemy < 0:
             self.position[0] -= self.speed * jump_back
         if self.position[0] - xEnnemy > 0:
@@ -159,7 +165,10 @@ class Player(pygame.sprite.Sprite):
             self.position[1] -= self.speed * jump_back
         if self.position[1] - yEnnemy > 0:
             self.position[1] += self.speed * jump_back
+        '''
+
         if self.health <= 0:
+            self.is_dead = True
             print("Game Over")
         self.update()
 

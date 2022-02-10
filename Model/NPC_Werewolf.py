@@ -9,7 +9,6 @@ class NPC_Werewolf(parent):
 
     def __init__(self, x, y, name, screen, moonCycle, player):
         super().__init__(x, y, name, screen, player)
-        self.updateImage('Ressources/perso/NPC1.png', 32,  32)
         self.werewolf_skins = {
             '1': ['Ressources/perso/WereWolfs.png', 48, 52, 0, 0],
             '2': ['Ressources/perso/WereWolfs.png', 48, 52, 3*48, 0],
@@ -32,8 +31,11 @@ class NPC_Werewolf(parent):
 
     def transform(self, cycleMoon):
         if cycleMoon == 6:
-            self.updateImage('Ressources/perso/NPC1.png', 32, 32, 0, 0)
-            self.damage_image = (self.image.copy()).convert_alpha()
+            self.updateImage(self.skin_npc[0],
+                             self.skin_npc[1],
+                             self.skin_npc[2],
+                             self.skin_npc[3],
+                             self.skin_npc[4])
             self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
             self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
             self.rect = self.image.get_rect()
