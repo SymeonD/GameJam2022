@@ -29,7 +29,7 @@ class Game:
         self.map = "town_day"
 
         #Etat cycle jour/nuit
-        self.cycleState = "jour"
+        self.cycleState = "nuit"
 
         #chargement du joueur
         self.player = Player(0, 0, self.screen)
@@ -201,6 +201,7 @@ class Game:
 
             else:
                 self.cycleState = "jour"
+                self.generate_money()
                 self.map_manager.change_time()
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
@@ -209,13 +210,16 @@ class Game:
 
     def update(self):
 
-
         self.map_manager.update()
 
         pygame.display.update()
 
-
-
+    def generate_money(self):
+        money = 0
+        for npc in self.map_manager.get_group():
+            if npc.type != "player":
+                money += npc.generate_money()
+        self.player.money += int(money)
 
     def pause(self):
         runPause = True
