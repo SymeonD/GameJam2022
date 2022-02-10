@@ -26,8 +26,8 @@ class NPC_Werewolf(parent):
         self.old_position = self.position.copy()
         self.detect_range = self.moonCycle*50
         self.speed = self.moonCycle
-        self.health = 100*moonCycle
-        self.max_health = 100*moonCycle
+        self.ww_health = 100*moonCycle
+        self.ww_max_health = 100*moonCycle
 
     def transform(self, cycleMoon):
         if cycleMoon == 6:
@@ -42,6 +42,7 @@ class NPC_Werewolf(parent):
             self.state = 'NPC'
             self.animating = False
         elif cycleMoon >= self.moonCycle:
+            self.health = self.ww_max_health
             self.updateImage(self.werewolf_skins[str(self.moonCycle)][0],
                              self.werewolf_skins[str(self.moonCycle)][1],
                              self.werewolf_skins[str(self.moonCycle)][2],
