@@ -27,7 +27,7 @@ class MapManager:
         self.maps = dict() # town_day -> Map("town_day", walls, group)
         self.screen = screen
         self.player = player
-        self.current_map = "town_day"
+        self.current_map = "town_night"
 
         #chargement des maps
         self.tmx_data = None
@@ -36,6 +36,11 @@ class MapManager:
             Portal(from_world="town_day", origin_point="enter_medium_house", target_world="medium_house", teleport_point="spawn_medium_house"),
             Portal(from_world="town_day", origin_point="enter_small_house", target_world="small_house", teleport_point="spawn_small_house"),
             Portal(from_world="town_day", origin_point="enter_big_house", target_world="big_house", teleport_point="spawn_big_house")
+        ])
+        self.register_map("town_night", portals=[
+            Portal(from_world="town_night", origin_point="enter_medium_house", target_world="medium_house", teleport_point="spawn_medium_house"),
+            Portal(from_world="town_night", origin_point="enter_small_house", target_world="small_house", teleport_point="spawn_small_house"),
+            Portal(from_world="town_night", origin_point="enter_big_house", target_world="big_house", teleport_point="spawn_big_house")
         ])
 
         self.register_map("medium_house", portals=[
@@ -47,7 +52,7 @@ class MapManager:
         self.register_map("big_house", portals=[
             Portal(from_world="big_house", origin_point="exit_big_house", target_world="town_day", teleport_point="spawn_exit_big_house")
         ])
-        
+
 
         self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data)
         self.rendered_elements = self.maps[self.current_map].tmx_data_element
@@ -157,7 +162,7 @@ class MapManager:
         #self.get_group().center(self.player.rect.center)
         #self.get_group().draw(self.screen)
         print("draw")
-        
+
     '''
     - Update de la map
     '''
