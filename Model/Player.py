@@ -42,7 +42,7 @@ class Player(pygame.sprite.Sprite):
         self.health = 200
         self.max_health = 200
         self.skin = 1
-        self.inventory = Inventory()
+        self.inventory = Inventory(650, 650)
         self.inventory.add(item.itemList[0])
         self.inventory.add(item.itemList[0])
         self.inventory.add(item.itemList[1])
