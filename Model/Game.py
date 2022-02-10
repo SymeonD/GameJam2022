@@ -229,7 +229,7 @@ class Game:
                 mixer.music.set_volume(1)
                 mixer.music.play()
 
-                for sprite in self.map_manager.get_group():
+                for sprite in self.map_manager.get_group_npc():
                     if sprite.type == "werewolf":
                         sprite.transform(self.cycleMoon)
 

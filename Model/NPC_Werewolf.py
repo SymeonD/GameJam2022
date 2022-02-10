@@ -27,6 +27,8 @@ class NPC_Werewolf(parent):
         self.old_position = self.position.copy()
         self.detect_range = self.moonCycle*50
         self.speed = self.moonCycle
+        self.health = 100*moonCycle
+        self.max_health = 100*moonCycle
 
     def transform(self, cycleMoon):
         if cycleMoon == 6:
