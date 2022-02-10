@@ -15,6 +15,7 @@ class Inventory:
         self.rect = (self.x, self.y, (self.box_size + self.border) * self.cols + self.border,
                      (self.box_size + self.border) * self.rows + self.border)
 
+        #desc
         self.screen = None
         self.itemDesc = None
         self.descX = None
@@ -54,7 +55,7 @@ class Inventory:
         for x in range(self.cols):
             for y in range(self.rows):
                 caseRect = (self.x + (self.box_size + self.border) * x + self.border,
-                            self.x + (self.box_size + self.border) * y + self.border, self.box_size, self.box_size)
+                            self.y + (self.box_size + self.border) * y + self.border, self.box_size, self.box_size)
                 pygame.draw.rect(screen, (180, 180, 180), caseRect)
 
                 # Si il y a un item dans la case
@@ -65,7 +66,7 @@ class Inventory:
 
                 numcase += 1
 
-    def update(self, screen, inventory):
+    def update(self, screen):
         self.drawInventory(screen)
         if self.showDesc == "desc":
             font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
