@@ -105,6 +105,12 @@ class Game:
                     #for sprite in clicked_sprites:
                     #    if self.itemSelected[0].name == "Potion de Vie":
                     #        sprite.heal(50)
+                    if self.player.rect.collidepoint(pos):
+                        self.player.heal(50)
+                        print("heal")
+                        self.player.inventory.removeItem(self.itemSelected, 1)
+                        for item in self.player.inventory.items:
+                            print(item[0].name + str(item[1]))
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 

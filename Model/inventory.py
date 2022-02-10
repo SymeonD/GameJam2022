@@ -40,9 +40,9 @@ class Inventory:
         for item in self.items:
             # si la liste n'est pas vide
             if item:
-                if itemRemove == item[0]:
-                    if amount == "all" or item[1] < amount:
-                        item.remove()
+                if itemRemove[0] == item[0]:
+                    if amount == "all" or item[1] <= amount:
+                        self.items.remove(itemRemove)
                     else:
                         item[1] -= amount
 
