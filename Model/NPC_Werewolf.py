@@ -17,7 +17,7 @@ class NPC_Werewolf(parent):
             '5': ['Ressources/perso/WereWolfs.png', 48, 52, 6*48, 4*52],
         }
         self.moonCycle = moonCycle
-        self.type = 'speed'
+        self.type = 'werewolf'
         self.target = None
         self.state = 'NPC'
         self.damage = self.moonCycle*10
@@ -58,6 +58,7 @@ class NPC_Werewolf(parent):
                                          self.position[1] - self.target.position[1])
 
     def move_npc(self, player1):
+        self.save_location()
         if self.state == 'WW':
             self.updateTarget(player1)
             rotation = 75

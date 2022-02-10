@@ -1,6 +1,8 @@
 from dataclasses import dataclass
+from Model.NPC import NPC
+from Model.NPC_Werewolf import NPC_Werewolf
 from re import S
-import pygame, pytmx
+import pygame, pytmx, random
 
 @dataclass
 class Portal:
@@ -17,6 +19,7 @@ class Map:
     tmx_data: pytmx.TiledMap
     tmx_data_element: pytmx.TiledTileLayer
     portals: list[Portal]
+    npc: list[NPC]
 
 class MapManager:
 
@@ -54,11 +57,10 @@ class MapManager:
         self.register_map("big_house", portals=[
             Portal(from_world="big_house", origin_point="exit_big_house", target_world="town_day", teleport_point="spawn_exit_big_house")
         ])
-        
+
 
         self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data)
         self.rendered_elements = self.maps[self.current_map].tmx_data_element
-        #self.rendered_elements = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data_element)
 
         self.teleport_player("player")
 
@@ -68,35 +70,29 @@ class MapManager:
         self.tmx_data_element = []
         for tile_layer in self.tmx_data.get_layer_by_name("top"):
             self.tmx_data_element = tile_layer
-            #for tile_object in tile_layer:
-            #    self.tmx_data_element.append(tile_object)
-        #map_data = pyscroll.data.TiledMapData(self.tmx_data)
-        #map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
-        #map_layer.zoom = 2
 
         # Les collisions
         walls = []
+        npc_list = []
         for obj in self.tmx_data.objects:
             if obj.type == "collision":
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
-        '''
-        # Dessiner les différents calques
-            #gestion de la superposition du joueur avec le décor en fonction des calques
-        if name == "town_day":
-            dl = 6
-        elif name == "medium_house":
-            dl = 1
-
-            -> PROBLEME RESOLU : 8 claques max avec le top
-        '''
+        #Gestion des npc
+            if obj.type == "spawn_point":
+                if random.randint(1, 2) == 1:
+                    npc_list.append(NPC(obj.x, obj.y, "npc", self.screen))
+                else:
+                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1,5)))
 
         #group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         group = pygame.sprite.Group()
         group.add(self.player)
+        group.add(npc_list)
+
 
         # Creer un objet Map
-        map = Map(name, walls, group, self.tmx_data, self.tmx_data_element, portals)
+        map = Map(name, walls, group, self.tmx_data, self.tmx_data_element, portals, npc_list)
         self.maps[name] = map
 
     '''
@@ -170,17 +166,17 @@ class MapManager:
         #self.get_group().center(self.player.rect.center)
         #self.get_group().draw(self.screen)
         print("draw")
-        
+
     '''
     - Update de la map
     '''
     def update(self):
         self.screen.blit(self.renderedmap, (0, 0))
         self.get_group().update()
+        self.check_collisions()
         for x, y, tile in self.get_map().tmx_data.get_layer_by_name("top").tiles():
             tile.set_colorkey([0, 0, 0])
             self.screen.blit(tile, (x*16, y*16))
-        self.check_collisions()
 
     '''
     - Téléportation du joueur
@@ -205,8 +201,8 @@ class MapManager:
                     self.current_map = portal.target_world
                     self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data)
                     self.rendered_elements = self.maps[self.current_map].tmx_data_element
-                    #self.rendered_elements = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data_element)
                     self.teleport_player(copy_portal.teleport_point)
+
 
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:

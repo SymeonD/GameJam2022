@@ -24,6 +24,8 @@ class NPC(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.position = [x, y]
         self.speed = 1
+        self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
+        self.old_position = self.position.copy()
         self.screen = screen
 
         self.name = name
@@ -32,6 +34,8 @@ class NPC(pygame.sprite.Sprite):
         self.skin = 1
         self.level = 1
         self.hit_countdown = 0
+
+        self.type = "basic"
 
         #trader
         self.tradeState = False
@@ -69,6 +73,8 @@ class NPC(pygame.sprite.Sprite):
             font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
             obj = font.render(self.itemDesc, True, (0, 0, 0), (255, 255, 255))
             self.screen.blit(obj, (self.descX + 15, self.descY + 15))
+
+        self.screen.blit(self.image, self.rect)
 
     def toggleDesc(self, state, itemDesc, posX, posY):
         if state == "desc":
@@ -136,9 +142,7 @@ class NPC(pygame.sprite.Sprite):
             self.position[1] += self.speed * jump_back
         if self.health <= 0:
             randomItem = random.choice(item.itemList) #une fois le npc mort on choisi un item au hasard parmi ceux dans la liste
-            print(randomItem.name)
             randomItem.draw(self.screen, self.position[0], self.position[1]) #on affiche l'item au lieu de la mort du NPC
-            print('test')
             self.kill()
 
     def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):
@@ -159,6 +163,13 @@ class NPC(pygame.sprite.Sprite):
             self.health = self.max_health
         else:
             self.health += amount
+
+    def save_location(self):
+        self.old_position = self.position.copy()
+
+    def move_back(self):
+        self.position = self.old_position
+        self.update()
 
     def startDialog(self):
         """
