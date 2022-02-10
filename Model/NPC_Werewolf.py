@@ -1,4 +1,5 @@
 from Model.NPC import NPC as parent
+from pygame import mixer
 import pygame
 import math
 import os
@@ -44,6 +45,8 @@ class NPC_Werewolf(parent):
             self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
             self.rect = self.image.get_rect()
             self.state = 'WW'
+            transformSound = mixer.Sound('Ressources/sounds/transform.mp3')
+            transformSound.play()
 
     def update(self):
         super().update()

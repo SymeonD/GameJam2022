@@ -66,7 +66,7 @@ class Game:
 
     def run(self):
 
-        #mixer.music.play() #lecture de la musique
+        mixer.music.play() #lecture de la musique
 
         while self.running:
 
@@ -117,7 +117,7 @@ class Game:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                
+
                 # Clique sur l'inventaire
                 if self.player.inventory.in_grid(pos[0], pos[1]):
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
@@ -127,6 +127,8 @@ class Game:
                     clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
                     for sprite in clicked_sprites:
                         self.player.attack(sprite)
+                        playerAttackSound = mixer.Sound('Ressources/sounds/player_attack.ogg')
+                        playerAttackSound.play()
 
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
@@ -179,7 +181,7 @@ class Game:
 
 
     def switch_cycle(self):
-        
+
 
         #Récupère les secondes
         seconds = (pygame.time.get_ticks()-self.start_ticks)//1000
@@ -188,8 +190,12 @@ class Game:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
-                print(self.cycleMoon)
                 self.map_manager.change_time()
+                mixer.music.stop()
+                mixer.music.unload()
+                mixer.music.load("Ressources/music/background_night_v1.mp3")
+                mixer.music.set_volume(1)
+                mixer.music.play()
 
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
@@ -205,6 +211,11 @@ class Game:
                 self.cycleState = "jour"
                 self.generate_money()
                 self.map_manager.change_time()
+                mixer.music.stop()
+                mixer.music.unload()
+                mixer.music.load("Ressources/music/background_day.mp3")
+                mixer.music.set_volume(1)
+                mixer.music.play()
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
                         sprite.transform(6)
@@ -226,15 +237,15 @@ class Game:
         runPause = True
 
         # chargement de l'image de fond
-        background_img = pygame.image.load('Ressources/menu/bg.jpg').convert_alpha()
+        background_img = pygame.image.load('Ressources/menu/pausebg.jpg').convert_alpha()
 
         # chargement des images pour boutons
         resume_img = pygame.image.load('Ressources/menu/start_btn.png').convert_alpha()
         leave_img = pygame.image.load('Ressources/menu/exit_btn.png').convert_alpha()
 
         # creer les boutons
-        resume_button = Button(100, 200, resume_img, 0.5)
-        leave_button = Button(600, 200, leave_img, 0.5)
+        resume_button = Button(200, 300, resume_img, 0.5)
+        leave_button = Button(700, 300, leave_img, 0.5)
 
         # musique en pause
         mixer.music.pause()
