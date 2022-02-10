@@ -17,7 +17,7 @@ class NPC_Werewolf(parent):
             '5': ['Ressources/perso/WereWolfs.png', 48, 52, 6*48, 4*52],
         }
         self.moonCycle = moonCycle
-        self.type = 'speed'
+        self.type = 'werewolf'
         self.target = None
         self.state = 'NPC'
         self.damage = self.moonCycle*10

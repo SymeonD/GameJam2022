@@ -70,10 +70,11 @@ class MapManager:
 
         #Gestion des npc
             if obj.type == "spawn_point":
-                if random.randint(1, 2) == 1:
+                if random.randint(2, 2) == 1:
                     npc_list.append(NPC(obj.x, obj.y, "npc", self.screen))
                 else:
-                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "npc", self.screen, random.randint(1,5)))
+                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "npc", self.screen, random.randint(1,1)))
+                    print("lg")
 
         #group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         group = pygame.sprite.Group()
@@ -192,6 +193,7 @@ class MapManager:
                     self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data)
                     self.rendered_elements = self.maps[self.current_map].tmx_data_element
                     self.teleport_player(copy_portal.teleport_point)
+
 
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:

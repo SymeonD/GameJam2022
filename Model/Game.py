@@ -186,12 +186,21 @@ class Game:
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
 
+                for sprite in self.map_manager.get_group():
+                    if sprite.type == "werewolf":
+                        sprite.transform(self.cycleMoon)
+
                 #Mooncycle update
                 self.cycleMoon += 1
                 if self.cycleMoon > 5:
                     self.cycleMoon = 1
                     #Add special effects (super werewolves...)
 
+            else:
+                self.cycleState = "jour"
+                for sprite in self.map_manager.get_group():
+                    if sprite.type == "werewolf":
+                        sprite.transform(6)
 
 
     def update(self):

@@ -11,6 +11,7 @@ class NPC_Trader(parent):
         print(x, y)
         self.inventory = Inventory(16+x-336/2,y-73-20)
         self.inventory.add(item.itemList[0])
+        self.type = "trader"
 
     def trade(self):
         self.tradeState = not self.tradeState
