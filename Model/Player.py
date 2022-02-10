@@ -125,6 +125,7 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(item.itemList[3].image, (265, 698,))
         self.screen.blit(obj, (305, 698,))
 
+    def updateInv(self):
         self.inventory.update(self.screen)
 
     def get_image(self, x, y):

@@ -126,13 +126,16 @@ class Game:
                     #tapper
                     clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
                     for sprite in clicked_sprites:
-                        self.player.attack(sprite)
-                        playerAttackSound = mixer.Sound('Ressources/sounds/player_attack.ogg')
-                        playerAttackSound.play()
+                        if sprite.type != "player":
+                            self.player.attack(sprite)
+                            playerAttackSound = mixer.Sound('Ressources/sounds/player_attack.ogg')
+                            playerAttackSound.play()
 
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
+                if self.map_manager.trader.rect.collidepoint(pos):
+                    self.map_manager.trader.trade()
 
             if event.type == pygame.MOUSEMOTION:
                 pos = pygame.mouse.get_pos()
@@ -156,6 +159,12 @@ class Game:
                     self.player.inventory.toggleDesc("item", self.screen, self.itemSelected[0].image, pos[0], pos[1])
                 else:
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
+
+                # passe sur un trader
+                if self.map_manager.trader.rect.collidepoint(pos):
+                    self.map_manager.trader.toggleDesc("desc", "Click to trade", pos[0], pos[1])
+                else:
+                    self.map_manager.trader.toggleDesc("", "", pos[0], pos[1])
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
