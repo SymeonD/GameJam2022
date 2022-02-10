@@ -6,8 +6,8 @@ from Model import item
 
 class NPC_Trader(parent):
 
-    def __init__(self, x, y, name, screen):
-        super().__init__(x, y, name, screen)
+    def __init__(self, x, y, name, screen, player):
+        super().__init__(x, y, name, screen, player)
         print(x, y)
         self.inventory = Inventory(16+x-336/2,y-73-20)
         self.inventory.add(item.itemList[0])

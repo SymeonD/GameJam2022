@@ -8,7 +8,7 @@ from pygame import mixer
 
 class NPC(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, name, screen):
+    def __init__(self, x, y, name, screen, player):
         super(NPC, self).__init__()
         self.image = None
         self.current_image = 0
@@ -36,6 +36,7 @@ class NPC(pygame.sprite.Sprite):
         self.hit_countdown = 0
 
         self.type = "basic"
+        self.player = player
 
         #trader
         self.tradeState = False

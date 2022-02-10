@@ -76,9 +76,9 @@ class MapManager:
         #Gestion des npc
             if obj.type == "spawn_point":
                 if random.randint(1, 2) == 1:
-                    npc_list.append(NPC(obj.x, obj.y, "npc", self.screen))
+                    npc_list.append(NPC(obj.x, obj.y, "npc", self.screen, self.player))
                 else:
-                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1,5)))
+                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1,5), self.player))
 
         #group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         group = pygame.sprite.Group()
@@ -166,9 +166,13 @@ class MapManager:
     - Update de la map
     '''
     def update(self):
+        #draw background map
         self.screen.blit(self.renderedmap, (0, 0))
+
         self.get_group().update()
         self.check_collisions()
+
+        #draw top layer
         for x, y, tile in self.get_map().tmx_data.get_layer_by_name("top").tiles():
             tile.set_colorkey([0, 0, 0])
             self.screen.blit(tile, (x*16, y*16))
