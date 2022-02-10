@@ -110,10 +110,11 @@ class Player(pygame.sprite.Sprite):
         self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
 
         # Update money
-        text_money = "Money : " + str(self.money)
+        text_money = ": " + str(self.money)
         font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
         obj = font.render(text_money, True, (0, 0, 0))
-        self.screen.blit(obj, (265, 698,))
+        self.screen.blit(item.itemList[3].image, (265, 698,))
+        self.screen.blit(obj, (305, 698,))
 
         self.inventory.update(self.screen)
 
