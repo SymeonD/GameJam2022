@@ -11,6 +11,9 @@ class NPC(pygame.sprite.Sprite):
     def __init__(self, x, y, name, screen):
         super(NPC, self).__init__()
         self.image = None
+        self.current_image = 0
+        self.current_direction = 'down'
+        self.animating = False
         self.updateImage('Ressources/perso/NPC1.png', 32, 32)
         self.original_image = self.image
 
@@ -43,10 +46,17 @@ class NPC(pygame.sprite.Sprite):
             self.image = self.original_image
             self.hit_countdown = None
 
+        #animation
+        if self.animating:
+            self.current_image += 0.2
+            if self.current_image >= len(self.images[self.current_direction]):
+                self.current_image = 0
+            self.image = self.images[self.current_direction][int(self.current_image)]
+            self.image.set_colorkey([0, 0, 0])
 
     def change_animation(self, name):
         self.image.set_colorkey((0, 0, 0))
-        self.image = self.images[name]
+        self.image = self.images[name][0]
         self.original_image = self.image
 
     def get_image(self, x, y):
@@ -61,10 +71,18 @@ class NPC(pygame.sprite.Sprite):
         self.image = self.get_image(0, 0)
         self.image.set_colorkey([0, 0, 0])
         self.images = {
-            'down': self.get_image(0+decal_x, 0+decal_y),
-            'up': self.get_image(0+decal_x, (3 * self.sprite_size_y)+decal_y),
-            'right': self.get_image(0+decal_x, (2 * self.sprite_size_y)+decal_y),
-            'left': self.get_image(0+decal_x, self.sprite_size_y+decal_y)
+            'down': [self.get_image(0+decal_x, 0+decal_y),
+                     self.get_image(sprite_size_x+decal_x, 0+decal_y),
+                     self.get_image(sprite_size_x*2+decal_x, 0+decal_y)],
+            'up': [self.get_image(0+decal_x, (3 * self.sprite_size_y)+decal_y),
+                   self.get_image(sprite_size_x+decal_x, (3 * self.sprite_size_y)+decal_y),
+                   self.get_image(sprite_size_x*2+decal_x, (3 * self.sprite_size_y)+decal_y)],
+            'right': [self.get_image(0+decal_x, (2 * self.sprite_size_y)+decal_y),
+                      self.get_image(sprite_size_x+decal_x, (2 * self.sprite_size_y)+decal_y),
+                      self.get_image(sprite_size_x*2+decal_x, (2 * self.sprite_size_y)+decal_y)],
+            'left': [self.get_image(0+decal_x, self.sprite_size_y+decal_y),
+                     self.get_image(sprite_size_x+decal_x, self.sprite_size_y+decal_y),
+                     self.get_image(sprite_size_x*2+decal_x, self.sprite_size_y+decal_y)]
         }
 
     def take_damage(self, amount, xEnnemy, yEnnemy):

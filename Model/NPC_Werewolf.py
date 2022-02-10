@@ -8,13 +8,13 @@ class NPC_Werewolf(parent):
 
     def __init__(self, x, y, name, screen, moonCycle):
         super().__init__(x, y, name, screen)
-        self.updateImage('Ressources/player.png', 32,  32)
+        self.updateImage('Ressources/perso/NPC1.png', 32,  32)
         self.werewolf_skins = {
-            '1': ['Ressources/WereWolfs.png', 48, 52, 0, 0],
-            '2': ['Ressources/WereWolfs.png', 48, 52, 3*48, 0],
-            '3': ['Ressources/WereWolfs.png', 48, 52, 9*48, 0],
-            '4': ['Ressources/WereWolfs.png', 48, 52, 0, 4*52],
-            '5': ['Ressources/WereWolfs.png', 48, 52, 6*48, 4*52],
+            '1': ['Ressources/perso/WereWolfs.png', 48, 52, 0, 0],
+            '2': ['Ressources/perso/WereWolfs.png', 48, 52, 3*48, 0],
+            '3': ['Ressources/perso/WereWolfs.png', 48, 52, 9*48, 0],
+            '4': ['Ressources/perso/WereWolfs.png', 48, 52, 0, 4*52],
+            '5': ['Ressources/perso/WereWolfs.png', 48, 52, 6*48, 4*52],
         }
         self.moonCycle = moonCycle
         self.type = 'speed'
@@ -30,6 +30,7 @@ class NPC_Werewolf(parent):
             self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
             self.rect = self.image.get_rect()
             self.state = 'NPC'
+            self.animating = False
         elif cycleMoon >= self.moonCycle:
             self.updateImage(self.werewolf_skins[str(self.moonCycle)][0],
                              self.werewolf_skins[str(self.moonCycle)][1],
@@ -61,21 +62,27 @@ class NPC_Werewolf(parent):
             self.updateTarget(player1)
             rotation = 75
             if self.targetDistance < 200:
+                self.animating = True
                 if self.position[1] > self.target.position[1]:
                     self.position[1] -= self.speed
                     self.change_animation("up")
+                    self.current_direction = "up"
                 if self.position[1] < self.target.position[1]:
                     self.position[1] += self.speed
                     self.change_animation("down")
+                    self.current_direction = "down"
                 if self.position[0] > self.target.position[0]:
                     self.position[0] -= self.speed
                     if self.position[1] - self.target.position[1] < rotation and self.position[1] - \
                             self.target.position[1] > -rotation:
                         self.change_animation("left")
+                        self.current_direction = "left"
                 if self.position[0] < self.target.position[0]:
                     self.position[0] += self.speed
                     if self.position[1] - self.target.position[1] < rotation and self.position[1] - \
                             self.target.position[1] > -rotation:
                         self.change_animation("right")
+                        self.current_direction = "right"
             else:
                 self.change_animation("down")
+                self.animating = False

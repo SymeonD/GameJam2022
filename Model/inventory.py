@@ -3,14 +3,14 @@ import sys
 
 
 class Inventory:
-    def __init__(self):
+    def __init__(self, x, y):
         self.rows = 2
         self.cols = 9
         self.capacity = self.rows * self.cols
         self.items = []
         self.box_size = 34
-        self.x = 650
-        self.y = 650
+        self.x = x
+        self.y = y
         self.border = 3
         self.rect = (self.x, self.y, (self.box_size + self.border) * self.cols + self.border,
                      (self.box_size + self.border) * self.rows + self.border)
@@ -40,9 +40,9 @@ class Inventory:
         for item in self.items:
             # si la liste n'est pas vide
             if item:
-                if itemRemove == item[0]:
-                    if amount == "all" or item[1] < amount:
-                        item.remove()
+                if itemRemove[0] == item[0]:
+                    if amount == "all" or item[1] <= amount:
+                        self.items.remove(itemRemove)
                     else:
                         item[1] -= amount
 
@@ -61,7 +61,7 @@ class Inventory:
                 if numcase < len(self.items):
                     screen.blit(self.items[numcase][0].image, caseRect)
                     amount = font.render(str(self.items[numcase][1]), True, (0, 0, 0))
-                    screen.blit(amount, (caseRect[0] + self.box_size // 2, caseRect[1] + self.box_size // 2))
+                    screen.blit(amount, (caseRect[0] + self.box_size // 2+7, caseRect[1] + self.box_size // 2-5))
 
                 numcase += 1
 
@@ -85,10 +85,10 @@ class Inventory:
     #return item in position
     def getItem(self, posX, posY):
         case = 0
-        if (posY-650)//38.5 >= 1:
-            case = ((posX-650)//(336/9))*2+2
+        if (posY-self.y)//38.5 >= 1:
+            case = ((posX-self.x)//(336/9))*2+2
         else:
-            case = ((posX - 650) // (336 / 9)*2)+1
+            case = ((posX - self.x) // (336 / 9)*2)+1
         if len(self.items) >= case:
             return self.items[int(case)-1]
 

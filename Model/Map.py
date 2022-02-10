@@ -51,7 +51,6 @@ class MapManager:
         walls = []
         for obj in tmx_data.objects:
             if obj.type == "collision":
-                print("test")
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
         '''

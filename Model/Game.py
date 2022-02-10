@@ -22,7 +22,7 @@ class Game:
         SCREEN_HEIGHT = 768
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
             #titre de la fenetre
-        pygame.display.set_caption('WereWolf')
+        pygame.display.set_caption("Where's Wolf")
 
         #map de base
         self.map = "town_day"
@@ -30,6 +30,7 @@ class Game:
         #chargement du joueur
         self.player = Player(0, 0, self.screen)
 
+        #Map manager
         self.map_manager = MapManager(self.screen, self.player)
 
             #définir le logo du jeu
@@ -53,19 +54,23 @@ class Game:
         mixer.music.load("Ressources/music/background_day.mp3")
         mixer.music.set_volume(1)
 
+        #Variable de gestion du drag and drop
+        self.itemSelected = None
+
+        #Variable de la boucle du jeu
+        self.running = True
 
 
 
     def run(self):
-        running = True
 
         #mixer.music.play() #lecture de la musique
 
-        itemSelected = None
+        while self.running:
 
-        while running:
             #Limiter à 60 fps
             self.clock.tick(60)
+
             #gestion des cycles jour/nui
             self.switch_cycle()
 
@@ -74,76 +79,95 @@ class Game:
 
             #sauvegarde localisation joueur
             self.player.save_location()
+
             #gestion des touches
             self.handle_input()
 
+            #update game
             self.update()
 
-            # event handler
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
+            #update events
+            self.handle_event(pygame.event.get())
 
-                if event.type == pygame.MOUSEBUTTONUP:
-                    pos = pygame.mouse.get_pos()
 
-                    '''
-                    clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)] + [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
-                    if itemSelected:
-                        for sprite in clicked_sprites:
-                            if itemSelected[0].name == "Potion de Vie":
-                                sprite.heal(50)
-                        itemSelected = None
-                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
-                    '''
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    pos = pygame.mouse.get_pos()
 
-                    # Clique sur l'inventaire
-                    if self.player.inventory.in_grid(pos[0], pos[1]):
-                        itemSelected = self.player.inventory.getItem(pos[0], pos[1])
-                        #self.player.inventory.removeItem(itemSelected[0], "all")
-                    else:
-                        itemSelected = None
-                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
-
-                if event.type == pygame.MOUSEMOTION:
-                    pos = pygame.mouse.get_pos()
-
-                    # Passe sur l'inventaire
-                    if self.player.inventory.in_grid(pos[0], pos[1]):
-
-                        #Item survolé
-                        itemDesc = self.player.inventory.getItem(pos[0], pos[1])
-
-                        #Si il y a un item séléctionné
-                        if itemSelected:
-                            self.player.inventory.toggleDesc("item", self.screen, itemSelected[0].image, pos[0], pos[1])
-
-                        #Afficher la description
-                        elif itemDesc:
-                            self.player.inventory.toggleDesc("desc", self.screen, itemDesc[0].name, pos[0], pos[1])
-                        else:
-                            self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
-                    elif itemSelected:
-                        self.player.inventory.toggleDesc("item", self.screen, itemSelected[0].image, pos[0], pos[1])
-                    else:
-                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
         pygame.quit
 
+    def handle_event(self, events):
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.running = False
+
+            if event.type == pygame.MOUSEBUTTONUP:
+                pos = pygame.mouse.get_pos()
+
+                #clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)] + [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
+                if self.itemSelected:
+                    #for sprite in clicked_sprites:
+                    #    if self.itemSelected[0].name == "Potion de Vie":
+                    #        sprite.heal(50)
+                    if self.player.rect.collidepoint(pos):
+                        self.itemSelected[0].useItem(self.player)
+                        self.player.inventory.removeItem(self.itemSelected, 1)
+                        for item in self.player.inventory.items:
+                            print(item[0].name + str(item[1]))
+                    self.itemSelected = None
+                    self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+
+                # Clique sur l'inventaire
+                if self.player.inventory.in_grid(pos[0], pos[1]):
+                    self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
+                    # self.player.inventory.removeItem(self.itemSelected[0], "all")
+                else:
+                    self.itemSelected = None
+                    self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
+
+            if event.type == pygame.MOUSEMOTION:
+                pos = pygame.mouse.get_pos()
+
+                # Passe sur l'inventaire
+                if self.player.inventory.in_grid(pos[0], pos[1]):
+
+                    # Item survolé
+                    itemDesc = self.player.inventory.getItem(pos[0], pos[1])
+
+                    # Si il y a un item séléctionné
+                    if self.itemSelected:
+                        self.player.inventory.toggleDesc("item", self.screen, self.itemSelected[0].image, pos[0], pos[1])
+
+                    # Afficher la description
+                    elif itemDesc:
+                        self.player.inventory.toggleDesc("desc", self.screen, itemDesc[0].name, pos[0], pos[1])
+                    else:
+                        self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
+                elif self.itemSelected:
+                    self.player.inventory.toggleDesc("item", self.screen, self.itemSelected[0].image, pos[0], pos[1])
+                else:
+                    self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
+        keyD = False
         if keys[pygame.K_z]:
             self.player.move_player('up')
+            keyD = True
         if keys[pygame.K_q]:
             self.player.move_player('left')
+            keyD = True
         if keys[pygame.K_s]:
             self.player.move_player('down')
+            keyD = True
         if keys[pygame.K_d]:
             self.player.move_player('right')
+            keyD = True
         if keys[pygame.K_p]:
             self.pause()
+            keyD = True
+        if not keyD:
+            self.player.move_player('stop')
 
 
     def switch_cycle(self):
@@ -164,7 +188,9 @@ class Game:
                     #Add special effects (super werewolves...)
 
 
+
     def update(self):
+
 
         self.map_manager.update()
         Inventory.update(self.player.inventory, self.screen, self.player.inventory)

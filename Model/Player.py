@@ -21,11 +21,16 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.position = [x, y]
         self.images = {
-            'down': self.get_image(0, 0),
-            'up': self.get_image(0, 96),
-            'right': self.get_image(0, 64),
-            'left': self.get_image(0, 32)
+            'down': [self.get_image(0, 0), self.get_image(32, 0), self.get_image(64, 0)],
+            'up': [self.get_image(0, 96), self.get_image(32, 96), self.get_image(64, 96)],
+            'right': [self.get_image(0, 64), self.get_image(32, 64), self.get_image(64, 64)],
+            'left': [self.get_image(0, 32), self.get_image(32, 32), self.get_image(64, 32)],
+            'stop': [self.get_image(0, 0)]
         }
+        self.current_image = 0
+        self.current_direction = 'down'
+        self.animating = False
+
         self.old_position = self.position.copy()
         self.speed = 3
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
@@ -37,7 +42,7 @@ class Player(pygame.sprite.Sprite):
         self.health = 200
         self.max_health = 200
         self.skin = 1
-        self.inventory = Inventory()
+        self.inventory = Inventory(650, 650)
         self.inventory.add(item.itemList[0])
         self.inventory.add(item.itemList[0])
         self.inventory.add(item.itemList[1])
@@ -45,8 +50,10 @@ class Player(pygame.sprite.Sprite):
         self.weapon = "sword"
         self.weapon_damage = 20
 
+        self.money = 0
+
     def get(self):
-        self.image = self.images["down"]
+        self.image = self.images["down"][0]
         self.image.set_colorkey([0, 0, 0])
         return self.image
 
@@ -54,8 +61,10 @@ class Player(pygame.sprite.Sprite):
         self.old_position = self.position.copy()
 
     def move_player(self, type):
-        self.image = self.images[type]
+        self.image = self.images[type][0]
         self.image.set_colorkey([0, 0, 0])
+        self.current_direction = type
+        self.animating = True
         if type == "up":
             self.position[1] -= self.speed
         elif type == "down":
@@ -64,15 +73,24 @@ class Player(pygame.sprite.Sprite):
             self.position[0] += self.speed
         elif type == "left":
             self.position[0] -= self.speed
+        elif type == "stop":
+            self.animating = False
         self.original_image = self.image
 
     def update(self):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
+
         # Update health bar
         pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, self.max_health, 20), 3)
         pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, self.max_health, 20))
         self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
+
+        #Update money
+        text_money = "Money : "+str(self.money)
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_money, True, (0, 0, 0))
+        self.screen.blit(obj, (265, 698,))
 
         #blink if damaged
         if self.hit_countdown:
@@ -84,6 +102,14 @@ class Player(pygame.sprite.Sprite):
         elif self.hit_countdown == 0:
             self.image = self.original_image
             self.hit_countdown = None
+
+        #animation
+        if self.animating:
+            self.current_image += 0.2
+            if self.current_image >= len(self.images[self.current_direction]):
+                self.current_image = 0
+            self.image = self.images[self.current_direction][int(self.current_image)]
+            self.image.set_colorkey([0, 0, 0])
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])
