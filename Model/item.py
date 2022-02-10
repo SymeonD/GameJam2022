@@ -33,5 +33,15 @@ itemList = []
 #pour ajouter un item à notre liste
 itemList.append(Item(0,'Potion de Vie',5, (pygame.image.load('Ressources/item/tile144.png')), 'heal', 20, 20))
 itemList.append(Item(1,"Pain",5,(pygame.image.load('Ressources/item/tile238.png')), "heal", 5, 5))
-itemList.append(Item(2,"Brique",5,(pygame.image.load('Ressources/item/tile273.png')), "damage", 10, 5))
-itemList.append(Item(3,"Piece",5,(pygame.image.load('Ressources/item/tile199.png')), "damage", 10, 10))
+itemList.append(Item(2,"Epee en bois",5,(pygame.image.load('Ressources/item/tile081.png')), "weapon", 10, 50))
+itemList.append(Item(4,"Piece",5,(pygame.image.load('Ressources/item/tile199.png')), "damage", 10, 10)) # money
+itemList.append(Item(5,"Bouclier rond",5,(pygame.image.load('Ressources/item/tile096.png')), "protection", 10, 100))
+itemList.append(Item(6,"Bouclier puissant",5,(pygame.image.load('Ressources/item/tile097.png')), "damage", 25, 250))
+itemList.append(Item(7,"Bouclier croisé",5,(pygame.image.load('Ressources/item/tile098.png')), "damage", 50, 500))
+itemList.append(Item(8,"Epee de chevalier",5,(pygame.image.load('Ressources/item/tile082.png')), "weapon", 25, 250))
+itemList.append(Item(9,"Epee de corsaire",5,(pygame.image.load('Ressources/item/tile085.png')), "weapon", 50, 500))
+itemList.append(Item(10,"Potion de force",5,(pygame.image.load('Ressources/item/tile147.png')), "strength", 10, 100))
+itemList.append(Item(11,"Potion de vitesse",5,(pygame.image.load('Ressources/item/tile145.png')), "speed", 10, 100))
+
+
+
