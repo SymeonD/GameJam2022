@@ -27,11 +27,16 @@ class MapManager:
 
         #chargement des maps
         self.register_map("town_day", portals=[
-            Portal(from_world="town_day", origin_point="enter_house", target_world="medium_house", teleport_point="spawn_house")
+            Portal(from_world="town_day", origin_point="enter_medium_house", target_world="medium_house", teleport_point="spawn_medium_house"),
+            Portal(from_world="town_day", origin_point="enter_small_house", target_world="small_house", teleport_point="spawn_small_house")
         ])
         self.register_map("medium_house", portals=[
-            Portal(from_world="medium_house", origin_point="exit_house", target_world="town_day", teleport_point="spawn_exit_house")
+            Portal(from_world="medium_house", origin_point="exit_medium_house", target_world="town_day", teleport_point="spawn_exit_medium_house")
         ])
+        self.register_map("small_house", portals=[
+            Portal(from_world="small_house", origin_point="exit_small_house", target_world="town_day", teleport_point="spawn_exit_small_house")
+        ])
+        
 
         self.teleport_player("player")
 
