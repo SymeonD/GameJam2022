@@ -22,7 +22,7 @@ class Game:
         SCREEN_HEIGHT = 768
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
             #titre de la fenetre
-        pygame.display.set_caption('WereWolf')
+        pygame.display.set_caption("Where's Wolf")
 
         #map de base
         self.map = "town_day"
@@ -61,7 +61,6 @@ class Game:
 
 
 
-
     def run(self):
 
         #mixer.music.play() #lecture de la musique
@@ -88,6 +87,7 @@ class Game:
 
             #update events
             self.handle_event(pygame.event.get())
+
 
 
         pygame.quit
@@ -182,7 +182,9 @@ class Game:
                     #Add special effects (super werewolves...)
 
 
+
     def update(self):
+
 
         self.map_manager.update()
         Inventory.update(self.player.inventory, self.screen, self.player.inventory)
