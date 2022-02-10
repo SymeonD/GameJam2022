@@ -110,7 +110,7 @@ class Game:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                
+
                 # Clique sur l'inventaire
                 if self.player.inventory.in_grid(pos[0], pos[1]):
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
@@ -144,16 +144,24 @@ class Game:
 
     def handle_input(self):
         keys = pygame.key.get_pressed()
+        keyD = False
         if keys[pygame.K_z]:
             self.player.move_player('up')
+            keyD = True
         if keys[pygame.K_q]:
             self.player.move_player('left')
+            keyD = True
         if keys[pygame.K_s]:
             self.player.move_player('down')
+            keyD = True
         if keys[pygame.K_d]:
             self.player.move_player('right')
+            keyD = True
         if keys[pygame.K_p]:
             self.pause()
+            keyD = True
+        if not keyD:
+            self.player.move_player('stop')
 
 
     def switch_cycle(self):
