@@ -70,6 +70,8 @@ class NPC(pygame.sprite.Sprite):
             obj = font.render(self.itemDesc, True, (0, 0, 0), (255, 255, 255))
             self.screen.blit(obj, (self.descX + 15, self.descY + 15))
 
+        self.screen.blit(self.image, self.rect)
+
     def toggleDesc(self, state, itemDesc, posX, posY):
         if state == "desc":
             self.itemDesc = itemDesc
