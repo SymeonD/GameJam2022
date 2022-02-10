@@ -22,7 +22,7 @@ class NPC_Trader(parent):
 
     def update(self):
         super().update()
-        self.updateImage('Ressources/perso/trader.png', 32, 32)
+
         # if trader
         if self.showDesc == "desc":
             font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
