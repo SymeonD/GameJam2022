@@ -4,12 +4,14 @@ from Model.NPC_Werewolf import NPC_Werewolf
 from re import S
 import pygame, pytmx, random
 
+
 @dataclass
 class Portal:
     from_world: str
     origin_point: str
     target_world: str
     teleport_point: str
+
 
 @dataclass
 class Map:
@@ -21,30 +23,41 @@ class Map:
     portals: list[Portal]
     npc: list[NPC]
 
+
 class MapManager:
 
     def __init__(self, screen, player):
-        self.maps = dict() # town -> ["town_day","town_night"]
+        self.maps = dict()  # town -> ["town_day","town_night"]
         self.screen = screen
         self.player = player
         self.timeState = 0
         self.current_map = "town"
+
+        # Pour les sous
         self.npc_group = pygame.sprite.Group()
 
-        #chargement des maps
+        # chargement des maps
         self.tmx_data = None
         self.tmx_data_element = []
         self.register_map("town_day", portals=[
-            Portal(from_world="town_day", origin_point="enter_medium_house", target_world="medium_house", teleport_point="spawn_medium_house"),
-            Portal(from_world="town_day", origin_point="enter_small_house", target_world="small_house", teleport_point="spawn_small_house"),
-            Portal(from_world="town_day", origin_point="enter_big_house", target_world="big_house", teleport_point="spawn_big_house"),
-            Portal(from_world="town_day", origin_point="enter_forest_day", target_world="forest_day", teleport_point="spawn_forest_day")
+            Portal(from_world="town_day", origin_point="enter_medium_house", target_world="medium_house",
+                   teleport_point="spawn_medium_house"),
+            Portal(from_world="town_day", origin_point="enter_small_house", target_world="small_house",
+                   teleport_point="spawn_small_house"),
+            Portal(from_world="town_day", origin_point="enter_big_house", target_world="big_house",
+                   teleport_point="spawn_big_house"),
+            Portal(from_world="town_day", origin_point="enter_forest_day", target_world="forest_day",
+                   teleport_point="spawn_forest_day")
         ])
         self.register_map("town_night", portals=[
-            Portal(from_world="town_night", origin_point="enter_medium_house", target_world="medium_house", teleport_point="spawn_medium_house"),
-            Portal(from_world="town_night", origin_point="enter_small_house", target_world="small_house", teleport_point="spawn_small_house"),
-            Portal(from_world="town_night", origin_point="enter_big_house", target_world="big_house", teleport_point="spawn_big_house"),
-            Portal(from_world="town_night", origin_point="enter_forest_night", target_world="forest_night", teleport_point="spawn_forest_night")
+            Portal(from_world="town_night", origin_point="enter_medium_house", target_world="medium_house",
+                   teleport_point="spawn_medium_house"),
+            Portal(from_world="town_night", origin_point="enter_small_house", target_world="small_house",
+                   teleport_point="spawn_small_house"),
+            Portal(from_world="town_night", origin_point="enter_big_house", target_world="big_house",
+                   teleport_point="spawn_big_house"),
+            Portal(from_world="town_night", origin_point="enter_forest_night", target_world="forest_night",
+                   teleport_point="spawn_forest_night")
         ])
 
         self.register_map("forest_day", portals=[
@@ -52,12 +65,15 @@ class MapManager:
                    teleport_point="spawn_exit_forest_day")
         ])
         self.register_map("forest_night", portals=[
-            Portal(from_world="forest_night", origin_point="exit_forest_night", target_world="town_night", teleport_point="spawn_exit_forest_night"),
-            Portal(from_world="forest_night", origin_point="enter_jail", target_world="jail", teleport_point="spawn_jail")
+            Portal(from_world="forest_night", origin_point="exit_forest_night", target_world="town_night",
+                   teleport_point="spawn_exit_forest_night"),
+            Portal(from_world="forest_night", origin_point="enter_jail", target_world="jail",
+                   teleport_point="spawn_jail")
         ])
 
         self.register_map("jail", portals=[
-            Portal(from_world="jail", origin_point="exit_jail", target_world="forest_night", teleport_point="spawn_exit_jail")
+            Portal(from_world="jail", origin_point="exit_jail", target_world="forest_night",
+                   teleport_point="spawn_exit_jail")
         ])
         self.register_map("jail", portals=[
             Portal(from_world="jail", origin_point="exit_jail", target_world="forest_day",
@@ -65,7 +81,8 @@ class MapManager:
         ])
 
         self.register_map("medium_house", portals=[
-            Portal(from_world="medium_house", origin_point="exit_medium_house", target_world="town_day", teleport_point="spawn_exit_medium_house")
+            Portal(from_world="medium_house", origin_point="exit_medium_house", target_world="town_day",
+                   teleport_point="spawn_exit_medium_house")
         ])
         self.register_map("medium_house", portals=[
             Portal(from_world="medium_house", origin_point="exit_medium_house", target_world="town_night",
@@ -73,29 +90,30 @@ class MapManager:
         ])
 
         self.register_map("small_house", portals=[
-            Portal(from_world="small_house", origin_point="exit_small_house", target_world="town_day", teleport_point="spawn_exit_small_house")
+            Portal(from_world="small_house", origin_point="exit_small_house", target_world="town_day",
+                   teleport_point="spawn_exit_small_house")
         ])
         self.register_map("small_house", portals=[
             Portal(from_world="small_house", origin_point="exit_small_house", target_world="town_night",
                    teleport_point="spawn_exit_small_house")
         ])
-        
+
         self.register_map("big_house", portals=[
-            Portal(from_world="big_house", origin_point="exit_big_house", target_world="town_day", teleport_point="spawn_exit_big_house")
+            Portal(from_world="big_house", origin_point="exit_big_house", target_world="town_day",
+                   teleport_point="spawn_exit_big_house")
         ])
         self.register_map("big_house", portals=[
             Portal(from_world="big_house", origin_point="exit_big_house", target_world="town_night",
                    teleport_point="spawn_exit_big_house")
         ])
 
-
         self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map][self.timeState].tmx_data)
         self.rendered_elements = self.maps[self.current_map][self.timeState].tmx_data_element
 
         self.teleport_player("player")
 
-    def register_map(self, name, portals=[]) :
-         # Charger la map
+    def register_map(self, name, portals=[]):
+        # Charger la map
         self.tmx_data = pytmx.util_pygame.load_pygame(f"Ressources/{name}.tmx")
         self.tmx_data_element = []
         for tile_layer in self.tmx_data.get_layer_by_name("top"):
@@ -108,15 +126,15 @@ class MapManager:
             if obj.type == "collision":
                 walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
-        #Gestion des npc
+            # Gestion des npc
             if obj.type == "spawn_point":
-                '''if random.randint(1, 2) == 1:
+                if random.randint(1, 2) == 1:
                     npc_list.append(NPC(obj.x, obj.y, "npc", self.screen, self.player))
                 else:
-                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1,5), self.player))'''
-                npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, 1, self.player))
+                    npc_list.append(
+                        NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1, 5), self.player))
 
-        #group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
+        # group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         group = pygame.sprite.Group()
         group.add(self.player)
         group.add(npc_list)
@@ -187,6 +205,7 @@ class MapManager:
     '''
     - Getters
     '''
+
     def get_map(self):
         return self.maps[self.current_map][self.timeState]
 
@@ -205,30 +224,33 @@ class MapManager:
     '''
     - Dessin du groupe + centrage sur le joueur
     '''
+
     def draw(self):
-        #self.get_group().center(self.player.rect.center)
-        #self.get_group().draw(self.screen)
+        # self.get_group().center(self.player.rect.center)
+        # self.get_group().draw(self.screen)
         print("draw")
 
     '''
     - Update de la map
     '''
+
     def update(self):
-        #draw background map
+        # draw background map
         self.screen.blit(self.renderedmap, (0, 0))
 
         self.get_group().update()
         self.check_collisions()
-        #self.check_time()
+        # self.check_time()
 
-        #draw top layer
+        # draw top layer
         for x, y, tile in self.get_map().tmx_data.get_layer_by_name("top").tiles():
             tile.set_colorkey([0, 0, 0])
-            self.screen.blit(tile, (x*16, y*16))
+            self.screen.blit(tile, (x * 16, y * 16))
 
     '''
     - Téléportation du joueur
     '''
+
     def teleport_player(self, name):
         point = self.get_object(name)
         self.player.position[0] = point.x
@@ -238,6 +260,7 @@ class MapManager:
     '''
     - Verification des collisions
     '''
+
     def check_collisions(self):
         for portal in self.get_map().portals:
             if portal.from_world.split('_')[0] == self.current_map:
@@ -247,10 +270,10 @@ class MapManager:
                 if self.player.feet.colliderect(rect):
                     copy_portal = portal
                     self.current_map = portal.target_world.split('_')[0]
-                    self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map][self.timeState].tmx_data)
+                    self.renderedmap = self.renderWholeTMXMapToSurface(
+                        self.maps[self.current_map][self.timeState].tmx_data)
                     self.rendered_elements = self.maps[self.current_map][self.timeState].tmx_data_element
                     self.teleport_player(copy_portal.teleport_point)
-
 
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:
@@ -278,6 +301,3 @@ class MapManager:
 
         self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map][self.timeState].tmx_data)
         self.rendered_elements = self.maps[self.current_map][self.timeState].tmx_data_element
-        
-            
-

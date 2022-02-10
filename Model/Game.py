@@ -43,7 +43,6 @@ class Game:
         #Création d'une clock pour les FPS
         self.clock = pygame.time.Clock()
 
-
         #Etat du cycle des lunes
         self.cycleMoon = 1
 
