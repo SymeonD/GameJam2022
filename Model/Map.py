@@ -158,8 +158,6 @@ class MapManager:
     def update(self):
         self.screen.blit(self.renderedmap, (0, 0))
         self.get_group().update()
-        for sprite in self.get_group().sprites():
-            self.screen.blit(sprite.image, sprite.rect)
         for x, y, tile in self.get_map().tmx_data.get_layer_by_name("top").tiles():
             tile.set_colorkey([0, 0, 0])
             self.screen.blit(tile, (x*16, y*16))
