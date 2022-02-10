@@ -106,16 +106,11 @@ class Game:
             if event.type == pygame.MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
 
-                #clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)] + [s for s in self.werewolf_group if s.rect.collidepoint(pos)]
+                clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
                 if self.itemSelected:
-                    #for sprite in clicked_sprites:
-                    #    if self.itemSelected[0].name == "Potion de Vie":
-                    #        sprite.heal(50)
-                    if self.player.rect.collidepoint(pos):
-                        self.itemSelected[0].useItem(self.player)
+                    for sprite in clicked_sprites:
+                        self.itemSelected[0].useItem(sprite)
                         self.player.inventory.removeItem(self.itemSelected, 1)
-                        for item in self.player.inventory.items:
-                            print(item[0].name + str(item[1]))
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
@@ -127,6 +122,10 @@ class Game:
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
                     # self.player.inventory.removeItem(self.itemSelected[0], "all")
                 else:
+                    clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
+                    for sprite in clicked_sprites:
+                        sprite.take_damage(self.player.weapon_damage, self.player.position[0], self.player.position[1])
+
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 

@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from Model.NPC import NPC
+from Model.NPC_Werewolf import NPC_Werewolf
 from re import S
 import pygame, pytmx, random
 
