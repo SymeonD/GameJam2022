@@ -128,6 +128,7 @@ class MapManager:
         name = name.split('_')[0]
         maplist.append(map)
         if name in self.maps:
+            map.group = self.maps[name][0].group
             maplist.append(self.maps[name][0])
             self.maps[name] = maplist
         else:
@@ -196,6 +197,9 @@ class MapManager:
 
     def get_object(self, name):
         return self.get_map().tmx_data.get_object_by_name(name)
+
+    def get_group_npc(self):
+        return self.npc_group
 
     '''
     - Dessin du groupe + centrage sur le joueur

@@ -216,10 +216,9 @@ class Game:
 
     def generate_money(self):
         money = 0
-        for npc in self.map_manager.get_group():
-            if npc.type != "player":
-                money += npc.generate_money()
-        self.player.money += int(money)
+        for npc in self.map_manager.get_group_npc():
+            money += npc.generate_money()
+        self.player.money += int(money/2)
 
     def pause(self):
         runPause = True
