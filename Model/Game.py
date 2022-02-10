@@ -30,6 +30,7 @@ class Game:
         #chargement du joueur
         self.player = Player(0, 0, self.screen)
 
+        #Map manager
         self.map_manager = MapManager(self.screen, self.player)
 
             #définir le logo du jeu
@@ -106,8 +107,7 @@ class Game:
                     #    if self.itemSelected[0].name == "Potion de Vie":
                     #        sprite.heal(50)
                     if self.player.rect.collidepoint(pos):
-                        self.player.heal(50)
-                        print("heal")
+                        self.itemSelected[0].useItem(self.player)
                         self.player.inventory.removeItem(self.itemSelected, 1)
                         for item in self.player.inventory.items:
                             print(item[0].name + str(item[1]))
