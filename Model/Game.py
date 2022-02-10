@@ -129,7 +129,7 @@ class Game:
                 pos = pygame.mouse.get_pos()
 
                 # Clique sur l'inventaire du joueur
-                if self.player.inventory.in_grid(pos[0], pos[1]):
+                if self.player.inventory.in_grid(pos[0], pos[1]) and self.player.inventory_open:
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
                 else:
                     #tapper
@@ -146,8 +146,9 @@ class Game:
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
                 # Clique sur l'inventaire du trader
-                if self.map_manager.trader.inventory.in_grid(pos[0], pos[1]):
-                    self.player.buy(self.map_manager.trader.inventory.getItem(pos[0], pos[1]))
+                if self.map_manager.trader.inventory.in_grid(pos[0], pos[1]) and self.map_manager.trader.tradeState:
+                    if self.map_manager.trader.inventory.getItem(pos[0], pos[1]):
+                        self.player.buy(self.map_manager.trader.inventory.getItem(pos[0], pos[1]))
 
                 #toggle trader inventory
                 if self.map_manager.trader.rect.collidepoint(pos):
