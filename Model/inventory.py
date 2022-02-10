@@ -116,6 +116,9 @@ class Inventory:
             self.showDesc = False
             self.itemShow = None
 
+    def is_full(self):
+        return len(self.items) >= 18
+
 
     """
     #draw everything

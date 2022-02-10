@@ -115,10 +115,13 @@ class Game:
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
+
+
+
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
 
-                # Clique sur l'inventaire
+                # Clique sur l'inventaire du joueur
                 if self.player.inventory.in_grid(pos[0], pos[1]):
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
                     # self.player.inventory.removeItem(self.itemSelected[0], "all")
@@ -130,12 +133,22 @@ class Game:
                             self.player.attack(sprite)
                             playerAttackSound = mixer.Sound('Ressources/sounds/player_attack.ogg')
                             playerAttackSound.play()
+                        else:
+                            self.player.toggle_inventory()
 
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
+                # Clique sur l'inventaire du trader
+                if self.map_manager.trader.inventory.in_grid(pos[0], pos[1]):
+                    self.player.buy(self.map_manager.trader.inventory.getItem(pos[0], pos[1]))
+
+                #toggle trader inventory
                 if self.map_manager.trader.rect.collidepoint(pos):
                     self.map_manager.trader.trade()
+
+
+
 
             if event.type == pygame.MOUSEMOTION:
                 pos = pygame.mouse.get_pos()
@@ -165,6 +178,18 @@ class Game:
                     self.map_manager.trader.toggleDesc("desc", "Click to trade", pos[0], pos[1])
                 else:
                     self.map_manager.trader.toggleDesc("", "", pos[0], pos[1])
+
+                # Passe sur l'inventaire d'un trader
+                if self.map_manager.trader.inventory.in_grid(pos[0], pos[1]):
+
+                    # Item survolé
+                    itemDesc = self.map_manager.trader.inventory.getItem(pos[0], pos[1])
+
+                    # Afficher la description
+                    if itemDesc:
+                        self.map_manager.trader.inventory.toggleDesc("desc", self.screen, itemDesc[0].name, pos[0], pos[1])
+                    else:
+                        self.map_manager.trader.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
     def handle_input(self):
         keys = pygame.key.get_pressed()

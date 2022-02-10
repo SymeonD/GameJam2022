@@ -46,9 +46,9 @@ class Menu:
             screen.blit(self.background_img, (0, 0))
 
             #affiche les noms pour les 3 icones
-            screen.blit(self.text_story, (482, 590))
-            screen.blit(self.text_credits, (182, 590))
-            screen.blit(self.text_rules, (782, 590))
+            screen.blit(self.text_credits, (482, 590))
+            screen.blit(self.text_rules, (182, 590))
+            screen.blit(self.text_story, (782, 590))
 
             #dessine les boutons crees precedemment
             if self.start_button.draw(screen):
