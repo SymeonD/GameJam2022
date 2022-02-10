@@ -48,7 +48,7 @@ class Inventory:
                         item[1] -= amount
 
     def drawInventory(self, screen):
-        pygame.draw.rect(screen, (100, 100, 100, 200), self.rect)
+        pygame.draw.rect(screen, (100, 100, 100), self.rect)
         numcase = 0
         font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
 
@@ -56,7 +56,7 @@ class Inventory:
             for y in range(self.rows):
                 caseRect = (self.x + (self.box_size + self.border) * x + self.border,
                             self.y + (self.box_size + self.border) * y + self.border, self.box_size, self.box_size)
-                pygame.draw.rect(screen, (180, 180, 180, 100), caseRect)
+                pygame.draw.rect(screen, (180, 180, 180), caseRect)
 
                 # Si il y a un item dans la case
                 if numcase < len(self.items):
