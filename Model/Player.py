@@ -45,6 +45,8 @@ class Player(pygame.sprite.Sprite):
         self.weapon = "sword"
         self.weapon_damage = 20
 
+        self.money = 0
+
     def get(self):
         self.image = self.images["down"]
         self.image.set_colorkey([0, 0, 0])
@@ -69,10 +71,17 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
+
         # Update health bar
         pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, self.max_health, 20), 3)
         pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, self.max_health, 20))
         self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
+
+        #Update money
+        text_money = "Money : "+str(self.money)
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_money, True, (0, 0, 0))
+        self.screen.blit(obj, (265, 698,))
 
         #blink if damaged
         if self.hit_countdown:

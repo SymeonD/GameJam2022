@@ -61,7 +61,7 @@ class Inventory:
                 if numcase < len(self.items):
                     screen.blit(self.items[numcase][0].image, caseRect)
                     amount = font.render(str(self.items[numcase][1]), True, (0, 0, 0))
-                    screen.blit(amount, (caseRect[0] + self.box_size // 2, caseRect[1] + self.box_size // 2))
+                    screen.blit(amount, (caseRect[0] + self.box_size // 2+7, caseRect[1] + self.box_size // 2-5))
 
                 numcase += 1
 

@@ -83,8 +83,10 @@ class Game:
             #gestion des touches
             self.handle_input()
 
+            #update game
             self.update()
 
+            #update events
             self.handle_event(pygame.event.get())
 
 
@@ -108,7 +110,7 @@ class Game:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-
+                
                 # Clique sur l'inventaire
                 if self.player.inventory.in_grid(pos[0], pos[1]):
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
