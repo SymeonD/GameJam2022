@@ -45,7 +45,7 @@ class Game:
         self.cycleMoon = 1
 
         #Définition du tick de départ de l'horloge
-        self.start_ticks = pygame.time.get_ticks()
+        self.start_ticks = 0
 
         # initialisation musique de fond (jour)
         mixer.pre_init(44100, 16, 2, 4096)
@@ -63,6 +63,9 @@ class Game:
 
 
     def run(self):
+
+        # Définition du tick de départ de l'horloge
+        self.start_ticks = pygame.time.get_ticks()
 
         mixer.music.play() #lecture de la musique
 
@@ -114,8 +117,8 @@ class Game:
                 #utiliser un item
                 if self.itemSelected:
                     for sprite in clicked_sprites:
-                        self.itemSelected[0].useItem(sprite)
-                        self.player.inventory.removeItem(self.itemSelected, 1)
+                        if self.itemSelected[0].useItem(sprite, self.player):
+                            self.player.inventory.removeItem(self.itemSelected, 1)
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
@@ -128,7 +131,6 @@ class Game:
                 # Clique sur l'inventaire du joueur
                 if self.player.inventory.in_grid(pos[0], pos[1]):
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
-                    # self.player.inventory.removeItem(self.itemSelected[0], "all")
                 else:
                     #tapper
                     clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
@@ -226,7 +228,7 @@ class Game:
         #Récupère les secondes
         seconds = (pygame.time.get_ticks()-self.start_ticks)//1000
 
-        if seconds > 60:
+        if seconds > 10:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"

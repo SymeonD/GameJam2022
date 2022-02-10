@@ -1,4 +1,5 @@
 import pygame
+import math
 
 class Item(pygame.sprite.Sprite):
     def __init__(self, id, name, roll, image, effect, effect_power, price):
@@ -18,20 +19,26 @@ class Item(pygame.sprite.Sprite):
     def draw(self, screen, posx, posy):
         screen.blit(self.image, (posx, posy))
 
-    def useItem(self, sprite):
-        if self.effect == "heal":
-            sprite.heal(self.effect_power)
-        if self.effect == "damage":
-            sprite.take_damage(self.effect_power, 1024, 768)
-        if sprite.type == "player":
-            if self.effect == "protection":
-                sprite.protect(self.effect_power)
-            if self.effect == "strength":
-                sprite.strengthen(self.effect_power)
-            if self.effect == "speed":
-                sprite.speed(self.effect_power)
-            if self.effect == "weapon":
-                sprite.equip_weapon(self)
+    def useItem(self, sprite, player):
+        distance = math.hypot(sprite.position[0] - player.position[0],
+                                       sprite.position[1] - player.position[1])
+        if distance <= 200:
+            if self.effect == "heal":
+                sprite.heal(self.effect_power)
+            if self.effect == "damage":
+                sprite.take_damage(self.effect_power, 1024, 768)
+            if sprite.type == "player":
+                if self.effect == "protection":
+                    sprite.protect(self.effect_power)
+                if self.effect == "strength":
+                    sprite.strengthen(self.effect_power)
+                if self.effect == "speed":
+                    sprite.speed(self.effect_power)
+                if self.effect == "weapon":
+                    sprite.equip_weapon(self)
+            return True
+        else:
+            return False
 
 #créer la liste d'item
 itemList = []
