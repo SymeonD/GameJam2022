@@ -21,6 +21,8 @@ class NPC_Werewolf(parent):
         self.target = None
         self.state = 'NPC'
         self.damage = self.moonCycle*10
+        self.attack_speed = 1/60
+        self.attack_cooldown = 1
 
     def transform(self, cycleMoon):
         if cycleMoon == 6:
@@ -49,6 +51,10 @@ class NPC_Werewolf(parent):
             self.updateTarget(self.player)
             self.move_npc(self.player)
 
+        # update attack cooldown
+        if self.attack_cooldown < 1:
+            self.attack_cooldown += self.attack_speed
+
     def updateTarget(self, player1):
         if self.target:
             if math.hypot(self.position[0] - player1.position[0],
@@ -69,6 +75,8 @@ class NPC_Werewolf(parent):
             self.updateTarget(player1)
             rotation = 75
             if self.targetDistance < 200:
+                if self.targetDistance < 50:
+                    self.attack(player1)
                 self.animating = True
                 if self.position[1] > self.target.position[1]:
                     self.position[1] -= self.speed
@@ -93,3 +101,7 @@ class NPC_Werewolf(parent):
             else:
                 self.change_animation("down")
                 self.animating = False
+
+    def attack(self, player):
+        if self.attack_cooldown >= 1:
+            player.take_damage(self.damage, self.position[0], self.position[1])

@@ -108,6 +108,7 @@ class Game:
                 pos = pygame.mouse.get_pos()
 
                 clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
+                #utiliser un item
                 if self.itemSelected:
                     for sprite in clicked_sprites:
                         self.itemSelected[0].useItem(sprite)
@@ -123,9 +124,10 @@ class Game:
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
                     # self.player.inventory.removeItem(self.itemSelected[0], "all")
                 else:
+                    #tapper
                     clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
                     for sprite in clicked_sprites:
-                        sprite.take_damage(self.player.weapon_damage, self.player.position[0], self.player.position[1])
+                        self.player.attack(sprite)
 
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
