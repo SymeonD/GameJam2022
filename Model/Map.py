@@ -168,10 +168,10 @@ class MapManager:
     def update(self):
         self.screen.blit(self.renderedmap, (0, 0))
         self.get_group().update()
+        self.check_collisions()
         for x, y, tile in self.get_map().tmx_data.get_layer_by_name("top").tiles():
             tile.set_colorkey([0, 0, 0])
             self.screen.blit(tile, (x*16, y*16))
-        self.check_collisions()
 
     '''
     - Téléportation du joueur
