@@ -31,10 +31,13 @@ class Game:
         #chargement du joueur
         self.player = Player(0, 0, self.screen)
 
+        # Test du trade
+        self.trader = NPC_Trader(500, 100, "Trader", self.screen)
+
         #Map manager
         self.map_manager = MapManager(self.screen, self.player)
 
-            #définir le logo du jeu
+        #définir le logo du jeu
         pygame.display.set_icon(self.player.get())
 
         #Création d'une clock pour les FPS
@@ -61,8 +64,7 @@ class Game:
         #Variable de la boucle du jeu
         self.running = True
 
-        #Test du trade
-        self.trader = NPC_Trader(500, 100, "Trader", self.screen)
+
 
 
     def run(self):
