@@ -31,9 +31,6 @@ class Game:
         #chargement du joueur
         self.player = Player(0, 0, self.screen)
 
-        # Test du trade
-        self.trader = NPC_Trader(500, 100, "Trader", self.screen)
-
         #Map manager
         self.map_manager = MapManager(self.screen, self.player)
 
@@ -124,7 +121,7 @@ class Game:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                print(pos)
+                
                 # Clique sur l'inventaire
                 if self.player.inventory.in_grid(pos[0], pos[1]):
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
@@ -133,19 +130,9 @@ class Game:
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
-                #Test trader:
-                if self.trader.rect.collidepoint(pos):
-                    self.trader.trade()
-
 
             if event.type == pygame.MOUSEMOTION:
                 pos = pygame.mouse.get_pos()
-
-                #passe sur un trader
-                if self.trader.rect.collidepoint(pos):
-                    self.trader.toggleDesc("desc", "Click to trade", pos[0], pos[1])
-                else:
-                    self.trader.toggleDesc("", "", pos[0], pos[1])
 
                 # Passe sur l'inventaire
                 if self.player.inventory.in_grid(pos[0], pos[1]):
@@ -212,11 +199,6 @@ class Game:
 
 
         self.map_manager.update()
-
-        # test trader
-        self.trader.update()
-
-        self.screen.blit(self.trader.image, self.trader.rect)
 
         pygame.display.update()
 
