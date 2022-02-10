@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="28" nextobjectid="88">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="30" nextobjectid="91">
  <tileset firstgid="1" source="tsx/insideH.tsx"/>
  <tileset firstgid="726" source="tsx/dayBG.tsx"/>
  <tileset firstgid="946" source="tsx/NatureTS2.tsx"/>
@@ -21,6 +21,14 @@
  <objectgroup id="27" name="enter_bigH">
   <object id="86" name="enter_big_house" x="772" y="382" width="28" height="54"/>
   <object id="87" name="spawn_exit_big_house" x="850" y="455">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="29" name="SPAWNS">
+  <object id="89" type="spawn_point" x="66.7277" y="350.648">
+   <point/>
+  </object>
+  <object id="90" type="spawn_point" x="433.076" y="278.686">
    <point/>
   </object>
  </objectgroup>
