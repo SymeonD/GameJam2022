@@ -45,7 +45,7 @@ class Game:
         self.cycleMoon = 1
 
         #Définition du tick de départ de l'horloge
-        self.start_ticks = pygame.time.get_ticks()
+        self.start_ticks = 0
 
         # initialisation musique de fond (jour)
         mixer.pre_init(44100, 16, 2, 4096)
@@ -63,6 +63,9 @@ class Game:
 
 
     def run(self):
+
+        # Définition du tick de départ de l'horloge
+        self.start_ticks = pygame.time.get_ticks()
 
         mixer.music.play() #lecture de la musique
 
@@ -114,8 +117,8 @@ class Game:
                 #utiliser un item
                 if self.itemSelected:
                     for sprite in clicked_sprites:
-                        self.itemSelected[0].useItem(sprite)
-                        self.player.inventory.removeItem(self.itemSelected, 1)
+                        if self.itemSelected[0].useItem(sprite, self.player):
+                            self.player.inventory.removeItem(self.itemSelected, 1)
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
@@ -128,7 +131,6 @@ class Game:
                 # Clique sur l'inventaire du joueur
                 if self.player.inventory.in_grid(pos[0], pos[1]):
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
-                    # self.player.inventory.removeItem(self.itemSelected[0], "all")
                 else:
                     #tapper
                     clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
@@ -191,7 +193,7 @@ class Game:
 
                     # Afficher la description
                     if itemDesc:
-                        self.map_manager.trader.inventory.toggleDesc("desc", self.screen, itemDesc[0].name, pos[0], pos[1])
+                        self.map_manager.trader.inventory.toggleDesc("sellitem", self.screen, itemDesc[0], pos[0], pos[1])
                     else:
                         self.map_manager.trader.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
                 else:
@@ -256,7 +258,7 @@ class Game:
                 mixer.music.load("Ressources/music/background_day.mp3")
                 mixer.music.set_volume(0.2)
                 mixer.music.play()
-                for sprite in self.map_manager.get_group():
+                for sprite in self.map_manager.get_group_npc():
                     if sprite.type == "werewolf":
                         sprite.transform(6)
 

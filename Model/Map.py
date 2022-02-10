@@ -286,6 +286,8 @@ class MapManager:
 
                 if self.player.feet.colliderect(rect):
                     copy_portal = portal
+                    if self.trader.tradeState:
+                        self.trader.trade()
                     self.current_map = portal.target_world.split('_')[0]
                     self.renderedmap = self.renderWholeTMXMapToSurface(
                         self.maps[self.current_map][self.timeState].tmx_data)

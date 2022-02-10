@@ -62,7 +62,7 @@ class Inventory:
                 if numcase < len(self.items):
                     screen.blit(self.items[numcase][0].image, caseRect)
                     amount = font.render(str(self.items[numcase][1]), True, (0, 0, 0))
-                    screen.blit(amount, (caseRect[0] + self.box_size // 2+7, caseRect[1] + self.box_size // 2-5))
+                    screen.blit(amount, (caseRect[0] + self.box_size // 2, caseRect[1] + self.box_size // 2-5))
 
                 numcase += 1
 
@@ -72,6 +72,28 @@ class Inventory:
             font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
             obj = font.render(self.itemDesc, True, (0, 0, 0), (255, 255, 255))
             self.screen.blit(obj, (self.descX + 15, self.descY + 15))
+        elif self.showDesc == "sellitem":
+            font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+            obj1 = font.render(self.itemDesc.name, True, (0, 0, 0), (255, 255, 255)) #item name
+            if self.itemDesc.effect == "weapon" :
+                obj2 = font.render("Attack speed: " + str(int(self.itemDesc.att_speed*60))
+                                   , True, (0, 0, 0), (255, 255, 255))
+                obj4 = font.render("Attack power: " + str(self.itemDesc.att_power)
+                                   , True, (0, 0, 0), (255, 255, 255))
+                obj5 = font.render("Attack range: " + str(self.itemDesc.att_range)
+                                   , True, (0, 0, 0), (255, 255, 255))
+
+            else:
+                obj2 = font.render(self.itemDesc.effect + ": " + str(self.itemDesc.effect_power), True, (0, 0, 0), (255, 255, 255)) #item desc
+            obj3 = font.render("Price: "+str(self.itemDesc.price), True, (0, 0, 0), (255, 255, 255)) #item price
+            self.screen.blit(obj1, (self.descX + 15, self.descY + 15))
+            self.screen.blit(obj2, (self.descX + 15, self.descY + 45))
+            if self.itemDesc.effect == "weapon":
+                self.screen.blit(obj4, (self.descX + 15, self.descY + 75))
+                self.screen.blit(obj5, (self.descX + 15, self.descY + 105))
+                self.screen.blit(obj3, (self.descX + 15, self.descY + 135))
+            else:
+                self.screen.blit(obj3, (self.descX + 15, self.descY + 75))
         elif self.showDesc == "item":
             self.screen.blit(self.itemShow, (self.descX + 15, self.descY + 15))
 
@@ -108,6 +130,13 @@ class Inventory:
             self.descY = posY
             self.showDesc = "item"
             self.itemShow = itemDesc
+        elif state == "sellitem":
+            self.screen = screen
+            self.itemDesc = itemDesc
+            self.descX = posX
+            self.descY = posY
+            self.showDesc = "sellitem"
+            self.itemShow = None
         else:
             self.screen = None
             self.itemDesc = None
