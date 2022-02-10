@@ -40,7 +40,12 @@ class MapManager:
         self.register_map("town_night", portals=[
             Portal(from_world="town_night", origin_point="enter_medium_house", target_world="medium_house", teleport_point="spawn_medium_house"),
             Portal(from_world="town_night", origin_point="enter_small_house", target_world="small_house", teleport_point="spawn_small_house"),
-            Portal(from_world="town_night", origin_point="enter_big_house", target_world="big_house", teleport_point="spawn_big_house")
+            Portal(from_world="town_night", origin_point="enter_big_house", target_world="big_house", teleport_point="spawn_big_house"),
+            Portal(from_world="town_night", origin_point="enter_forest_night", target_world="forest_night", teleport_point="spawn_forest_night")
+        ])
+
+        self.register_map("forest_night", portals=[
+            Portal(from_world="forest_night", origin_point="exit_forest_night", target_world="town_night", teleport_point="spawn_exit_forest_night")
         ])
 
         self.register_map("medium_house", portals=[
