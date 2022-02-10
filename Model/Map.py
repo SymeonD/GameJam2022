@@ -23,12 +23,12 @@ class Map:
 
 class MapManager:
 
-    def __init__(self, screen, player, timeState):
-        self.maps = dict() # town_day -> Map("town_day", walls, group)
+    def __init__(self, screen, player):
+        self.maps = dict() # town -> ["town_day","town_night"]
         self.screen = screen
         self.player = player
-        self.timeState = timeState
-        self.current_map = "town_night"
+        self.timeState = 0
+        self.current_map = "town"
 
         #chargement des maps
         self.tmx_data = None
@@ -46,12 +46,13 @@ class MapManager:
             Portal(from_world="town_night", origin_point="enter_forest_night", target_world="forest_night", teleport_point="spawn_forest_night")
         ])
 
+        self.register_map("forest_day", portals=[
+            Portal(from_world="forest_day", origin_point="exit_forest_day", target_world="town_day",
+                   teleport_point="spawn_exit_forest_day")
+        ])
         self.register_map("forest_night", portals=[
             Portal(from_world="forest_night", origin_point="exit_forest_night", target_world="town_night", teleport_point="spawn_exit_forest_night"),
             Portal(from_world="forest_night", origin_point="enter_jail", target_world="jail", teleport_point="spawn_jail")
-        ])
-        self.register_map("forest_day", portals=[
-            Portal(from_world="forest_day", origin_point="exit_forest_day", target_world="town_day", teleport_point="spawn_exit_forest_day")
         ])
 
         self.register_map("jail", portals=[
@@ -61,16 +62,28 @@ class MapManager:
         self.register_map("medium_house", portals=[
             Portal(from_world="medium_house", origin_point="exit_medium_house", target_world="town_day", teleport_point="spawn_exit_medium_house")
         ])
+        self.register_map("medium_house", portals=[
+            Portal(from_world="medium_house", origin_point="exit_medium_house", target_world="town_day",
+                   teleport_point="spawn_exit_medium_house")
+        ])
         self.register_map("small_house", portals=[
             Portal(from_world="small_house", origin_point="exit_small_house", target_world="town_day", teleport_point="spawn_exit_small_house")
+        ])
+        self.register_map("small_house", portals=[
+            Portal(from_world="small_house", origin_point="exit_small_house", target_world="town_day",
+                   teleport_point="spawn_exit_small_house")
         ])
         self.register_map("big_house", portals=[
             Portal(from_world="big_house", origin_point="exit_big_house", target_world="town_day", teleport_point="spawn_exit_big_house")
         ])
+        self.register_map("big_house", portals=[
+            Portal(from_world="big_house", origin_point="exit_big_house", target_world="town_day",
+                   teleport_point="spawn_exit_big_house")
+        ])
 
 
-        self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data)
-        self.rendered_elements = self.maps[self.current_map].tmx_data_element
+        self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map][self.timeState].tmx_data)
+        self.rendered_elements = self.maps[self.current_map][self.timeState].tmx_data_element
 
         self.teleport_player("player")
 
@@ -102,8 +115,15 @@ class MapManager:
 
 
         # Creer un objet Map
+        maplist = []
         map = Map(name, walls, group, self.tmx_data, self.tmx_data_element, portals, npc_list)
-        self.maps[name] = map
+        name = name.split('_')[0]
+        maplist.append(map)
+        if name in self.maps:
+            maplist.append(self.maps[name][0])
+            self.maps[name] = maplist
+        else:
+            self.maps[name] = maplist
 
     '''
     - Creer map à partir de tmx data
@@ -158,7 +178,7 @@ class MapManager:
     - Getters
     '''
     def get_map(self):
-        return self.maps[self.current_map]
+        return self.maps[self.current_map][self.timeState]
 
     def get_group(self):
         return self.get_map().group
@@ -207,15 +227,15 @@ class MapManager:
     '''
     def check_collisions(self):
         for portal in self.get_map().portals:
-            if portal.from_world == self.current_map:
+            if portal.from_world.split('_')[0] == self.current_map:
                 point = self.get_object(portal.origin_point)
                 rect = pygame.Rect(point.x, point.y, point.width, point.height)
 
                 if self.player.feet.colliderect(rect):
                     copy_portal = portal
-                    self.current_map = portal.target_world
-                    self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data)
-                    self.rendered_elements = self.maps[self.current_map].tmx_data_element
+                    self.current_map = portal.target_world.split('_')[0]
+                    self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map][self.timeState].tmx_data)
+                    self.rendered_elements = self.maps[self.current_map][self.timeState].tmx_data_element
                     self.teleport_player(copy_portal.teleport_point)
 
 
@@ -224,25 +244,27 @@ class MapManager:
                 sprite.move_back()
 
     def change_time(self):
-        #position = self.player.save_location()
+        if self.timeState == 1:
+            self.timeState = 0
+        else:
+            self.timeState = 1
+
+        '''
         if self.timeState == "jour" and self.current_map == "town_night" or self.current_map == "forest_night":
             if self.current_map == "town_night":
                 self.current_map = "town_day"
-                #self.teleport_player(position)
             elif self.current_map == "forest_night":
                 self.current_map = "forest_day"
-                #self.teleport_player(position)
 
         if self.timeState == "nuit" and self.current_map == "town_day" or self.current_map == "forest_day":
             if self.current_map == "town_day":
                 self.current_map = "town_night"
-                #self.teleport_player(position)
             elif self.current_map == "forest_day":
                 self.current_map = "forest_night"
-                #self.teleport_player(position)
+        '''
 
-        self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map].tmx_data)
-        self.rendered_elements = self.maps[self.current_map].tmx_data_element
+        self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map][self.timeState].tmx_data)
+        self.rendered_elements = self.maps[self.current_map][self.timeState].tmx_data_element
         
             
 

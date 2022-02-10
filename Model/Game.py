@@ -35,7 +35,7 @@ class Game:
         self.player = Player(0, 0, self.screen)
 
         #Map manager
-        self.map_manager = MapManager(self.screen, self.player, self.cycleState)
+        self.map_manager = MapManager(self.screen, self.player)
 
         #définir le logo du jeu
         pygame.display.set_icon(self.player.get())
@@ -187,7 +187,7 @@ class Game:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
-                self.map_manager.timeState = "nuit"
+                self.map_manager.change_time()
 
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
@@ -201,7 +201,7 @@ class Game:
 
             else:
                 self.cycleState = "jour"
-                self.map_manager.timeState = "jour"
+                self.map_manager.change_time()
                 for sprite in self.map_manager.get_group():
                     if sprite.type == "werewolf":
                         sprite.transform(6)
