@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="41">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="54">
  <tileset firstgid="1" source="tsx/Outside_A5.tsx"/>
  <tileset firstgid="513" source="tsx/allBG.tsx"/>
  <tileset firstgid="773" source="tsx/Outside_B.tsx"/>
@@ -7,11 +7,8 @@
  <tileset firstgid="2565" source="tsx/jail.tsx"/>
  <objectgroup id="10" name="enter/exit">
   <object id="6" name="exit_forest_night" x="858.969" y="130.982" width="44.1204" height="31.7115"/>
-  <object id="7" name="spawn_forest_night" x="741.774" y="204.057">
-   <point/>
-  </object>
   <object id="39" name="enter_jail" x="130.556" y="422.222" width="59.7222" height="43.0556"/>
-  <object id="40" name="spawn_exit_jail" x="191.667" y="527.778">
+  <object id="53" name="spawn_exit_jail" x="159.722" y="508.333">
    <point/>
   </object>
  </objectgroup>
@@ -50,6 +47,20 @@
   <object id="34" type="collision" x="73.643" y="713.862" width="15.4413" height="27.3192"/>
   <object id="35" type="collision" x="844.518" y="135.408" width="14.2535" height="19.0046"/>
   <object id="36" type="collision" x="905.096" y="133.032" width="11.8779" height="28.5069"/>
+  <object id="41" type="collision" x="722.222" y="281.944" width="30.5556" height="26.3889"/>
+  <object id="42" type="collision" x="880.556" y="284.722" width="30.5556" height="25"/>
+  <object id="43" type="collision" x="191.667" y="187.5" width="31.9444" height="25"/>
+  <object id="44" type="collision" x="320.833" y="294.444" width="27.7778" height="25"/>
+  <object id="45" type="collision" x="625" y="333.333" width="29.1667" height="20.8333"/>
+  <object id="46" type="collision" x="865.278" y="427.778" width="27.7778" height="22.2222"/>
+  <object id="47" type="collision" x="526.389" y="430.556" width="34.7222" height="22.2222"/>
+  <object id="48" type="collision" x="447.222" y="509.722" width="33.3333" height="20.8333"/>
+  <object id="49" type="collision" x="722.222" y="591.667" width="29.1667" height="19.4444"/>
+  <object id="50" type="collision" x="641.667" y="655.556" width="31.9444" height="19.4444"/>
+  <object id="51" type="collision" x="334.722" y="638.889" width="34.7222" height="19.4444"/>
+  <object id="52" name="spawn_forest_night" x="881.944" y="212.5">
+   <point/>
+  </object>
  </objectgroup>
  <layer id="1" name="grass" width="64" height="48">
   <data encoding="csv">

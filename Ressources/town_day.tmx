@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="32" nextobjectid="102">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="32" nextobjectid="103">
  <tileset firstgid="1" source="tsx/insideH.tsx"/>
  <tileset firstgid="726" source="tsx/dayBG.tsx"/>
  <tileset firstgid="946" source="tsx/NatureTS2.tsx"/>
@@ -35,15 +35,12 @@
  </objectgroup>
  <objectgroup id="31" name="enter_forestD">
   <object id="100" name="enter_forest_day" x="845.218" y="111.213" width="36.6348" height="34.0181"/>
-  <object id="101" name="spawn_exit_forest_day" x="990.449" y="200.183">
+  <object id="102" name="spawn_exit_forest_day" x="863.535" y="183.174">
    <point/>
   </object>
  </objectgroup>
  <objectgroup id="26" name="enter_smallH">
   <object id="82" name="enter_small_house" x="193.097" y="218.609" width="31.5158" height="58.029"/>
-  <object id="83" x="172.361" y="345.737">
-   <point/>
-  </object>
   <object id="85" name="spawn_exit_small_house" x="168" y="303">
    <point/>
   </object>
@@ -89,7 +86,7 @@
   <object id="91" name="m" type="collision" x="1.30839" y="2.61677" width="1021.85" height="122.988"/>
   <object id="92" name="m" type="collision" x="1015.31" y="125.605" width="10.4671" height="642.418"/>
   <object id="93" name="m" type="collision" x="0" y="95.5122" width="7.85032" height="671.202"/>
-  <object id="94" name="m" x="0" y="753.631" width="1029.7" height="11.7755"/>
+  <object id="94" name="m" type="collision" x="0" y="753.631" width="1029.7" height="11.7755"/>
   <object id="95" name="m" type="collision" x="639.801" y="121.68" width="41.8684" height="30.0929"/>
   <object id="96" name="m" type="collision" x="739.239" y="124.297" width="35.3264" height="27.4761"/>
   <object id="97" name="m" type="collision" x="945.964" y="121.68" width="30.0929" height="28.7845"/>

@@ -56,6 +56,9 @@ class MapManager:
             Portal(from_world="forest_night", origin_point="enter_jail", target_world="jail", teleport_point="spawn_jail")
         ])
 
+        '''
+        - IDEM pour les lieux clos un pour le jour et un pour la nuit 
+        '''
         self.register_map("jail", portals=[
             Portal(from_world="jail", origin_point="exit_jail", target_world="forest_night", teleport_point="spawn_exit_jail")
         ])
