@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from re import S
-import pygame, pytmx#, pyscroll
+import pygame, pytmx
 
 @dataclass
 class Portal:
