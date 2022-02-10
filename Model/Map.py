@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from Model.NPC import NPC
 from Model.NPC_Werewolf import NPC_Werewolf
+from Model.NPC_Trader import NPC_Trader
 from re import S
 import pygame, pytmx, random
 
@@ -30,6 +31,7 @@ class MapManager:
         self.maps = dict()  # town -> ["town_day","town_night"]
         self.screen = screen
         self.player = player
+        self.trader = None
         self.timeState = 0
         self.current_map = "town"
 
@@ -138,6 +140,11 @@ class MapManager:
                         NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1, 5), self.player))'''
                 npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, 1, self.player))
 
+            if obj.type == 'spawn_trader':
+                self.trader = NPC_Trader(obj.x, obj.y, "npc", self.screen, self.player)
+                npc_list.append(self.trader)
+
+
         # group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         group = pygame.sprite.Group()
         group.add(self.player)
@@ -151,6 +158,8 @@ class MapManager:
         name = name.split('_')[0]
         maplist.append(map)
         if name in self.maps:
+            for element in group:
+                self.maps[name][0].group.add(element)
             map.group = self.maps[name][0].group
             maplist.append(self.maps[name][0])
             self.maps[name] = maplist
@@ -252,6 +261,10 @@ class MapManager:
             tile.set_colorkey([0, 0, 0])
             self.screen.blit(tile, (x * 16, y * 16))
 
+        #draw inventories
+        self.trader.updateInv()
+        self.player.updateInv()
+
     '''
     - Téléportation du joueur
     '''
@@ -283,13 +296,8 @@ class MapManager:
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1:
                 sprite.move_back()
-                if sprite.type == "werewolf":
-                    print("werewolf")
-                    #sprite.blitW()
             elif sprite.type == "werewolf":
                 sprite.move_forth()
-                #sprite.blitW()
-                print("werewolf")
 
         if type(sprite) is NPC:
             if sprite.feet.colliderect(self.player.rect):
@@ -303,20 +311,6 @@ class MapManager:
             self.timeState = 0
         else:
             self.timeState = 1
-
-        '''
-        if self.timeState == "jour" and self.current_map == "town_night" or self.current_map == "forest_night":
-            if self.current_map == "town_night":
-                self.current_map = "town_day"
-            elif self.current_map == "forest_night":
-                self.current_map = "forest_day"
-
-        if self.timeState == "nuit" and self.current_map == "town_day" or self.current_map == "forest_day":
-            if self.current_map == "town_day":
-                self.current_map = "town_night"
-            elif self.current_map == "forest_day":
-                self.current_map = "forest_night"
-        '''
 
         self.renderedmap = self.renderWholeTMXMapToSurface(self.maps[self.current_map][self.timeState].tmx_data)
         self.rendered_elements = self.maps[self.current_map][self.timeState].tmx_data_element

@@ -24,12 +24,14 @@ class NPC_Trader(parent):
         super().update()
 
         # if trader
-        if self.tradeState:
-            self.inventory.update(self.screen)
-        elif self.showDesc == "desc":
+        if self.showDesc == "desc":
             font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
             obj = font.render(self.itemDesc, True, (0, 0, 0), (255, 255, 255))
             self.screen.blit(obj, (self.descX + 15, self.descY + 15))
+
+    def updateInv(self):
+        if self.tradeState:
+            self.inventory.update(self.screen)
 
     def toggleDesc(self, state, itemDesc, posX, posY):
         if state == "desc":
@@ -54,8 +56,8 @@ class NPC_Trader(parent):
     def trade(self):
         self.tradeState = not self.tradeState
 
-    def take_damage(self):
-        print("non")
+    def take_damage(self, amount, xEnnemy, yEnnemy):
+        None
 
 
 
