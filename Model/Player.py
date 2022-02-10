@@ -3,6 +3,7 @@ import os
 import math
 
 from Model.inventory import Inventory
+from Model.Weapon import Weapon
 from Model import item
 from pygame import mixer
 
@@ -52,11 +53,15 @@ class Player(pygame.sprite.Sprite):
         self.inventory.add(item.itemList[2])
 
         self.weapon = "sword"
-        self.weapon_damage = 20
-        self.weapon_speed = 1/60
+        self.weapon_power = 0
+        self.weapon_speed = 1/15
+        self.weapon_range = 50
         self.attack_cooldown = 1
 
         self.money = 0
+        self.inventory_open = True
+        self.strength = 10
+        self.defense = 10
 
     def get(self):
         self.image = self.images["down"][0]
@@ -114,19 +119,21 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(self.image, self.rect)
 
         # Update health bar
-        pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, self.max_health, 20), 3)
-        pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, self.max_health, 20))
-        self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
+        self.draw_health(self.screen)
 
         # Update money
         text_money = ": " + str(self.money)
         font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
         obj = font.render(text_money, True, (0, 0, 0))
-        self.screen.blit(item.itemList[3].image, (265, 698,))
+        self.screen.blit(item.itemList[2].image, (265, 698,))
         self.screen.blit(obj, (305, 698,))
 
     def updateInv(self):
-        self.inventory.update(self.screen)
+        if self.inventory_open:
+            self.inventory.update(self.screen)
+
+    def toggle_inventory(self):
+        self.inventory_open = not self.inventory_open
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])
@@ -138,7 +145,7 @@ class Player(pygame.sprite.Sprite):
         self.update()
 
     def take_damage(self, amount, xEnnemy, yEnnemy):
-        self.health -= amount
+        self.health -= amount/(self.defense/10)
         self.original_image = self.image
         self.hit_countdown = 10
         jump_back = 10
@@ -159,12 +166,54 @@ class Player(pygame.sprite.Sprite):
     def attack(self, werewolf):
         werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
                                        self.position[1] - werewolf.position[1])
-        if werewolf_distance < 100 and self.attack_cooldown >= 1:
-            werewolf.take_damage(self.weapon_damage, self.position[0], self.position[1])
+        if werewolf_distance < self.weapon_range and self.attack_cooldown >= 1:
+            werewolf.take_damage(self.weapon_power, self.position[0], self.position[1])
             self.attack_cooldown = 0
 
+    def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):
+        pygame.draw.rect(surface, color_background, (*position, *size))
+        pygame.draw.rect(surface, color_border, (*position, *size), 1)
+        innerPos = (position[0] + 1, position[1] + 1)
+        innerSize = (int((size[0] - 2) * progress), size[1] - 2)
+        pygame.draw.rect(surface, color_health, (*innerPos, *innerSize))
+
+    def draw_health(self, surf):
+        health_rect = pygame.Rect(0, 0, self.original_image.get_width(), 7)
+        health_rect.midbottom = self.rect.centerx, self.rect.top
+        self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
+                        self.health / self.max_health)
+
+
+    #Item effect functions
     def heal(self, amount):
         if self.health + amount > self.max_health:
             self.health = self.max_health
         else:
             self.health += amount
+
+    def protect(self, amount):
+        self.defense += amount
+
+    def strenghthen(self, amount):
+        self.strength += amount
+
+    def speed(self, amount):
+        self.speed += amount
+
+    def equip_weapon(self, weapon):
+        self.weapon = weapon.name
+        self.weapon_speed = weapon.att_speed
+        self.weapon_power = weapon.att_power
+        self.weapon_range = weapon.att_range
+
+    #trader function
+    def buy(self, item_to_buy):
+        if self.inventory.is_full():
+            print("inventaire plein")
+        else:
+            if self.money >= item_to_buy[0].price:
+                self.inventory.add(item_to_buy[0])
+                self.money -= item_to_buy[0].price
+            else:
+                print("Vous etes trop pauvre")
+
