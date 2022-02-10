@@ -161,7 +161,7 @@ class Game:
                 pos = pygame.mouse.get_pos()
 
                 # Passe sur l'inventaire
-                if self.player.inventory.in_grid(pos[0], pos[1]):
+                if self.player.inventory.in_grid(pos[0], pos[1]) and self.player.inventory_open:
 
                     # Item survolé
                     itemDesc = self.player.inventory.getItem(pos[0], pos[1])
@@ -187,7 +187,7 @@ class Game:
                     self.map_manager.trader.toggleDesc("", "", pos[0], pos[1])
 
                 # Passe sur l'inventaire d'un trader
-                if self.map_manager.trader.inventory.in_grid(pos[0], pos[1]):
+                if self.map_manager.trader.inventory.in_grid(pos[0], pos[1]) and self.map_manager.trader.tradeState:
 
                     # Item survolé
                     itemDesc = self.map_manager.trader.inventory.getItem(pos[0], pos[1])
