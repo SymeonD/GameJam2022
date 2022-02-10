@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from re import S
-import pygame, pytmx, pyscroll
+import pygame, pytmx#, pyscroll
 
 @dataclass
 class Portal:
@@ -13,7 +13,7 @@ class Portal:
 class Map:
     name: str
     walls: list[pygame.Rect]
-    group: pyscroll.PyscrollGroup
+    group: pygame.sprite.Group()
     tmx_data: pytmx.TiledMap
     tmx_data_element: pytmx.TiledTileLayer
     portals: list[Portal]

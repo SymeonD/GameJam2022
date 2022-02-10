@@ -2,7 +2,7 @@ import random
 
 import pygame
 import pytmx
-import pyscroll
+#import pyscroll
 import sys
 import math
 from pygame import mixer
