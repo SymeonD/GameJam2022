@@ -172,7 +172,7 @@ class Game:
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
                 # passe sur un trader
-                if self.map_manager.trader.rect.collidepoint(pos):
+                if self.map_manager.trader.rect.collidepoint(pos) and not self.map_manager.trader.tradeState:
                     self.map_manager.trader.toggleDesc("desc", "Click to trade", pos[0], pos[1])
                 else:
                     self.map_manager.trader.toggleDesc("", "", pos[0], pos[1])
@@ -188,6 +188,8 @@ class Game:
                         self.map_manager.trader.inventory.toggleDesc("desc", self.screen, itemDesc[0].name, pos[0], pos[1])
                     else:
                         self.map_manager.trader.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
+                else:
+                    self.map_manager.trader.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
 
     def handle_input(self):
         keys = pygame.key.get_pressed()

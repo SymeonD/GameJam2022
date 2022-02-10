@@ -11,6 +11,7 @@ class NPC_Trader(parent):
         self.inventory = Inventory(16 + x - 336 / 2, y - 73 - 20)
         for new_item in item.itemList:
             self.inventory.add(new_item)
+        self.updateImage('Ressources/perso/trader.png', 32, 32)
         self.type = "trader"
         self.tradeState = False
         self.itemDesc = None
@@ -21,7 +22,7 @@ class NPC_Trader(parent):
 
     def update(self):
         super().update()
-
+        self.updateImage('Ressources/perso/trader.png', 32, 32)
         # if trader
         if self.showDesc == "desc":
             font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
