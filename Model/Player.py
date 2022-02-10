@@ -57,6 +57,7 @@ class Player(pygame.sprite.Sprite):
         self.attack_cooldown = 1
 
         self.money = 0
+        self.inventory_open = True
 
     def get(self):
         self.image = self.images["down"][0]
@@ -114,9 +115,7 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(self.image, self.rect)
 
         # Update health bar
-        pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, self.max_health, 20), 3)
-        pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, self.max_health, 20))
-        self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
+        self.draw_health(self.screen)
 
         # Update money
         text_money = ": " + str(self.money)
@@ -126,7 +125,11 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(obj, (305, 698,))
 
     def updateInv(self):
-        self.inventory.update(self.screen)
+        if self.inventory_open:
+            self.inventory.update(self.screen)
+
+    def toggle_inventory(self):
+        self.inventory_open = not self.inventory_open
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])
@@ -162,6 +165,20 @@ class Player(pygame.sprite.Sprite):
         if werewolf_distance < 100 and self.attack_cooldown >= 1:
             werewolf.take_damage(self.weapon_damage, self.position[0], self.position[1])
             self.attack_cooldown = 0
+
+    def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):
+        pygame.draw.rect(surface, color_background, (*position, *size))
+        pygame.draw.rect(surface, color_border, (*position, *size), 1)
+        innerPos = (position[0] + 1, position[1] + 1)
+        innerSize = (int((size[0] - 2) * progress), size[1] - 2)
+        pygame.draw.rect(surface, color_health, (*innerPos, *innerSize))
+
+    def draw_health(self, surf):
+        health_rect = pygame.Rect(0, 0, self.original_image.get_width(), 7)
+        health_rect.midbottom = self.rect.centerx, self.rect.top
+        self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
+                        self.health / self.max_health)
+
 
     def heal(self, amount):
         if self.health + amount > self.max_health:

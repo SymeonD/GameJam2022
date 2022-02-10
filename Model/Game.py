@@ -130,6 +130,8 @@ class Game:
                             self.player.attack(sprite)
                             playerAttackSound = mixer.Sound('Ressources/sounds/player_attack.ogg')
                             playerAttackSound.play()
+                        else:
+                            self.player.toggle_inventory()
 
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
