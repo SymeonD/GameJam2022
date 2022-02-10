@@ -5,7 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/Game.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Model/NPC_Werewolf.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/NPC_Werewolf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Model/Player.py" beforeDir="false" afterPath="$PROJECT_DIR$/Model/Player.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

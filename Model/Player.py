@@ -4,6 +4,7 @@ import math
 
 from Model.inventory import Inventory
 from Model import item
+from pygame import mixer
 
 class Player(pygame.sprite.Sprite):
 
@@ -140,6 +141,8 @@ class Player(pygame.sprite.Sprite):
         self.original_image = self.image
         self.hit_countdown = 10
         jump_back = 10
+        playerHitSound = mixer.Sound('Ressources/sounds/player_hit.ogg')
+        playerHitSound.play()
         if self.position[0] - xEnnemy < 0:
             self.position[0] -= self.speed * jump_back
         if self.position[0] - xEnnemy > 0:
@@ -164,4 +167,3 @@ class Player(pygame.sprite.Sprite):
             self.health = self.max_health
         else:
             self.health += amount
-
