@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="31" nextobjectid="100">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="32" nextobjectid="102">
  <tileset firstgid="1" source="tsx/insideH.tsx"/>
  <tileset firstgid="726" source="tsx/dayBG.tsx"/>
  <tileset firstgid="946" source="tsx/NatureTS2.tsx"/>
@@ -30,6 +30,12 @@
    <point/>
   </object>
   <object id="90" type="spawn_point" x="433.076" y="278.686">
+   <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="31" name="enter_forestD">
+  <object id="100" name="enter_forest_day" x="845.218" y="111.213" width="36.6348" height="34.0181"/>
+  <object id="101" name="spawn_exit_forest_day" x="990.449" y="200.183">
    <point/>
   </object>
  </objectgroup>
