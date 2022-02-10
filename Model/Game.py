@@ -22,14 +22,12 @@ class Game:
         SCREEN_WIDTH = 1024
         SCREEN_HEIGHT = 768
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-            #titre de la fenetre
+
+        #titre de la fenetre
         pygame.display.set_caption("Where's Wolf")
 
-        #map de base
-        self.map = "town_day"
-
         #Etat cycle jour/nuit
-        self.cycleState = "nuit"
+        self.cycleState = "jour"
 
         #chargement du joueur
         self.player = Player(0, 0, self.screen)

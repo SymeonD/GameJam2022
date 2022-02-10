@@ -25,6 +25,8 @@ class NPC_Werewolf(parent):
         self.attack_speed = 1/(60*(6-self.moonCycle))
         self.attack_cooldown = 1
         self.old_position = self.position.copy()
+        self.detect_range = self.moonCycle*50
+        self.speed = self.moonCycle
 
     def transform(self, cycleMoon):
         if cycleMoon == 6:
@@ -81,7 +83,7 @@ class NPC_Werewolf(parent):
         if self.state == 'WW':
             self.updateTarget(player1)
             rotation = 75
-            if self.targetDistance < 200:
+            if self.targetDistance < self.detect_range:
                 if self.targetDistance < 50:
                     self.attack(player1)
                 self.animating = True

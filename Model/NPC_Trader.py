@@ -8,7 +8,6 @@ class NPC_Trader(parent):
 
     def __init__(self, x, y, name, screen, player):
         super().__init__(x, y, name, screen, player)
-        print(x, y)
         self.inventory = Inventory(16 + x - 336 / 2, y - 73 - 20)
         for new_item in item.itemList:
             self.inventory.add(new_item)
