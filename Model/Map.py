@@ -47,10 +47,15 @@ class MapManager:
         ])
 
         self.register_map("forest_night", portals=[
-            Portal(from_world="forest_night", origin_point="exit_forest_night", target_world="town_night", teleport_point="spawn_exit_forest_night")
+            Portal(from_world="forest_night", origin_point="exit_forest_night", target_world="town_night", teleport_point="spawn_exit_forest_night"),
+            Portal(from_world="forest_night", origin_point="enter_jail", target_world="jail", teleport_point="spawn_jail")
         ])
         self.register_map("forest_day", portals=[
             Portal(from_world="forest_day", origin_point="exit_forest_day", target_world="town_day", teleport_point="spawn_exit_forest_day")
+        ])
+
+        self.register_map("jail", portals=[
+            Portal(from_world="jail", origin_point="exit_jail", target_world="forest_night", teleport_point="spawn_exit_jail")
         ])
 
         self.register_map("medium_house", portals=[
