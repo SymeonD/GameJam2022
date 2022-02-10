@@ -45,6 +45,3 @@ def credits():
 
         # cap framerate at 60 FPS
         clock.tick(60)
-
-if __name__ == '__main__': 
-    credits()
