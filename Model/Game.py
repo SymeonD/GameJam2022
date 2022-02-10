@@ -226,7 +226,7 @@ class Game:
         #Récupère les secondes
         seconds = (pygame.time.get_ticks()-self.start_ticks)//1000
 
-        if seconds > 10:
+        if seconds > 60:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
@@ -256,7 +256,7 @@ class Game:
                 mixer.music.load("Ressources/music/background_day.mp3")
                 mixer.music.set_volume(1)
                 mixer.music.play()
-                for sprite in self.map_manager.get_group():
+                for sprite in self.map_manager.get_group_npc():
                     if sprite.type == "werewolf":
                         sprite.transform(6)
 
