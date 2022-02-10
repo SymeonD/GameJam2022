@@ -14,7 +14,38 @@ class NPC(pygame.sprite.Sprite):
         self.current_image = 0
         self.current_direction = 'down'
         self.animating = False
-        self.updateImage('Ressources/perso/NPC1.png', 32, 32)
+        self.npc_skins = {
+            '1': ['Ressources/perso/tabPNJ1.png', 32, 32, 0, 0],
+            '2': ['Ressources/perso/tabPNJ1.png', 32, 32, 3 * 32, 0],
+            '3': ['Ressources/perso/tabPNJ1.png', 32, 32, 6 * 32, 0],
+            '4': ['Ressources/perso/tabPNJ1.png', 32, 32, 9 * 32, 0],
+            '5': ['Ressources/perso/tabPNJ1.png', 32, 32, 0, 4 * 32],
+            '6': ['Ressources/perso/tabPNJ1.png', 32, 32, 3 * 32, 4 * 32],
+            '7': ['Ressources/perso/tabPNJ1.png', 32, 32, 6 * 32, 4 * 32],
+
+            '8': ['Ressources/perso/tabPNJ2.png', 32, 32, 0, 0],
+            '9': ['Ressources/perso/tabPNJ2.png', 32, 32, 3 * 32, 0],
+            '10': ['Ressources/perso/tabPNJ2.png', 32, 32, 6 * 32, 0],
+            '11': ['Ressources/perso/tabPNJ2.png', 32, 32, 9 * 32, 0],
+            '12': ['Ressources/perso/tabPNJ4.png', 32, 32, 0, 4 * 32],
+            '13': ['Ressources/perso/tabPNJ4.png', 32, 32, 3 * 32, 4 * 32],
+            '14': ['Ressources/perso/tabPNJ4.png', 32, 32, 6 * 32, 4 * 32],
+
+            '15': ['Ressources/perso/tabPNJ3.png', 32, 32, 0, 0],
+            '16': ['Ressources/perso/tabPNJ3.png', 32, 32, 3 * 32, 0],
+            '17': ['Ressources/perso/tabPNJ3.png', 32, 32, 6 * 32, 0],
+            '18': ['Ressources/perso/tabPNJ3.png', 32, 32, 9 * 32, 0],
+            '19': ['Ressources/perso/tabPNJ3.png', 32, 32, 0, 4 * 32],
+            '20': ['Ressources/perso/tabPNJ3.png', 32, 32, 3 * 32, 4 * 32],
+            '21': ['Ressources/perso/tabPNJ3.png', 32, 32, 6 * 32, 4 * 32]
+        }
+        nbr = random.randint(1, 21)
+        print(len(self.npc_skins[str(nbr)]))
+        self.updateImage(self.npc_skins[str(nbr)][0],
+                             self.npc_skins[str(nbr)][1],
+                             self.npc_skins[str(nbr)][2],
+                             self.npc_skins[str(nbr)][3],
+                             self.npc_skins[str(nbr)][4])
         self.original_image = self.image
 
         self.damage_image = (self.image.copy()).convert_alpha()
@@ -80,7 +111,7 @@ class NPC(pygame.sprite.Sprite):
         self.sprite_size_x = sprite_size_x
         self.sprite_size_y = sprite_size_y
         self.sprite_sheet = pygame.image.load(ressource)
-        self.image = self.get_image(0, 0)
+        self.image = self.get_image(0+decal_x, 0+decal_y)
         self.image.set_colorkey([0, 0, 0])
         self.images = {
             'down': [self.get_image(0+decal_x, 0+decal_y),
@@ -96,6 +127,7 @@ class NPC(pygame.sprite.Sprite):
                      self.get_image(sprite_size_x+decal_x, self.sprite_size_y+decal_y),
                      self.get_image(sprite_size_x*2+decal_x, self.sprite_size_y+decal_y)]
         }
+        self.original_image = self.image
 
     def take_damage(self, amount, xEnnemy, yEnnemy):
         self.health -= amount
