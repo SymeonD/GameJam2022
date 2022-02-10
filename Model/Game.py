@@ -45,7 +45,7 @@ class Game:
 
 
         #Etat du cycle des lunes
-        self.cycleMoon = 0
+        self.cycleMoon = 1
 
         #Définition du tick de départ de l'horloge
         self.start_ticks = pygame.time.get_ticks()
@@ -189,6 +189,7 @@ class Game:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
+                print(self.cycleMoon)
                 self.map_manager.change_time()
 
                 for sprite in self.map_manager.get_group():

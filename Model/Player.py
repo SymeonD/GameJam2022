@@ -155,7 +155,6 @@ class Player(pygame.sprite.Sprite):
     def attack(self, werewolf):
         werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
                                        self.position[1] - werewolf.position[1])
-        print(self.attack_cooldown)
         if werewolf_distance < 100 and self.attack_cooldown >= 1:
             werewolf.take_damage(self.weapon_damage, self.position[0], self.position[1])
             self.attack_cooldown = 0

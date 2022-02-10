@@ -21,7 +21,7 @@ class NPC_Werewolf(parent):
         self.target = None
         self.state = 'NPC'
         self.damage = self.moonCycle*10
-        self.attack_speed = 1/60
+        self.attack_speed = 1/(60*(6-self.moonCycle))
         self.attack_cooldown = 1
 
     def transform(self, cycleMoon):
@@ -105,3 +105,4 @@ class NPC_Werewolf(parent):
     def attack(self, player):
         if self.attack_cooldown >= 1:
             player.take_damage(self.damage, self.position[0], self.position[1])
+            self.attack_cooldown = 0
