@@ -81,17 +81,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
 
-        # Update health bar
-        pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, self.max_health, 20), 3)
-        pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, self.max_health, 20))
-        self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
-
-        #Update money
-        text_money = "Money : "+str(self.money)
-        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
-        obj = font.render(text_money, True, (0, 0, 0))
-        self.screen.blit(obj, (265, 698,))
-
         #blink if damaged
         if self.hit_countdown:
             if self.hit_countdown % 2:
@@ -109,7 +98,22 @@ class Player(pygame.sprite.Sprite):
             if self.current_image >= len(self.images[self.current_direction]):
                 self.current_image = 0
             self.image = self.images[self.current_direction][int(self.current_image)]
-            self.image.set_colorkey([0, 0, 0])
+        self.image.set_colorkey([0, 0, 0])
+
+        self.screen.blit(self.image, self.rect)
+
+        # Update health bar
+        pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, self.max_health, 20), 3)
+        pygame.draw.rect(self.screen, (255, 0, 0), (50, 698, self.max_health, 20))
+        self.health_bar_green = pygame.draw.rect(self.screen, (0, 255, 0), (50, 698, self.health, 20))
+
+        # Update money
+        text_money = "Money : " + str(self.money)
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_money, True, (0, 0, 0))
+        self.screen.blit(obj, (265, 698,))
+
+        self.inventory.update(self.screen)
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])

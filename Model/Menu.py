@@ -2,7 +2,7 @@ import random
 
 import pygame
 import pytmx
-import pyscroll
+#import pyscroll
 import sys
 
 from Model.bouton import Button
