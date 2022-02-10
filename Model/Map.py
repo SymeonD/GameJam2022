@@ -29,6 +29,7 @@ class MapManager:
         self.player = player
         self.timeState = 0
         self.current_map = "town"
+        self.npc_group = pygame.sprite.Group()
 
         #chargement des maps
         self.tmx_data = None
@@ -61,6 +62,7 @@ class MapManager:
             Portal(from_world="medium_house", origin_point="exit_medium_house", target_world="town_day",
                    teleport_point="spawn_exit_medium_house")
         ])
+
         self.register_map("small_house", portals=[
             Portal(from_world="small_house", origin_point="exit_small_house", target_world="town_day", teleport_point="spawn_exit_small_house")
         ])
@@ -68,6 +70,7 @@ class MapManager:
             Portal(from_world="small_house", origin_point="exit_small_house", target_world="town_day",
                    teleport_point="spawn_exit_small_house")
         ])
+        
         self.register_map("big_house", portals=[
             Portal(from_world="big_house", origin_point="exit_big_house", target_world="town_day", teleport_point="spawn_exit_big_house")
         ])
@@ -108,6 +111,7 @@ class MapManager:
         group.add(self.player)
         group.add(npc_list)
 
+        self.npc_group.add(npc_list)
 
         # Creer un objet Map
         maplist = []

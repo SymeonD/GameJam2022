@@ -77,6 +77,9 @@ class NPC(pygame.sprite.Sprite):
 
         self.screen.blit(self.image, self.rect)
 
+    def generate_money(self):
+        return self.health/2
+
     def toggleDesc(self, state, itemDesc, posX, posY):
         if state == "desc":
             self.itemDesc = itemDesc
