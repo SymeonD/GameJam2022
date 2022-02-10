@@ -125,6 +125,8 @@ class Game:
                     clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
                     for sprite in clicked_sprites:
                         sprite.take_damage(self.player.weapon_damage, self.player.position[0], self.player.position[1])
+                        playerAttackSound = mixer.Sound('Ressources/sounds/player_attack.ogg')
+                        playerAttackSound.play()
 
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
