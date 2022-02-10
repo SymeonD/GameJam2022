@@ -44,14 +44,14 @@ class Item(pygame.sprite.Sprite):
 itemList = []
 
 #pour ajouter un item à notre liste
-itemList.append(Item(0,'Potion de Vie',5, (pygame.image.load('Ressources/item/tile144.png')), 'heal', 20, 20))
-itemList.append(Item(1,"Pain",5,(pygame.image.load('Ressources/item/tile238.png')), "heal", 5, 5))
+itemList.append(Item(0,'Health potion',5, (pygame.image.load('Ressources/item/tile144.png')), 'heal', 20, 20))
+itemList.append(Item(1,"Bread",5,(pygame.image.load('Ressources/item/tile238.png')), "heal", 5, 5))
 itemList.append(Item(4,"Piece",5,(pygame.image.load('Ressources/item/tile199.png')), "damage", 10, 10)) # money
-itemList.append(Item(5,"Bouclier rond",5,(pygame.image.load('Ressources/item/tile096.png')), "protection", 10, 100))
-itemList.append(Item(6,"Bouclier puissant",5,(pygame.image.load('Ressources/item/tile097.png')), "protection", 25, 250))
-itemList.append(Item(7,"Bouclier croisé",5,(pygame.image.load('Ressources/item/tile098.png')), "protection", 50, 500))
-itemList.append(Item(10,"Potion de force",5,(pygame.image.load('Ressources/item/tile147.png')), "strength", 10, 100))
-itemList.append(Item(11,"Potion de vitesse",5,(pygame.image.load('Ressources/item/tile145.png')), "speed", 10, 100))
+itemList.append(Item(5,"Round shield",5,(pygame.image.load('Ressources/item/tile096.png')), "protection", 10, 100))
+itemList.append(Item(6,"Strong shield",5,(pygame.image.load('Ressources/item/tile097.png')), "protection", 25, 250))
+itemList.append(Item(7,"Heater shield",5,(pygame.image.load('Ressources/item/tile098.png')), "protection", 50, 500))
+itemList.append(Item(10,"Strength potion",5,(pygame.image.load('Ressources/item/tile147.png')), "strength", 10, 100))
+itemList.append(Item(11,"Speed potion",5,(pygame.image.load('Ressources/item/tile145.png')), "speed", 10, 100))
 
 
 
