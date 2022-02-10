@@ -92,6 +92,12 @@ class Game:
             #update events
             self.handle_event(pygame.event.get())
 
+            if self.running and self.player.is_dead:
+                self.running = False
+                print("Vous etes mort")
+            elif self.running and self.get_npc_alive_count() <= 3:
+                self.running = False
+                print("Presque tous vos villageois sont morts")
 
 
         pygame.quit
@@ -266,6 +272,13 @@ class Game:
         for npc in self.map_manager.get_group_npc():
             money += npc.generate_money()
         self.player.money += int(money/2)
+
+    def get_npc_alive_count(self):
+        number = 0
+        for npc in self.map_manager.get_group_npc().sprites():
+            if npc.type == "basic":
+                number+=1
+        return number
 
     def pause(self):
         runPause = True

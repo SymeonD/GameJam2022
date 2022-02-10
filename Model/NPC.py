@@ -40,12 +40,12 @@ class NPC(pygame.sprite.Sprite):
             '21': ['Ressources/perso/tabPNJ3.png', 32, 32, 6 * 32, 4 * 32]
         }
         nbr = random.randint(1, 21)
-        print(len(self.npc_skins[str(nbr)]))
-        self.updateImage(self.npc_skins[str(nbr)][0],
-                             self.npc_skins[str(nbr)][1],
-                             self.npc_skins[str(nbr)][2],
-                             self.npc_skins[str(nbr)][3],
-                             self.npc_skins[str(nbr)][4])
+        self.skin_npc = self.npc_skins[str(nbr)]
+        self.updateImage(self.skin_npc[0],
+                         self.skin_npc[1],
+                         self.skin_npc[2],
+                         self.skin_npc[3],
+                         self.skin_npc[4])
         self.original_image = self.image
 
         self.damage_image = (self.image.copy()).convert_alpha()

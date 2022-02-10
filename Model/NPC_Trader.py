@@ -12,6 +12,7 @@ class NPC_Trader(parent):
         for new_item in item.itemList:
             self.inventory.add(new_item)
         self.updateImage('Ressources/perso/trader.png', 32, 32)
+        self.skin = ['Ressources/perso/trader.png', 32, 32]
         self.type = "trader"
         self.tradeState = False
         self.itemDesc = None
