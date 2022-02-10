@@ -109,6 +109,7 @@ class Player(pygame.sprite.Sprite):
             if self.current_image >= len(self.images[self.current_direction]):
                 self.current_image = 0
             self.image = self.images[self.current_direction][int(self.current_image)]
+            self.image.set_colorkey([0, 0, 0])
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])
