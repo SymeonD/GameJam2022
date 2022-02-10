@@ -1,4 +1,5 @@
 from Model.NPC import NPC as parent
+from pygame import mixer
 import pygame
 import math
 import os

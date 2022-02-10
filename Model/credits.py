@@ -13,7 +13,7 @@ class Credits:
 
     def credits():
 
-        credit_list = ["EQUIPE ZYVASY","","Zineddine CHALEKH","Symeon DE ALMEIDA","Valentin WIBAILLIE","","MUSIQUE"," ", "Free Music Archive","Night Moments by Loco Roco","", "BRUITAGES","", "La Sonotheque","","","","Merci d'avoir joué à Where's Wolf ? !"]
+        credit_list = ["EQUIPE ZYVASY","","Zineddine CHALEKH","Symeon DE ALMEIDA","Valentin WIBAILLIE","","MUSIQUE"," ", "Free Music Archive","Night Moments by Loco Roco","Black Gloves (Edit) by Vitus Von Degen","", "BRUITAGES","", "La Sonotheque","Sound-Fishing","","","","Merci d'avoir joué à Where's Wolf ? !"]
 
         texts = []
         # we render the text once, since it's easier to work with surfaces
