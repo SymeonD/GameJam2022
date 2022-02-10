@@ -33,4 +33,5 @@ itemList = []
 #pour ajouter un item à notre liste
 itemList.append(Item(0,'Potion de Vie',5, (pygame.image.load('Ressources/item/tile144.png')), 'heal', 20, 20))
 itemList.append(Item(1,"Pain",5,(pygame.image.load('Ressources/item/tile238.png')), "heal", 5, 5))
-itemList.append(Item(2,"Piece",5,(pygame.image.load('Ressources/item/tile199.png')), "damage", 10, 10))
+itemList.append(Item(2,"Brique",5,(pygame.image.load('Ressources/item/tile273.png')), "damage", 10, 5))
+itemList.append(Item(3,"Piece",5,(pygame.image.load('Ressources/item/tile199.png')), "damage", 10, 10))
