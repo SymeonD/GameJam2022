@@ -80,6 +80,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
+        self.inventory.update(self.screen)
 
         # Update health bar
         pygame.draw.rect(self.screen, (255, 255, 255), (50, 698, self.max_health, 20), 3)
