@@ -229,15 +229,15 @@ class Game:
         runPause = True
 
         # chargement de l'image de fond
-        background_img = pygame.image.load('Ressources/menu/bg.jpg').convert_alpha()
+        background_img = pygame.image.load('Ressources/menu/pausebg.jpg').convert_alpha()
 
         # chargement des images pour boutons
         resume_img = pygame.image.load('Ressources/menu/start_btn.png').convert_alpha()
         leave_img = pygame.image.load('Ressources/menu/exit_btn.png').convert_alpha()
 
         # creer les boutons
-        resume_button = Button(100, 200, resume_img, 0.5)
-        leave_button = Button(600, 200, leave_img, 0.5)
+        resume_button = Button(200, 300, resume_img, 0.5)
+        leave_button = Button(700, 300, leave_img, 0.5)
 
         # musique en pause
         mixer.music.pause()
