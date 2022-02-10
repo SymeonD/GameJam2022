@@ -110,10 +110,11 @@ class MapManager:
 
         #Gestion des npc
             if obj.type == "spawn_point":
-                if random.randint(1, 2) == 1:
+                '''if random.randint(1, 2) == 1:
                     npc_list.append(NPC(obj.x, obj.y, "npc", self.screen, self.player))
                 else:
-                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1,5), self.player))
+                    npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, random.randint(1,5), self.player))'''
+                npc_list.append(NPC_Werewolf(obj.x, obj.y, "werewolf", self.screen, 1, self.player))
 
         #group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
         group = pygame.sprite.Group()
@@ -128,6 +129,7 @@ class MapManager:
         name = name.split('_')[0]
         maplist.append(map)
         if name in self.maps:
+            map.group = self.maps[name][0].group
             maplist.append(self.maps[name][0])
             self.maps[name] = maplist
         else:
@@ -196,6 +198,9 @@ class MapManager:
 
     def get_object(self, name):
         return self.get_map().tmx_data.get_object_by_name(name)
+
+    def get_group_npc(self):
+        return self.npc_group
 
     '''
     - Dessin du groupe + centrage sur le joueur

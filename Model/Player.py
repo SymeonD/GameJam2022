@@ -49,8 +49,11 @@ class Player(pygame.sprite.Sprite):
         self.inventory.add(item.itemList[0])
         self.inventory.add(item.itemList[1])
         self.inventory.add(item.itemList[2])
+
         self.weapon = "sword"
         self.weapon_damage = 20
+        self.weapon_speed = 1/60
+        self.attack_cooldown = 1
 
         self.money = 0
 
@@ -102,6 +105,11 @@ class Player(pygame.sprite.Sprite):
             self.image = self.images[self.current_direction][int(self.current_image)]
         self.image.set_colorkey([0, 0, 0])
 
+        #update attack cooldown
+        if self.attack_cooldown < 1:
+            self.attack_cooldown += self.weapon_speed
+
+        #draw caracter image
         self.screen.blit(self.image, self.rect)
 
         # Update health bar
@@ -147,8 +155,9 @@ class Player(pygame.sprite.Sprite):
     def attack(self, werewolf):
         werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
                                        self.position[1] - werewolf.position[1])
-        if werewolf_distance < 100:
+        if werewolf_distance < 100 and self.attack_cooldown >= 1:
             werewolf.take_damage(self.weapon_damage, self.position[0], self.position[1])
+            self.attack_cooldown = 0
 
     def heal(self, amount):
         if self.health + amount > self.max_health:

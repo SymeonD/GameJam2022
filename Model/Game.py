@@ -45,7 +45,7 @@ class Game:
 
 
         #Etat du cycle des lunes
-        self.cycleMoon = 0
+        self.cycleMoon = 1
 
         #Définition du tick de départ de l'horloge
         self.start_ticks = pygame.time.get_ticks()
@@ -108,6 +108,7 @@ class Game:
                 pos = pygame.mouse.get_pos()
 
                 clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
+                #utiliser un item
                 if self.itemSelected:
                     for sprite in clicked_sprites:
                         self.itemSelected[0].useItem(sprite)
@@ -123,9 +124,10 @@ class Game:
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
                     # self.player.inventory.removeItem(self.itemSelected[0], "all")
                 else:
+                    #tapper
                     clicked_sprites = [s for s in self.map_manager.get_group() if s.rect.collidepoint(pos)]
                     for sprite in clicked_sprites:
-                        sprite.take_damage(self.player.weapon_damage, self.player.position[0], self.player.position[1])
+                        self.player.attack(sprite)
 
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
@@ -187,6 +189,7 @@ class Game:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
+                print(self.cycleMoon)
                 self.map_manager.change_time()
 
                 for sprite in self.map_manager.get_group():
@@ -216,10 +219,9 @@ class Game:
 
     def generate_money(self):
         money = 0
-        for npc in self.map_manager.get_group():
-            if npc.type != "player":
-                money += npc.generate_money()
-        self.player.money += int(money)
+        for npc in self.map_manager.get_group_npc():
+            money += npc.generate_money()
+        self.player.money += int(money/2)
 
     def pause(self):
         runPause = True
