@@ -76,7 +76,7 @@ class Game:
             #gestion des cycles jour/nui
             self.switch_cycle()
             
-            if self.map_manager.boss.form == "boss_werewolf" and self.song_boss_unplay:
+            if self.map_manager.boss.form == "boss_werewolf" and self.song_boss_unplay and self.map_manager.get_map().name == "jail":
                 
                 mixer.music.stop()
                 mixer.music.unload()
@@ -241,7 +241,8 @@ class Game:
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
                 self.map_manager.change_time()
-                if self.song_boss_unplay:
+                if self.map_manager.get_map().name != "jail":
+                    self.song_boss_unplay = True
                     mixer.music.stop()
                     mixer.music.unload()
                     mixer.music.load("Ressources/music/background_night.mp3")
@@ -262,7 +263,8 @@ class Game:
                 self.cycleState = "jour"
                 self.generate_money()
                 self.map_manager.change_time()
-                if self.song_boss_unplay:
+                if self.map_manager.get_map().name != "jail":
+                    self.song_boss_unplay = True
                     mixer.music.stop()
                     mixer.music.unload()
                     mixer.music.load("Ressources/music/background_day.mp3")
