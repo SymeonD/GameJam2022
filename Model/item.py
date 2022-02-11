@@ -39,7 +39,7 @@ class Item(pygame.sprite.Sprite):
                 if self.effect == "strength":
                     sprite.strengthen(self.effect_power)
                 if self.effect == "speed":
-                    sprite.speed(self.effect_power)
+                    sprite.increase_speed(self.effect_power)
                 if self.effect == "weapon":
                     sprite.equip_weapon(self)
                     mixer.Sound("Ressources/sounds/sword.mp3").play()

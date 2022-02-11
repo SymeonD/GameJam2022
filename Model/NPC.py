@@ -60,18 +60,27 @@ class NPC(pygame.sprite.Sprite):
 
         self.name = name
         self.health = 100
+        self.npc_health = self.health
         self.max_health = 100
         self.skin = 1
         self.level = 1
         self.hit_countdown = 0
+        self.state = "NPC"
 
         self.type = "basic"
         self.player = player
 
     def update(self):
-        if self.type != "werewolf":
+        if self.type != "werewolf" and self.type != "boss":
             self.rect.topleft = self.position
             self.feet.midbottom = self.rect.midbottom
+
+        self.npc_health -= 1 / 60
+
+        if self.state == "NPC":
+            self.health = self.npc_health
+        else:
+            self.health = self.ww_health
 
         self.draw_health(self.screen)
         if self.hit_countdown:
@@ -91,6 +100,9 @@ class NPC(pygame.sprite.Sprite):
                 self.current_image = 0
             self.image = self.images[self.current_direction][int(self.current_image)]
             self.image.set_colorkey([0, 0, 0])
+
+        if self.health <= 0:
+            self.kill()
 
         self.screen.blit(self.image, self.rect)
 
@@ -130,7 +142,11 @@ class NPC(pygame.sprite.Sprite):
         self.original_image = self.image
 
     def take_damage(self, amount, xEnnemy, yEnnemy):
-        self.health -= amount
+        if self.state == "NPC":
+            self.npc_health -= amount
+        else:
+            self.ww_health -= amount
+
         self.original_image = self.image
         self.hit_countdown = 10
         jump_back = 10
@@ -157,14 +173,18 @@ class NPC(pygame.sprite.Sprite):
     def draw_health(self, surf):
         health_rect = pygame.Rect(0, 0, self.original_image.get_width(), 7)
         health_rect.midbottom = self.rect.centerx, self.rect.top
-        self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
+        if self.state == "NPC":
+            self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
                         self.health / self.max_health)
+        else:
+            self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
+                                 self.health / self.ww_max_health)
 
     def heal(self, amount):
-        if self.health + amount > self.max_health:
-            self.health = self.max_health
+        if self.npc_health + amount > self.max_health:
+            self.npc_health = self.max_health
         else:
-            self.health += amount
+            self.npc_health += amount
 
     def startDialog(self):
         """
