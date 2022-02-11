@@ -104,6 +104,10 @@ class NPC(pygame.sprite.Sprite):
             self.hit_countdown = None
 
         if self.health <= 0:
+            if self.type == "werewolf":
+                self.player.kill_werewolf()
+                self.player.drop(self.moonCycle*10)
+            self.is_dead = True
             self.kill()
 
         self.screen.blit(self.image, self.rect)
@@ -170,10 +174,6 @@ class NPC(pygame.sprite.Sprite):
         if self.health <= 0:
             randomItem = random.choice(item.itemList) #une fois le npc mort on choisi un item au hasard parmi ceux dans la liste
             randomItem.draw(self.screen, self.position[0], self.position[1]) #on affiche l'item au lieu de la mort du NPC
-            if self.type == "werewolf":
-                self.player.kill_werewolf()
-            self.is_dead = True
-            self.kill()
 
     def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):
         pygame.draw.rect(surface, color_background, (*position, *size))

@@ -282,6 +282,9 @@ class Player(pygame.sprite.Sprite):
         self.weapon_power = weapon.att_power
         self.weapon_range = weapon.att_range
 
+    def drop(self, amount):
+        self.money += amount
+
     #trader function
     def buy(self, item_to_buy):
         if self.inventory.is_full():
