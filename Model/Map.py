@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from Model.NPC import NPC
 from Model.NPC_Werewolf import NPC_Werewolf
 from Model.NPC_Trader import NPC_Trader
+from Model.NPC_Boss import NPC_Boss
 from re import S
 import pygame, pytmx, random
 
@@ -142,6 +143,10 @@ class MapManager:
             if obj.type == 'spawn_trader':
                 self.trader = NPC_Trader(obj.x, obj.y, "npc", self.screen, self.player)
                 npc_list.append(self.trader)
+
+            if obj.type == 'spawn_boss':
+                self.boss = NPC_Boss(obj.x, obj.y, "boss", self.screen, self.player)
+                npc_list.append(self.boss)
 
 
         # group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)

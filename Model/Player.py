@@ -206,7 +206,7 @@ class Player(pygame.sprite.Sprite):
     def strenghthen(self, amount):
         self.strength += amount
 
-    def speed(self, amount):
+    def increase_speed(self, amount):
         self.speed += amount
 
     def equip_weapon(self, weapon):
