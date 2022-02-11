@@ -101,9 +101,9 @@ class NPC_Boss(parent):
                         self.target.position[1] > -rotation:
                     self.change_animation("right")
                     self.current_direction = "right"
-            else:
-                self.change_animation("down")
-                self.animating = False
+        else:
+            self.change_animation("down")
+            self.animating = False
 
     def save_location(self):
         self.old_position = self.position.copy()
