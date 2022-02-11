@@ -8,6 +8,7 @@ class NPC_Boss(parent):
         super().__init__(x, y, name, screen, player)
 
         # init pnj boss image
+        self.form = "npc"
         self.updateImageBoss('Ressources/perso/boss.png', 32, 32)
         self.damage_image = (self.image.copy()).convert_alpha()
         self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
@@ -23,22 +24,20 @@ class NPC_Boss(parent):
         self.attack_cooldown = 1
 
         self.old_position = self.position.copy()
-        self.animating = True
+        self.animating = False
 
         self.ww_health = 5000
         self.ww_max_health = 5000
 
-        self.form = "npc"
-
         self.is_dead = False
 
     def transform(self):
-            self.updateImageBoss('Ressources/perso/boss_werewolf.png', 55, 54, 0, 0)
-            self.damage_image = (self.image.copy()).convert_alpha()
-            self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
-            self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
-            self.rect = self.image.get_rect()
-            self.form = "boss_werewolf"
+        self.form = "boss_werewolf"
+        self.updateImageBoss('Ressources/perso/boss_werewolf.png', 55, 54, 0, 0)
+        self.damage_image = (self.image.copy()).convert_alpha()
+        self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
+        self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
+        self.rect = self.image.get_rect()
 
     def update(self):
         super().update()
@@ -102,9 +101,9 @@ class NPC_Boss(parent):
                         self.target.position[1] > -rotation:
                     self.change_animation("right")
                     self.current_direction = "right"
-            else:
-                self.change_animation("down")
-                self.animating = False
+        else:
+            self.change_animation("down")
+            self.animating = False
 
     def save_location(self):
         self.old_position = self.position.copy()
@@ -129,18 +128,34 @@ class NPC_Boss(parent):
         self.sprite_sheet = pygame.image.load(ressource)
         self.image = self.get_image(0 + decal_x, 0 + decal_y)
         self.image.set_colorkey([0, 0, 0])
-        self.images = {
-            'down': [self.get_image(0 + decal_x, 0 + decal_y),
-                     self.get_image(sprite_size_x + decal_x, 0 + decal_y),
-                     self.get_image(sprite_size_x * 2 + decal_x, 0 + decal_y)],
-            'up': [self.get_image(0 + decal_x, (3 * self.sprite_size_y) + decal_y),
-                   self.get_image(sprite_size_x + decal_x, (3 * self.sprite_size_y) + decal_y),
-                   self.get_image(sprite_size_x * 2 + decal_x, (3 * self.sprite_size_y) + decal_y)],
-            'right': [self.get_image(0 + decal_x, (2 * self.sprite_size_y) + decal_y),
-                      self.get_image(sprite_size_x + decal_x, (2 * self.sprite_size_y) + decal_y),
-                      self.get_image(sprite_size_x * 2 + decal_x, (2 * self.sprite_size_y) + decal_y)],
-            'left': [self.get_image(0 + decal_x, self.sprite_size_y + decal_y),
-                     self.get_image(sprite_size_x + decal_x, self.sprite_size_y + decal_y),
-                     self.get_image(sprite_size_x * 2 + decal_x, self.sprite_size_y + decal_y)]
-        }
+        if self.form == "npc":
+            self.images = {
+                'down': [self.get_image(0 + decal_x, 0 + decal_y),
+                         self.get_image(sprite_size_x + decal_x, 0 + decal_y),
+                         self.get_image(sprite_size_x * 2 + decal_x, 0 + decal_y)],
+                'up': [self.get_image(0 + decal_x, (3 * self.sprite_size_y) + decal_y),
+                       self.get_image(sprite_size_x + decal_x, (3 * self.sprite_size_y) + decal_y),
+                       self.get_image(sprite_size_x * 2 + decal_x, (3 * self.sprite_size_y) + decal_y)],
+                'right': [self.get_image(0 + decal_x, (2 * self.sprite_size_y) + decal_y),
+                          self.get_image(sprite_size_x + decal_x, (2 * self.sprite_size_y) + decal_y),
+                          self.get_image(sprite_size_x * 2 + decal_x, (2 * self.sprite_size_y) + decal_y)],
+                'left': [self.get_image(0 + decal_x, self.sprite_size_y + decal_y),
+                         self.get_image(sprite_size_x + decal_x, self.sprite_size_y + decal_y),
+                         self.get_image(sprite_size_x * 2 + decal_x, self.sprite_size_y + decal_y)]
+            }
+        else:
+            self.images = {
+                'down': [self.get_image(0 + decal_x, 0 + decal_y),
+                         self.get_image((4 * sprite_size_x) + decal_x, 0 + decal_y),
+                         self.get_image(0 + decal_x, (3 * self.sprite_size_y) + decal_y)],
+                'up': [self.get_image(sprite_size_x + decal_x, 0 + decal_y),
+                       self.get_image((5*sprite_size_x) + decal_x, 0 + decal_y),
+                       self.get_image((6*sprite_size_x) + decal_x, self.sprite_size_y + decal_y)],
+                'right': [self.get_image((2*sprite_size_x) + decal_x, 0 + decal_y),
+                          self.get_image((6*sprite_size_x) + decal_x, 0+ decal_y),
+                          self.get_image(0 + decal_x, (2 * self.sprite_size_y) + decal_y)],
+                'left': [self.get_image((3*sprite_size_x) + decal_x, 0 + decal_y),
+                         self.get_image(0 + decal_x, self.sprite_size_y + decal_y),
+                         self.get_image(sprite_size_x + decal_x, (2*self.sprite_size_y) + decal_y)]
+            }
         self.original_image = self.image

@@ -36,6 +36,7 @@ class MapManager:
         self.trader = None
         self.timeState = 1
         self.current_map = "town"
+        self.boss = None
 
         # Pour les sous
         self.npc_group = pygame.sprite.Group()
@@ -146,8 +147,9 @@ class MapManager:
                 npc_list.append(self.trader)
 
             if obj.type == 'spawn_boss':
-                self.boss = NPC_Boss(obj.x, obj.y, "boss", self.screen, self.player)
-                npc_list.append(self.boss)
+                if not self.boss:
+                    self.boss = NPC_Boss(obj.x, obj.y, "boss", self.screen, self.player)
+                    npc_list.append(self.boss)
 
 
         # group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
@@ -164,7 +166,13 @@ class MapManager:
         maplist.append(map)
         if name in self.maps:
             for element in group:
-                self.maps[name][0].group.add(element)
+                exist = False
+                for sprite in self.maps[name][0].group.sprites():
+                    if element.position[0] == sprite.position[0] and element.position[1] == sprite.position[1]:
+                        exist = True
+                if not exist:
+                    self.maps[name][0].group.add(element)
+
             map.group = self.maps[name][0].group
             maplist.append(self.maps[name][0])
             self.maps[name] = maplist
@@ -255,6 +263,10 @@ class MapManager:
     def update(self):
         # draw background map
         self.screen.blit(self.renderedmap, (0, 0))
+
+        for sprite in self.get_group_npc().sprites():
+            if sprite.type == "basic" or sprite.type == "werewolf":
+                sprite.lose_health()
 
         self.get_group().update()
         self.check_collisions()

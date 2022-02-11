@@ -127,9 +127,23 @@ class Player(pygame.sprite.Sprite):
         # Update money
         text_money = ": " + str(self.money)
         font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
-        obj = font.render(text_money, True, (0, 0, 0))
-        self.screen.blit(item.itemList[2].image, (265, 698,))
-        self.screen.blit(obj, (305, 698,))
+        obj = font.render(text_money, True, (0, 0, 0), (255, 255, 255, 100))
+        self.screen.blit(item.itemList[2].image, (25, 640))
+        self.screen.blit(obj, (70, 640,))
+
+        #update strength
+        text_strength = ": " + str(self.strength)
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_strength, True, (0, 0, 0), (255, 255, 255))
+        self.screen.blit(item.itemList[8].image, (25, 670))
+        self.screen.blit(obj, (70, 670,))
+
+        # update speed
+        text_speed = ": " + str(self.speed)
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_speed, True, (0, 0, 0), (255, 255, 255))
+        self.screen.blit(item.itemList[9].image, (25, 700))
+        self.screen.blit(obj, (70, 700,))
 
         #update cooldown inventory
         if self.cooldown_inventory > 0:
@@ -183,7 +197,7 @@ class Player(pygame.sprite.Sprite):
         werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
                                        self.position[1] - werewolf.position[1])
         if werewolf_distance < self.weapon_range and self.attack_cooldown >= 1:
-            werewolf.take_damage(self.weapon_power, self.position[0], self.position[1])
+            werewolf.take_damage(self.weapon_power+self.strength, self.position[0], self.position[1])
             self.attack_cooldown = 0
 
     def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):
@@ -210,7 +224,7 @@ class Player(pygame.sprite.Sprite):
     def protect(self, amount):
         self.defense += amount
 
-    def strenghthen(self, amount):
+    def strengthen(self, amount):
         self.strength += amount
 
     def increase_speed(self, amount):

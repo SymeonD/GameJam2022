@@ -59,7 +59,14 @@ itemList.append(Item(5,"Round shield",5,(pygame.image.load('Ressources/item/tile
 itemList.append(Item(6,"Strong shield",5,(pygame.image.load('Ressources/item/tile097.png')), "protection", 25, 250))
 itemList.append(Item(7,"Heater shield",5,(pygame.image.load('Ressources/item/tile098.png')), "protection", 50, 500))
 itemList.append(Item(10,"Strength potion",5,(pygame.image.load('Ressources/item/tile147.png')), "strength", 10, 100))
-itemList.append(Item(11,"Speed potion",5,(pygame.image.load('Ressources/item/tile145.png')), "speed", 10, 100))
+itemList.append(Item(11,"Speed potion",5,(pygame.image.load('Ressources/item/tile145.png')), "speed", 0.5, 100))
+
+#ecran affichage
+itemList.append(Item(12,"Strength",5,(pygame.image.load('Ressources/item/tile020.png')), "affichage", 0.5, 100))
+itemList.append(Item(13,"Speed",5,(pygame.image.load('Ressources/item/tile060.png')), "affichage", 0.5, 100))
+itemList.append(Item(14,"Speed potion",5,(pygame.image.load('Ressources/item/tile145.png')), "affichage", 0.5, 100))
+itemList.append(Item(15,"Speed potion",5,(pygame.image.load('Ressources/item/tile145.png')), "affichage", 0.5, 100))
+
 
 
 

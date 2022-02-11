@@ -69,13 +69,12 @@ class NPC(pygame.sprite.Sprite):
 
         self.type = "basic"
         self.player = player
+        self.is_dead = False
 
     def update(self):
         if self.type != "werewolf" and self.type != "boss":
             self.rect.topleft = self.position
             self.feet.midbottom = self.rect.midbottom
-
-        self.npc_health -= 1 / 60
 
         if self.state == "NPC":
             self.health = self.npc_health
@@ -105,6 +104,9 @@ class NPC(pygame.sprite.Sprite):
             self.kill()
 
         self.screen.blit(self.image, self.rect)
+
+    def lose_health(self):
+        self.npc_health -= 1 / 60
 
     def generate_money(self):
         return self.health/2
@@ -151,16 +153,17 @@ class NPC(pygame.sprite.Sprite):
         self.hit_countdown = 10
         jump_back = 10
         if self.position[0] - xEnnemy < 0:
-            self.position[0] -= self.speed * jump_back
+            self.position[0] -= jump_back
         if self.position[0] - xEnnemy > 0:
-            self.position[0] += self.speed * jump_back
+            self.position[0] += jump_back
         if self.position[1] - yEnnemy < 0:
-            self.position[1] -= self.speed * jump_back
+            self.position[1] -= jump_back
         if self.position[1] - yEnnemy > 0:
-            self.position[1] += self.speed * jump_back
+            self.position[1] += jump_back
         if self.health <= 0:
             randomItem = random.choice(item.itemList) #une fois le npc mort on choisi un item au hasard parmi ceux dans la liste
             randomItem.draw(self.screen, self.position[0], self.position[1]) #on affiche l'item au lieu de la mort du NPC
+            self.is_dead = True
             self.kill()
 
     def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):
