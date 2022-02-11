@@ -70,6 +70,11 @@ class Player(pygame.sprite.Sprite):
         self.cooldown_inventory = 0
         self.werewolf_killed = 0
 
+        #potions
+        self.speed_use = False
+        self.strength_use = False
+        self.protect_use = False
+
     def get(self):
         self.image = self.images["down"][0]
         self.image.set_colorkey([0, 0, 0])
@@ -196,7 +201,7 @@ class Player(pygame.sprite.Sprite):
         self.werewolf_killed += 1
 
     def take_damage(self, amount, xEnnemy, yEnnemy):
-        self.health -= amount/(self.defense/10)
+        self.health -= amount/(self.defense/20)
         self.original_image = self.image
         self.hit_countdown = 10
 
@@ -247,16 +252,29 @@ class Player(pygame.sprite.Sprite):
         if self.health + amount > self.max_health:
             self.health = self.max_health
         else:
-            self.health += amount
+            self.health += amount/10
 
     def protect(self, amount):
-        self.defense += amount
+        if not self.protect_use:
+            self.defense += amount
+            self.protect_use = True
+        else:
+            self.defense += amount/10
 
     def strengthen(self, amount):
-        self.strength += amount
+        if not self.strength_use:
+            self.strength += amount
+            self.strength_use = True
+        else:
+            self.strength += amount/10
 
     def increase_speed(self, amount):
-        self.speed += amount
+        if not self.speed_use:
+            self.speed += amount
+            self.speed_use = True
+        else:
+            self.speed += amount/10
+
 
     def equip_weapon(self, weapon):
         self.weapon = weapon.name
