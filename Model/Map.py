@@ -282,6 +282,9 @@ class MapManager:
         self.trader.updateInv()
         self.player.updateInv()
 
+        #draw preview
+        self.player.update_preview()
+
     '''
     - Téléportation du joueur
     '''
