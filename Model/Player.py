@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite):
 
         self.money = 0
         self.inventory_open = True
-        self.strength = 10000
+        self.strength = 10
         self.defense = 10
 
         self.is_dead = False
