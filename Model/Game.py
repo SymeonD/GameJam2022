@@ -129,7 +129,7 @@ class Game:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                print(pos)
+
                 # Clique sur l'inventaire du joueur
                 if self.player.inventory.in_grid(pos[0], pos[1]) and self.player.inventory_open:
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])

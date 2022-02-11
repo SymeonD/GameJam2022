@@ -78,7 +78,7 @@ class NPC_Boss(parent):
         self.updateTarget(player1)
         rotation = 75
         if self.targetDistance < 1000:
-            if self.targetDistance < 200:
+            if self.targetDistance < 100:
                 self.attack(player1)
             self.animating = True
             if self.position[1] > self.target.position[1]:

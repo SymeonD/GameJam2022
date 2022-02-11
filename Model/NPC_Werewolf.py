@@ -56,7 +56,8 @@ class NPC_Werewolf(parent):
             transformSound.set_volume(0.3)
             transformSound.play()
             if cycleMoon//5*self.nb_update == 1:
-                self.damage += 50
+                self.damage *= 2
+                self.ww_max_health *= 2
                 self.nb_update += 1
 
     def update(self):
