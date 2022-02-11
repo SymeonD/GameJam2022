@@ -53,7 +53,7 @@ class Player(pygame.sprite.Sprite):
         self.inventory.add(item.itemList[2])
 
         self.weapon = "sword"
-        self.weapon_power = 0
+        self.weapon_power = 1
         self.weapon_speed = 1/15
         self.weapon_range = 50
         self.attack_cooldown = 1
@@ -132,7 +132,7 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(obj, (70, 640,))
 
         #update strength
-        text_strength = ": " + str(self.strength)
+        text_strength = ": " + str(self.strength*self.weapon_power)
         font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
         obj = font.render(text_strength, True, (0, 0, 0), (255, 255, 255))
         self.screen.blit(item.itemList[8].image, (25, 670))
@@ -144,6 +144,13 @@ class Player(pygame.sprite.Sprite):
         obj = font.render(text_speed, True, (0, 0, 0), (255, 255, 255))
         self.screen.blit(item.itemList[9].image, (25, 700))
         self.screen.blit(obj, (70, 700,))
+
+        # update speed
+        text_defense = ": " + str(self.defense)
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_defense, True, (0, 0, 0), (255, 255, 255))
+        self.screen.blit(item.itemList[10].image, (25, 730))
+        self.screen.blit(obj, (70, 730,))
 
         #update cooldown inventory
         if self.cooldown_inventory > 0:

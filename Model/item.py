@@ -64,8 +64,7 @@ itemList.append(Item(11,"Speed potion",5,(pygame.image.load('Ressources/item/til
 #ecran affichage
 itemList.append(Item(12,"Strength",5,(pygame.image.load('Ressources/item/tile020.png')), "affichage", 0.5, 100))
 itemList.append(Item(13,"Speed",5,(pygame.image.load('Ressources/item/tile060.png')), "affichage", 0.5, 100))
-itemList.append(Item(14,"Speed potion",5,(pygame.image.load('Ressources/item/tile145.png')), "affichage", 0.5, 100))
-itemList.append(Item(15,"Speed potion",5,(pygame.image.load('Ressources/item/tile145.png')), "affichage", 0.5, 100))
+itemList.append(Item(14,"Defense",5,(pygame.image.load('Ressources/item/tile113.png')), "affichage", 0.5, 100))
 
 
 
