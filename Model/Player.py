@@ -36,7 +36,7 @@ class Player(pygame.sprite.Sprite):
         self.type = "player"
 
         self.old_position = self.position.copy()
-        self.speed = 3
+        self.speed = 2
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
 
         self.screen = screen
@@ -137,43 +137,39 @@ class Player(pygame.sprite.Sprite):
         self.update_preview()
 
     def update_preview(self):
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+
         # Update money
         text_money = ": " + str(self.money)
-        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
         obj = font.render(text_money, True, (0, 0, 0), (255, 255, 255, 100))
         self.screen.blit(item.itemList[2].image, (25, 640))
         self.screen.blit(obj, (70, 640,))
 
         # update strength
         text_strength = ": " + str(self.strength * self.weapon_power)
-        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
         obj = font.render(text_strength, True, (0, 0, 0), (255, 255, 255))
         self.screen.blit(item.itemList[8].image, (25, 670))
         self.screen.blit(obj, (70, 670,))
 
         # update speed
         text_speed = ": " + str(self.speed)
-        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
         obj = font.render(text_speed, True, (0, 0, 0), (255, 255, 255))
         self.screen.blit(item.itemList[9].image, (25, 700))
         self.screen.blit(obj, (70, 700,))
 
         # update speed
         text_defense = ": " + str(self.defense)
-        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
         obj = font.render(text_defense, True, (0, 0, 0), (255, 255, 255))
         self.screen.blit(item.itemList[10].image, (25, 730))
         self.screen.blit(obj, (70, 730,))
 
         # update inventory touch
-        text_inventory = "E : Inventory"
-        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        text_inventory = "E : open / close inventory"
         obj = font.render(text_inventory, True, (0, 0, 0), (255, 255, 255))
-        self.screen.blit(obj, (750, 730,))
+        self.screen.blit(obj, (655, 730,))
 
         # update pause touch
         text_pause = "P : Pause"
-        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
         obj = font.render(text_pause, True, (0, 0, 0), (255, 255, 255))
         self.screen.blit(obj, (900, 730,))
 
