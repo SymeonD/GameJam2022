@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="32" nextobjectid="104">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="32" nextobjectid="109">
  <tileset firstgid="1" source="tsx/insideH.tsx"/>
  <tileset firstgid="726" source="tsx/dayBG.tsx"/>
  <tileset firstgid="946" source="tsx/NatureTS2.tsx"/>
@@ -30,6 +30,21 @@
    <point/>
   </object>
   <object id="90" type="spawn_point" x="433.076" y="278.686">
+   <point/>
+  </object>
+  <object id="104" type="spawn_point" x="709.211" y="186.842">
+   <point/>
+  </object>
+  <object id="105" type="spawn_point" x="393.421" y="702.632">
+   <point/>
+  </object>
+  <object id="106" type="spawn_point" x="950" y="657.895">
+   <point/>
+  </object>
+  <object id="107" type="spawn_point" x="727.632" y="509.211">
+   <point/>
+  </object>
+  <object id="108" type="spawn_point" x="156.579" y="693.421">
    <point/>
   </object>
  </objectgroup>

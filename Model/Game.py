@@ -317,4 +317,6 @@ class Game:
                     sys.exit(2)
 
             pygame.display.update()
+        
+        
 

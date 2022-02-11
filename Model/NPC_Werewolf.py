@@ -132,3 +132,5 @@ class NPC_Werewolf(parent):
         if self.attack_cooldown >= 1:
             player.take_damage(self.damage, self.position[0], self.position[1])
             self.attack_cooldown = 0
+
+        

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="58">
+<map version="1.8" tiledversion="1.8.0" orientation="orthogonal" renderorder="right-down" width="64" height="48" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="71">
  <tileset firstgid="1" source="tsx/insideH.tsx"/>
  <tileset firstgid="726" source="tsx/floors.tsx"/>
  <tileset firstgid="1494" source="tsx/walls.tsx"/>
@@ -59,13 +59,49 @@
  </objectgroup>
  <objectgroup id="7" name="enter/exit">
   <object id="22" name="exit_big_house" x="752.87" y="706.594" width="78.3127" height="28.4774"/>
-  <object id="23" name="spawn_big_house" x="961.111" y="670.108">
-   <point/>
-  </object>
   <object id="56" type="spawn_point" x="158.87" y="194.175">
    <point/>
   </object>
   <object id="57" type="spawn_point" x="703.568" y="421.132">
+   <point/>
+  </object>
+  <object id="58" name="spawn_big_house" x="797.468" y="636.709">
+   <point/>
+  </object>
+  <object id="59" type="spawn_point" x="679.747" y="210.127">
+   <point/>
+  </object>
+  <object id="60" type="spawn_point" x="892.405" y="167.089">
+   <point/>
+  </object>
+  <object id="61" type="spawn_point" x="502.532" y="126.582">
+   <point/>
+  </object>
+  <object id="62" type="spawn_point" x="105.063" y="417.722">
+   <point/>
+  </object>
+  <object id="63" type="spawn_point" x="488.608" y="606.329">
+   <point/>
+  </object>
+  <object id="64" type="spawn_point" x="284.81" y="698.734">
+   <point/>
+  </object>
+  <object id="65" type="spawn_point" x="130.38" y="574.684">
+   <point/>
+  </object>
+  <object id="66" type="spawn_point" x="463.291" y="444.304">
+   <point/>
+  </object>
+  <object id="67" type="spawn_point" x="445.57" y="311.392">
+   <point/>
+  </object>
+  <object id="68" type="spawn_point" x="713.924" y="278.481">
+   <point/>
+  </object>
+  <object id="69" type="spawn_point" x="187.342" y="275.949">
+   <point/>
+  </object>
+  <object id="70" x="959.494" y="-25.3165">
    <point/>
   </object>
  </objectgroup>

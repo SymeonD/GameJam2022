@@ -5,7 +5,7 @@ pygame.init()
 pygame.display.set_caption("Where's Wolf")
 screen = pygame.display.set_mode((1024, 768))
 screen_r = screen.get_rect()
-font = pygame.font.SysFont("Arial", 40)
+font = pygame.font.SysFont("Arial", 30)
 clock = pygame.time.Clock()
 
 class Credits:
@@ -13,16 +13,37 @@ class Credits:
 
     def credits():
 
-        credit_list = ["EQUIPE ZYVASY","","Zineddine CHALEKH","Symeon DE ALMEIDA","Valentin WIBAILLIE","","MUSIQUE"," ", "Free Music Archive","Night Moments by Loco Roco","Black Gloves (Edit) by Vitus Von Degen","", "BRUITAGES","", "La Sonotheque","Sound-Fishing","","","","Merci d'avoir joué à Where's Wolf ? !"]
+        credit_list = ["ZYVASY",
+                        "",
+                        "Zineddine CHALEKH",
+                        "Symeon DE ALMEIDA",
+                        "Valentin WIBAILLIE",
+                        "",
+                        "VISUEL",
+                        "",
+                        "Lanea Zimmerman et William Thompson : Toutes les tuiles des maps ",
+                        "Enjl : Arrière plan jour/nuit",
+                        "DoubleLeggy : Atlas de texture des PNJ (Sprite Sheet)",
+                        "Matt Firth (cheekyinkling) et game-icons.net : Icones des items",
+                        "",
+                        "MUSIQUE",
+                        "",
+                        "Derek et Brandon Fiechter :",
+                        "Elf Village (Day)",
+                        "Haunted Village (Night)",
+                        "",
+                        "BRUITAGES",
+                        "",
+                        "Mixkit",
+                        "La Sonotheque",
+                        "Sound-Fishing",
+                        "Jamius",]
 
         texts = []
-        # we render the text once, since it's easier to work with surfaces
-        # also, font rendering is a performance killer
+
         for i, line in enumerate(credit_list):
             s = font.render(line, 1, (255, 255, 255))
-            # we also create a Rect for each Surface. 
-            # whenever you use rects with surfaces, it may be a good idea to use sprites instead
-            # we give each rect the correct starting position 
+
             r = s.get_rect(centerx=screen_r.centerx, y=screen_r.bottom + i * 45)
             texts.append((r, s))
 
@@ -34,17 +55,12 @@ class Credits:
             screen.fill((10, 10, 10))
 
             for r, s in texts:
-                # now we just move each rect by one pixel each frame
                 r.move_ip(0, -1)
-                # and drawing is as simple as this
                 screen.blit(s, r)
 
-            # if all rects have left the screen, we exit
             if not screen_r.collidelistall([r for (r, _) in texts]):
                 return
 
-            # only call this once so the screen does not flicker
             pygame.display.flip()
 
-            # cap framerate at 60 FPS
             clock.tick(60)

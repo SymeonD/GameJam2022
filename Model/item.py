@@ -36,6 +36,7 @@ class Item(pygame.sprite.Sprite):
             if sprite.type == "player":
                 if self.effect == "protection":
                     sprite.protect(self.effect_power)
+                    mixer.Sound("Ressources/sounds/shield.mp3").play()
                 if self.effect == "strength":
                     sprite.strengthen(self.effect_power)
                 if self.effect == "speed":
