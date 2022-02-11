@@ -71,7 +71,7 @@ itemList.append(Item(15,"Chicken",5,(pygame.image.load('Ressources/item/tile239.
 itemList.append(Item(16,"Cake",5,(pygame.image.load('Ressources/item/tile253.png')), "heal", 20, 30))
 itemList.append(Item(17,"Super healthy potion", 5, (pygame.image.load('Ressources/item/tile148.png')), "heal", 100, 200))
 itemList.append(Item(17,"Apple", 5, (pygame.image.load('Ressources/item/tile224.png')), "heal", 3, 3))
-itemList.append(Item(17,"Grape", 5, (pygame.image.load('Ressources/item/tile228.png')), "heal", 4, 4))
+itemList.append(Item(17,"Grape", 5, (pygame.image.load('Ressources/item/tile229.png')), "heal", 4, 4))
 
 
 
