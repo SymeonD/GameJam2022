@@ -54,6 +54,7 @@ class NPC_Werewolf(parent):
             self.rect = self.image.get_rect()
             self.state = 'WW'
             transformSound = mixer.Sound('Ressources/sounds/transform.mp3')
+            transformSound.set_volume(0.3)
             transformSound.play()
 
     def update(self):
@@ -133,11 +134,6 @@ class NPC_Werewolf(parent):
             player.take_damage(self.damage, self.position[0], self.position[1])
             self.attack_cooldown = 0
 
-<<<<<<< HEAD
-        
-=======
     def take_damage(self, amount, xEnnemy, yEnnemy):
         super().take_damage(amount, xEnnemy, yEnnemy)
         mixer.Sound('Ressources/sounds/wolf_hit.mp3').play()
-
->>>>>>> ec25ecb3ca9d0e9bbc32cc3a17ffc1767cfd023a
