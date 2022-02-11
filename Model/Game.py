@@ -96,14 +96,11 @@ class Game:
             self.handle_event(pygame.event.get())
 
             if self.running and self.player.is_dead:
-                self.running = False
-                print("Vous etes mort")
+                self.end_game("dead")
             elif self.running and self.get_npc_alive_count() <= 3:
-                self.running = False
-                print("Presque tous vos villageois sont morts")
+                self.end_game("no_villagers")
             elif self.running and self.map_manager.boss.is_dead:
-                self.running = False
-                print("Vous avez gagné")
+                self.end_game("win")
 
         pygame.quit
 
@@ -287,8 +284,8 @@ class Game:
                 number+=1
         return number
 
-    def pause(self):
-        runPause = True
+    def end_game(self, state):
+        run_end = True
 
         # chargement de l'image de fond
         background_img = pygame.image.load('Ressources/menu/pausebg.jpg').convert_alpha()
@@ -300,6 +297,48 @@ class Game:
         # creer les boutons
         resume_button = Button(200, 300, resume_img, 0.5)
         leave_button = Button(700, 300, leave_img, 0.5)
+
+        if state == "win":
+            print("win")
+        elif state == "dead":
+            print("dead")
+        else:
+            print("no villagers")
+
+        # musique en pause
+        mixer.music.pause()
+
+        while run_end:
+            self.screen.blit(background_img, (0, 0))
+            if resume_button.draw(self.screen):
+                run_end = False
+                self.running = False
+                mixer.music.unpause()  # musique à nouveau active
+            if leave_button.draw(self.screen):
+                sys.exit(2)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit(2)
+
+            pygame.display.update()
+
+
+    def pause(self):
+        runPause = True
+
+        # chargement de l'image de fond
+        background_img = pygame.image.load('Ressources/menu/final.jpg').convert_alpha()
+
+        # chargement des images pour boutons
+        resume_img = pygame.image.load('Ressources/menu/start_btn.png').convert_alpha()
+        leave_img = pygame.image.load('Ressources/menu/exit_btn.png').convert_alpha()
+
+        # creer les boutons
+        resume_button = Button(200, 300, resume_img, 0.5)
+        leave_button = Button(700, 300, leave_img, 0.5)
+
+        #creer les 
 
         # musique en pause
         mixer.music.pause()
