@@ -60,7 +60,7 @@ class Player(pygame.sprite.Sprite):
 
         self.money = 0
         self.inventory_open = True
-        self.strength = 10
+        self.strength = 10000
         self.defense = 10
 
         self.is_dead = False
@@ -183,7 +183,7 @@ class Player(pygame.sprite.Sprite):
         werewolf_distance = math.hypot(self.position[0] - werewolf.position[0],
                                        self.position[1] - werewolf.position[1])
         if werewolf_distance < self.weapon_range and self.attack_cooldown >= 1:
-            werewolf.take_damage(self.weapon_power, self.position[0], self.position[1])
+            werewolf.take_damage(self.weapon_power+self.strength, self.position[0], self.position[1])
             self.attack_cooldown = 0
 
     def draw_health_bar(self, surface, position, size, color_border, color_background, color_health, progress):

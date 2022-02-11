@@ -36,6 +36,7 @@ class MapManager:
         self.trader = None
         self.timeState = 1
         self.current_map = "town"
+        self.boss = None
 
         # Pour les sous
         self.npc_group = pygame.sprite.Group()
@@ -146,8 +147,9 @@ class MapManager:
                 npc_list.append(self.trader)
 
             if obj.type == 'spawn_boss':
-                self.boss = NPC_Boss(obj.x, obj.y, "boss", self.screen, self.player)
-                npc_list.append(self.boss)
+                if not self.boss:
+                    self.boss = NPC_Boss(obj.x, obj.y, "boss", self.screen, self.player)
+                    npc_list.append(self.boss)
 
 
         # group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=6)
