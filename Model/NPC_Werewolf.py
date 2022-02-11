@@ -25,7 +25,7 @@ class NPC_Werewolf(parent):
         self.attack_cooldown = 1
         self.old_position = self.position.copy()
         self.detect_range = self.moonCycle*50
-        self.speed = self.moonCycle
+        self.speed = self.moonCycle/2
         self.ww_health = 100*moonCycle
         self.ww_max_health = 100*moonCycle
         self.nb_update = 1

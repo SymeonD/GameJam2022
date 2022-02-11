@@ -52,8 +52,8 @@ class Item(pygame.sprite.Sprite):
 itemList = []
 
 #pour ajouter un item à notre liste
-itemList.append(Item(0,"Health potion",5, (pygame.image.load('Ressources/item/tile144.png')), 'heal', 20, 20))
-itemList.append(Item(1,"Bread",5,(pygame.image.load('Ressources/item/tile238.png')), "heal", 5, 5))
+itemList.append(Item(0,"Health potion",5, (pygame.image.load('Ressources/item/tile144.png')), 'heal', 15, 20))
+itemList.append(Item(1,"Bread",5,(pygame.image.load('Ressources/item/tile237.png')), "heal", 5, 5))
 itemList.append(Item(4,"Piece",5,(pygame.image.load('Ressources/item/tile199.png')), "damage", 10, 10)) # money
 itemList.append(Item(5,"Round shield",5,(pygame.image.load('Ressources/item/tile096.png')), "protection", 10, 100))
 itemList.append(Item(6,"Strong shield",5,(pygame.image.load('Ressources/item/tile097.png')), "protection", 25, 250))
@@ -65,6 +65,14 @@ itemList.append(Item(11,"Speed potion",5,(pygame.image.load('Ressources/item/til
 itemList.append(Item(12,"Strength",5,(pygame.image.load('Ressources/item/tile020.png')), "affichage", 0.5, 100))
 itemList.append(Item(13,"Speed",5,(pygame.image.load('Ressources/item/tile060.png')), "affichage", 0.5, 100))
 itemList.append(Item(14,"Defense",5,(pygame.image.load('Ressources/item/tile113.png')), "affichage", 0.5, 100))
+
+#Bouffe
+itemList.append(Item(15,"Chicken",5,(pygame.image.load('Ressources/item/tile239.png')), "heal", 10, 10))
+itemList.append(Item(16,"Cake",5,(pygame.image.load('Ressources/item/tile253.png')), "heal", 20, 30))
+itemList.append(Item(17,"Super healthy potion", 5, (pygame.image.load('Ressources/item/tile148.png')), "heal", 100, 200))
+itemList.append(Item(17,"Apple", 5, (pygame.image.load('Ressources/item/tile224.png')), "heal", 3, 3))
+itemList.append(Item(17,"Grape", 5, (pygame.image.load('Ressources/item/tile228.png')), "heal", 4, 4))
+
 
 
 
