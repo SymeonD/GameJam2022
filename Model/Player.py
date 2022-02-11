@@ -63,11 +63,12 @@ class Player(pygame.sprite.Sprite):
 
         self.money = 0
         self.inventory_open = True
-        self.strength = 10
+        self.strength = 1000
         self.defense = 10
 
         self.is_dead = False
         self.cooldown_inventory = 0
+        self.werewolf_killed = 0
 
     def get(self):
         self.image = self.images["down"][0]
@@ -190,6 +191,9 @@ class Player(pygame.sprite.Sprite):
     def move_back(self):
         self.position = self.old_position
         self.update()
+
+    def kill_werewolf(self):
+        self.werewolf_killed += 1
 
     def take_damage(self, amount, xEnnemy, yEnnemy):
         self.health -= amount/(self.defense/10)

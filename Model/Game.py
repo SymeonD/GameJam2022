@@ -136,7 +136,7 @@ class Game:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-
+                print(pos)
                 # Clique sur l'inventaire du joueur
                 if self.player.inventory.in_grid(pos[0], pos[1]) and self.player.inventory_open:
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
@@ -244,11 +244,12 @@ class Game:
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
                 self.map_manager.change_time()
-                mixer.music.stop()
-                mixer.music.unload()
-                mixer.music.load("Ressources/music/background_night.mp3")
-                mixer.music.set_volume(0.2)
-                mixer.music.play()
+                if self.song_boss_unplay:
+                    mixer.music.stop()
+                    mixer.music.unload()
+                    mixer.music.load("Ressources/music/background_night.mp3")
+                    mixer.music.set_volume(0.2)
+                    mixer.music.play()
 
                 for sprite in self.map_manager.get_group_npc():
                     if sprite.type == "werewolf":
@@ -264,11 +265,12 @@ class Game:
                 self.cycleState = "jour"
                 self.generate_money()
                 self.map_manager.change_time()
-                mixer.music.stop()
-                mixer.music.unload()
-                mixer.music.load("Ressources/music/background_day.mp3")
-                mixer.music.set_volume(0.2)
-                mixer.music.play()
+                if self.song_boss_unplay:
+                    mixer.music.stop()
+                    mixer.music.unload()
+                    mixer.music.load("Ressources/music/background_day.mp3")
+                    mixer.music.set_volume(0.2)
+                    mixer.music.play()
                 for sprite in self.map_manager.get_group_npc():
                     if sprite.type == "werewolf":
                         sprite.transform(6)
@@ -297,8 +299,11 @@ class Game:
     def end_game(self, state):
         run_end = True
 
+        #setup font
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 50)
+
         # chargement de l'image de fond
-        background_img = pygame.image.load('Ressources/menu/pausebg.jpg').convert_alpha()
+        background_img = pygame.image.load('Ressources/menu/finalbg.jpg').convert_alpha()
 
         # chargement des images pour boutons
         resume_img = pygame.image.load('Ressources/menu/start_btn.png').convert_alpha()
@@ -308,18 +313,36 @@ class Game:
         resume_button = Button(200, 300, resume_img, 0.5)
         leave_button = Button(700, 300, leave_img, 0.5)
 
+        # creer les textes de fin
         if state == "win":
-            print("win")
+            text_end = "You won !"
         elif state == "dead":
-            print("dead")
+            text_end = "Are you seriously dead ?"
         else:
-            print("no villagers")
+            text_end = "Where are your villagers ?"
+        obj1 = font.render(text_end, True, (0, 0, 0))
+
+
+        text_wkilled = "Werewolf killed : " + str(self.player.werewolf_killed+1)
+        obj2 = font.render(text_wkilled, True, (0, 0, 0))
+
+        text_valive = "Villagers alive : " + str(len(self.map_manager.get_group_npc().sprites()))
+        obj3 = font.render(text_valive, True, (0, 0, 0))
 
         # musique en pause
         mixer.music.pause()
 
         while run_end:
             self.screen.blit(background_img, (0, 0))
+            if state == "win":
+                self.screen.blit(obj1, (450, 210,))
+            elif state == "dead":
+                self.screen.blit(obj1, (250, 210,))
+            else:
+                self.screen.blit(obj1, (1230, 210,))
+            self.screen.blit(obj2, (100, 450,))
+            self.screen.blit(obj3, (600, 450,))
+
             if resume_button.draw(self.screen):
                 run_end = False
                 self.running = False
@@ -338,7 +361,7 @@ class Game:
         runPause = True
 
         # chargement de l'image de fond
-        background_img = pygame.image.load('Ressources/menu/final.jpg').convert_alpha()
+        background_img = pygame.image.load('Ressources/menu/pausebg.jpg').convert_alpha()
 
         # chargement des images pour boutons
         resume_img = pygame.image.load('Ressources/menu/start_btn.png').convert_alpha()
@@ -348,7 +371,6 @@ class Game:
         resume_button = Button(200, 300, resume_img, 0.5)
         leave_button = Button(700, 300, leave_img, 0.5)
 
-        #creer les 
 
         # musique en pause
         mixer.music.pause()
