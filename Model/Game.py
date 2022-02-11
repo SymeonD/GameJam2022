@@ -156,7 +156,7 @@ class Game:
                         self.player.buy(self.map_manager.trader.inventory.getItem(pos[0], pos[1]))
 
                 #toggle trader inventory
-                if self.map_manager.trader.rect.collidepoint(pos):
+                if self.map_manager.trader.rect.collidepoint(pos) and (self.map_manager.get_map().name == "town_day" or self.map_manager.get_map().name == "town_night"):
                     self.map_manager.trader.trade()
 
 
