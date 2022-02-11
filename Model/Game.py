@@ -53,6 +53,8 @@ class Game:
         mixer.music.load("Ressources/music/background_day.mp3")
         mixer.music.set_volume(0.2)
 
+        self.song_boss_unplay = True
+
         #Variable de gestion du drag and drop
         self.itemSelected = None
 
@@ -76,7 +78,15 @@ class Game:
 
             #gestion des cycles jour/nui
             self.switch_cycle()
-
+            
+            if self.map_manager.boss.form == "boss_werewolf" and self.song_boss_unplay:
+                
+                mixer.music.stop()
+                mixer.music.unload()
+                mixer.music.load("Ressources/music/boss.mp3")
+                mixer.music.set_volume(0.2)
+                mixer.music.play()
+                self.song_boss_unplay = False
 
             '''
             # Dessin de la map + centrage
