@@ -101,7 +101,9 @@ class Game:
             elif self.running and self.get_npc_alive_count() <= 3:
                 self.running = False
                 print("Presque tous vos villageois sont morts")
-
+            elif self.running and self.map_manager.boss.is_dead:
+                self.running = False
+                print("Vous avez gagné")
 
         pygame.quit
 
@@ -139,8 +141,7 @@ class Game:
                             self.player.attack(sprite)
                             playerAttackSound = mixer.Sound('Ressources/sounds/player_attack.ogg')
                             playerAttackSound.play()
-                        else:
-                            self.player.toggle_inventory()
+
 
                     self.itemSelected = None
                     self.player.inventory.toggleDesc("", self.screen, "", pos[0], pos[1])
@@ -215,6 +216,8 @@ class Game:
         if keys[pygame.K_d]:
             self.player.move_player('right')
             keyD = True
+        if keys[pygame.K_e]:
+            self.player.toggle_inventory()
         if keys[pygame.K_p]:
             self.pause()
             keyD = True

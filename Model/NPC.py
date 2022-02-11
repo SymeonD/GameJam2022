@@ -71,7 +71,7 @@ class NPC(pygame.sprite.Sprite):
         self.player = player
 
     def update(self):
-        if self.type != "werewolf":
+        if self.type != "werewolf" and self.type != "boss":
             self.rect.topleft = self.position
             self.feet.midbottom = self.rect.midbottom
 
@@ -173,8 +173,12 @@ class NPC(pygame.sprite.Sprite):
     def draw_health(self, surf):
         health_rect = pygame.Rect(0, 0, self.original_image.get_width(), 7)
         health_rect.midbottom = self.rect.centerx, self.rect.top
-        self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
+        if self.state == "NPC":
+            self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
                         self.health / self.max_health)
+        else:
+            self.draw_health_bar(surf, health_rect.topleft, health_rect.size, (0, 0, 0), (255, 0, 0), (0, 255, 0),
+                                 self.health / self.ww_max_health)
 
     def heal(self, amount):
         if self.npc_health + amount > self.max_health:

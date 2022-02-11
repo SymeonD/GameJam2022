@@ -302,7 +302,7 @@ class MapManager:
         for sprite in self.get_group().sprites():
             if sprite.feet.collidelist(self.get_walls()) > -1 and sprite.type != "basic":
                 sprite.move_back()
-            elif sprite.type == "werewolf":
+            elif sprite.type == "werewolf" or sprite.type == "boss":
                 sprite.move_forth()
 
         if type(sprite) is NPC:

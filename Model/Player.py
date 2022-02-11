@@ -64,6 +64,7 @@ class Player(pygame.sprite.Sprite):
         self.defense = 10
 
         self.is_dead = False
+        self.cooldown_inventory = 0
 
     def get(self):
         self.image = self.images["down"][0]
@@ -130,12 +131,18 @@ class Player(pygame.sprite.Sprite):
         self.screen.blit(item.itemList[2].image, (265, 698,))
         self.screen.blit(obj, (305, 698,))
 
+        #update cooldown inventory
+        if self.cooldown_inventory > 0:
+            self.cooldown_inventory -= 1/30
+
     def updateInv(self):
         if self.inventory_open:
             self.inventory.update(self.screen)
 
     def toggle_inventory(self):
-        self.inventory_open = not self.inventory_open
+        if self.cooldown_inventory <= 0:
+            self.inventory_open = not self.inventory_open
+            self.cooldown_inventory = 1
 
     def get_image(self, x, y):
         image = pygame.Surface([32, 32])

@@ -1,4 +1,5 @@
 import pygame
+import math
 from Model.NPC import NPC as parent
 
 class NPC_Boss(parent):
@@ -24,7 +25,12 @@ class NPC_Boss(parent):
         self.old_position = self.position.copy()
         self.animating = True
 
+        self.ww_health = 5000
+        self.ww_max_health = 5000
+
         self.form = "npc"
+
+        self.is_dead = False
 
     def transform(self):
             self.updateImageBoss('Ressources/perso/boss_werewolf.png', 55, 54, 0, 0)
@@ -48,6 +54,10 @@ class NPC_Boss(parent):
 
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
+
+        if self.health <= 0:
+            self.is_dead = True
+            self.kill()
 
     def updateTarget(self, player1):
         if self.target:
