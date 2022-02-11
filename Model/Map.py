@@ -262,6 +262,10 @@ class MapManager:
         # draw background map
         self.screen.blit(self.renderedmap, (0, 0))
 
+        for sprite in self.get_group_npc().sprites():
+            if sprite.type == "basic" or sprite.type == "werewolf":
+                sprite.lose_health()
+
         self.get_group().update()
         self.check_collisions()
 

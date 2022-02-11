@@ -75,8 +75,6 @@ class NPC(pygame.sprite.Sprite):
             self.rect.topleft = self.position
             self.feet.midbottom = self.rect.midbottom
 
-        self.npc_health -= 1 / 60
-
         if self.state == "NPC":
             self.health = self.npc_health
         else:
@@ -105,6 +103,9 @@ class NPC(pygame.sprite.Sprite):
             self.kill()
 
         self.screen.blit(self.image, self.rect)
+
+    def lose_health(self):
+        self.npc_health -= 1 / 60
 
     def generate_money(self):
         return self.health/2
