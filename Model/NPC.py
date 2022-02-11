@@ -81,17 +81,6 @@ class NPC(pygame.sprite.Sprite):
         else:
             self.health = self.ww_health
 
-        self.draw_health(self.screen)
-        if self.hit_countdown:
-            if self.hit_countdown % 2:
-                self.image = self.damage_image  # (or other suitable pre-loaded image)
-            else:
-                self.image = self.original_image
-            self.hit_countdown = max(0, self.hit_countdown - 1)
-        elif self.hit_countdown == 0:
-            self.image = self.original_image
-            self.hit_countdown = None
-
         #animation
         if self.animating:
             self.current_image += 0.2
@@ -99,6 +88,20 @@ class NPC(pygame.sprite.Sprite):
                 self.current_image = 0
             self.image = self.images[self.current_direction][int(self.current_image)]
             self.image.set_colorkey([0, 0, 0])
+            self.damage_image = (self.image.copy()).convert_alpha()
+            self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
+            self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
+
+        self.draw_health(self.screen)
+        if self.hit_countdown:
+            if self.hit_countdown % 2:
+                self.image = self.damage_image
+            else:
+                self.image = self.original_image
+            self.hit_countdown = max(0, self.hit_countdown - 1)
+        elif self.hit_countdown == 0:
+            self.image = self.original_image
+            self.hit_countdown = None
 
         if self.health <= 0:
             self.kill()

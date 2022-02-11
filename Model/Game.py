@@ -277,7 +277,7 @@ class Game:
         money = 0
         for npc in self.map_manager.get_group_npc():
             money += npc.generate_money()
-        self.player.money += int(money/2)
+        self.player.money += int(money/10)
         mixer.Sound('Ressources/sounds/coin_win.mp3').play()
 
     def get_npc_alive_count(self):

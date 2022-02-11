@@ -50,7 +50,10 @@ class Player(pygame.sprite.Sprite):
         self.inventory.add(item.itemList[0])
         self.inventory.add(item.itemList[0])
         self.inventory.add(item.itemList[1])
-        self.inventory.add(item.itemList[2])
+        self.inventory.add(item.itemList[1])
+        self.inventory.add(item.itemList[1])
+        self.inventory.add(item.itemList[1])
+        self.inventory.add(item.itemList[1])
 
         self.weapon = "sword"
         self.weapon_power = 1
@@ -95,7 +98,18 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
 
-        #blink if damaged
+        #animation
+        if self.animating:
+            self.current_image += 0.2
+            if self.current_image >= len(self.images[self.current_direction]):
+                self.current_image = 0
+            self.image = self.images[self.current_direction][int(self.current_image)]
+        self.image.set_colorkey([0, 0, 0])
+        self.damage_image = (self.image.copy()).convert_alpha()
+        self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
+        self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
+
+        # blink if damaged
         if self.hit_countdown:
             if self.hit_countdown % 2:
                 self.image = self.damage_image  # (or other suitable pre-loaded image)
@@ -105,14 +119,6 @@ class Player(pygame.sprite.Sprite):
         elif self.hit_countdown == 0:
             self.image = self.original_image
             self.hit_countdown = None
-
-        #animation
-        if self.animating:
-            self.current_image += 0.2
-            if self.current_image >= len(self.images[self.current_direction]):
-                self.current_image = 0
-            self.image = self.images[self.current_direction][int(self.current_image)]
-        self.image.set_colorkey([0, 0, 0])
 
         #update attack cooldown
         if self.attack_cooldown < 1:

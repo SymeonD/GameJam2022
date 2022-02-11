@@ -36,6 +36,7 @@ class NPC_Werewolf(parent):
                              self.skin_npc[2],
                              self.skin_npc[3],
                              self.skin_npc[4])
+            self.damage_image = (self.image.copy()).convert_alpha()
             self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
             self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
             self.rect = self.image.get_rect()
@@ -48,9 +49,6 @@ class NPC_Werewolf(parent):
                              self.werewolf_skins[str(self.moonCycle)][2],
                              self.werewolf_skins[str(self.moonCycle)][3],
                              self.werewolf_skins[str(self.moonCycle)][4])
-            self.damage_image = (self.image.copy()).convert_alpha()
-            self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
-            self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
             self.rect = self.image.get_rect()
             self.state = 'WW'
             transformSound = mixer.Sound('Ressources/sounds/transform.mp3')
