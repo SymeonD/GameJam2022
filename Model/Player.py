@@ -249,10 +249,11 @@ class Player(pygame.sprite.Sprite):
 
     #Item effect functions
     def heal(self, amount):
+        print(amount)
         if self.health + amount > self.max_health:
             self.health = self.max_health
         else:
-            self.health += amount/10
+            self.health += amount
 
     def protect(self, amount):
         if not self.protect_use:

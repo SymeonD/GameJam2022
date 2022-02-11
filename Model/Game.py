@@ -58,6 +58,8 @@ class Game:
         #Variable de la boucle du jeu
         self.running = True
 
+        self.nb_jour = 1
+
 
 
 
@@ -261,6 +263,7 @@ class Game:
 
             else:
                 self.cycleState = "jour"
+                self.nb_jour += 1
                 self.generate_money()
                 self.map_manager.change_time()
                 if self.map_manager.get_map().name != "jail":
@@ -328,6 +331,9 @@ class Game:
         text_valive = "Villagers alive : " + str(len(self.map_manager.get_group_npc().sprites()))
         obj3 = font.render(text_valive, True, (0, 0, 0))
 
+        text_jours = "You survived : " + str(self.nb_jour) + " jours"
+        obj4 = font.render(text_jours, True, (0, 0, 0))
+
         # musique en pause
         mixer.music.pause()
 
@@ -341,6 +347,7 @@ class Game:
                 self.screen.blit(obj1, (1230, 210,))
             self.screen.blit(obj2, (100, 450,))
             self.screen.blit(obj3, (600, 450,))
+            self.screen.blit(obj4, (250, 250,))
 
             if resume_button.draw(self.screen):
                 run_end = False
