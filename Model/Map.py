@@ -164,7 +164,13 @@ class MapManager:
         maplist.append(map)
         if name in self.maps:
             for element in group:
-                self.maps[name][0].group.add(element)
+                exist = False
+                for sprite in self.maps[name][0].group.sprites():
+                    if element.position[0] == sprite.position[0] and element.position[1] == sprite.position[1]:
+                        exist = True
+                if not exist:
+                    self.maps[name][0].group.add(element)
+
             map.group = self.maps[name][0].group
             maplist.append(self.maps[name][0])
             self.maps[name] = maplist

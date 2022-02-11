@@ -232,7 +232,7 @@ class Game:
         #Récupère les secondes
         seconds = (pygame.time.get_ticks()-self.start_ticks)//1000
 
-        if seconds > 60:
+        if seconds > 10:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
