@@ -132,7 +132,7 @@ class Player(pygame.sprite.Sprite):
 
         #update cooldown inventory
         if self.cooldown_inventory > 0:
-            self.cooldown_inventory -= 1/30
+            self.cooldown_inventory -= 1/5
 
         self.update_preview()
 
@@ -164,6 +164,18 @@ class Player(pygame.sprite.Sprite):
         obj = font.render(text_defense, True, (0, 0, 0), (255, 255, 255))
         self.screen.blit(item.itemList[10].image, (25, 730))
         self.screen.blit(obj, (70, 730,))
+
+        # update inventory touch
+        text_inventory = "E : Inventory"
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_inventory, True, (0, 0, 0), (255, 255, 255))
+        self.screen.blit(obj, (750, 730,))
+
+        # update pause touch
+        text_pause = "P : Pause"
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_pause, True, (0, 0, 0), (255, 255, 255))
+        self.screen.blit(obj, (900, 730,))
 
     def updateInv(self):
         if self.inventory_open:

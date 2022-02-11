@@ -154,6 +154,8 @@ class NPC(pygame.sprite.Sprite):
 
         self.original_image = self.image
         self.hit_countdown = 10
+
+        '''
         jump_back = 10
         if self.position[0] - xEnnemy < 0:
             self.position[0] -= jump_back
@@ -163,6 +165,8 @@ class NPC(pygame.sprite.Sprite):
             self.position[1] -= jump_back
         if self.position[1] - yEnnemy > 0:
             self.position[1] += jump_back
+        '''
+
         if self.health <= 0:
             randomItem = random.choice(item.itemList) #une fois le npc mort on choisi un item au hasard parmi ceux dans la liste
             randomItem.draw(self.screen, self.position[0], self.position[1]) #on affiche l'item au lieu de la mort du NPC
