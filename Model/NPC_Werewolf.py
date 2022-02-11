@@ -52,6 +52,7 @@ class NPC_Werewolf(parent):
             self.rect = self.image.get_rect()
             self.state = 'WW'
             transformSound = mixer.Sound('Ressources/sounds/transform.mp3')
+            transformSound.set_volume(0.3)
             transformSound.play()
 
     def update(self):

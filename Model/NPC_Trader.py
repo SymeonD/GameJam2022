@@ -61,5 +61,8 @@ class NPC_Trader(parent):
     def take_damage(self, amount, xEnnemy, yEnnemy):
         None
 
+    def draw_health(self, surf):
+        None
+
 
 
