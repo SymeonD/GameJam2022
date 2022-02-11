@@ -18,7 +18,7 @@ class NPC_Boss(parent):
         self.target = player
         self.state = 'boss'
 
-        self.damage = 100
+        self.damage = 10
         self.attack_speed = 1/60
         self.attack_cooldown = 1
 
@@ -38,6 +38,7 @@ class NPC_Boss(parent):
             self.damage_image.fill((0, 0, 0, 255), None, pygame.BLEND_RGBA_MULT)
             self.damage_image.fill((255, 0, 0, 0), None, pygame.BLEND_RGBA_ADD)
             self.rect = self.image.get_rect()
+            self.form = "boss_werewolf"
 
     def update(self):
         super().update()
