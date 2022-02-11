@@ -5,6 +5,7 @@ import pytmx
 #import pyscroll
 import sys
 
+from Model.Game import Game
 from Model.bouton import Button
 from Model.Player import Player
 from Model.NPC_Werewolf import NPC_Werewolf
@@ -39,7 +40,7 @@ class Menu:
         self.text_rules = font.render('Règles', True, (255, 255, 255))
 
 
-    def menu(self, screen, game):
+    def menu(self, screen):
         running = True
         while running:
             #affiche l'image de fond
@@ -52,6 +53,7 @@ class Menu:
 
             #dessine les boutons crees precedemment
             if self.start_button.draw(screen):
+                game = Game(screen)
                 game.run()
             if self.exit_button.draw(screen):
                 running = False

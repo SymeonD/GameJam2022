@@ -1,14 +1,20 @@
 import pygame
 
-from Model.Game import Game
+
 from Model.Menu import Menu
 
 
 if __name__ == '__main__':
 	pygame.init()
-	game = Game()
+
+	# creation de la fenetre du jeu
+	# dimension de la fenetre
+	SCREEN_WIDTH = 1024
+	SCREEN_HEIGHT = 768
+	screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
 	menu = Menu()
-	menu.menu(game.screen, game)
+	menu.menu(screen)
 	
 
 	

@@ -16,12 +16,9 @@ from Model.inventory import Inventory
 
 class Game:
 
-    def __init__(self):
-        #creation de la fenetre du jeu
-            #dimension de la fenetre
-        SCREEN_WIDTH = 1024
-        SCREEN_HEIGHT = 768
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    def __init__(self, screen):
+
+        self.screen = screen
 
         #titre de la fenetre
         pygame.display.set_caption("Where's Wolf")
@@ -136,7 +133,7 @@ class Game:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 pos = pygame.mouse.get_pos()
-                print(pos)
+                
                 # Clique sur l'inventaire du joueur
                 if self.player.inventory.in_grid(pos[0], pos[1]) and self.player.inventory_open:
                     self.itemSelected = self.player.inventory.getItem(pos[0], pos[1])
@@ -239,7 +236,7 @@ class Game:
         #Récupère les secondes
         seconds = (pygame.time.get_ticks()-self.start_ticks)//1000
 
-        if seconds > 10:
+        if seconds > 60:
             self.start_ticks = pygame.time.get_ticks()
             if self.cycleState == "jour":
                 self.cycleState = "nuit"
