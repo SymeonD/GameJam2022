@@ -1,5 +1,6 @@
 import pygame
 import math
+from pygame import mixer
 from Model.NPC import NPC as parent
 
 class NPC_Boss(parent):
@@ -45,6 +46,7 @@ class NPC_Boss(parent):
         self.updateTarget(self.player)
         if self.targetDistance < 100 and self.form == "npc":
             self.transform()
+            mixer.Sound("Ressources/music/boss.mp3").play()
         if self.form == "boss_werewolf":
             self.move_npc(self.player)
 
