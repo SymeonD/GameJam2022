@@ -127,9 +127,23 @@ class Player(pygame.sprite.Sprite):
         # Update money
         text_money = ": " + str(self.money)
         font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
-        obj = font.render(text_money, True, (0, 0, 0))
-        self.screen.blit(item.itemList[2].image, (265, 698,))
-        self.screen.blit(obj, (305, 698,))
+        obj = font.render(text_money, True, (0, 0, 0), (255, 255, 255, 100))
+        self.screen.blit(item.itemList[2].image, (25, 640))
+        self.screen.blit(obj, (70, 640,))
+
+        #update strength
+        text_strength = ": " + str(self.strength)
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_strength, True, (0, 0, 0), (255, 255, 255))
+        self.screen.blit(item.itemList[8].image, (25, 670))
+        self.screen.blit(obj, (70, 670,))
+
+        # update speed
+        text_speed = ": " + str(self.speed)
+        font = pygame.font.Font(pygame.font.match_font("calibri"), 22)
+        obj = font.render(text_speed, True, (0, 0, 0), (255, 255, 255))
+        self.screen.blit(item.itemList[9].image, (25, 700))
+        self.screen.blit(obj, (70, 700,))
 
         #update cooldown inventory
         if self.cooldown_inventory > 0:
