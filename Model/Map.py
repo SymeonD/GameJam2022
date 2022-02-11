@@ -4,6 +4,7 @@ from Model.NPC_Werewolf import NPC_Werewolf
 from Model.NPC_Trader import NPC_Trader
 from re import S
 import pygame, pytmx, random
+from pygame import mixer
 
 
 @dataclass
@@ -273,6 +274,7 @@ class MapManager:
         self.player.position[0] = point.x
         self.player.position[1] = point.y
         self.player.save_location()
+        mixer.Sound("Ressources/sounds/teleport.mp3").play()
 
     '''
     - Verification des collisions

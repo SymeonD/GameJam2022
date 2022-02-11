@@ -10,6 +10,6 @@ class Weapon(item.Item):
         self.att_power = att_power
 
 
-item.itemList.append(Weapon(2,"Epee en bois",5,(pygame.image.load('Ressources/item/tile081.png')), "weapon", 100, 1/60, 100, 20))
-item.itemList.append(Weapon(8,"Epee de chevalier",5,(pygame.image.load('Ressources/item/tile082.png')), "weapon", 250, 1/45, 150, 35))
-item.itemList.append(Weapon(9,"Epee de corsaire",5,(pygame.image.load('Ressources/item/tile085.png')), "weapon", 500, 1/30, 150, 50))
+item.itemList.append(Weapon(2,"Wooden sword",5,(pygame.image.load('Ressources/item/tile081.png')), "weapon", 100, 1/60, 100, 20))
+item.itemList.append(Weapon(8,"Knight's sword",5,(pygame.image.load('Ressources/item/tile082.png')), "weapon", 250, 1/45, 150, 35))
+item.itemList.append(Weapon(9,"Corsair sword",5,(pygame.image.load('Ressources/item/tile085.png')), "weapon", 500, 1/30, 150, 50))

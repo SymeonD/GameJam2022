@@ -223,6 +223,7 @@ class Player(pygame.sprite.Sprite):
             if self.money >= item_to_buy[0].price:
                 self.inventory.add(item_to_buy[0])
                 self.money -= item_to_buy[0].price
+                mixer.Sound('Ressources/sounds/coin_loose.mp3').play()
             else:
                 print("Vous etes trop pauvre")
 

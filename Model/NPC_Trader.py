@@ -10,7 +10,8 @@ class NPC_Trader(parent):
         super().__init__(x, y, name, screen, player)
         self.inventory = Inventory(16 + x - 336 / 2, y - 73 - 20)
         for new_item in item.itemList:
-            self.inventory.add(new_item)
+            if new_item.name != "Piece":
+                self.inventory.add(new_item)
         self.updateImage('Ressources/perso/trader.png', 32, 32)
         self.skin = ['Ressources/perso/trader.png', 32, 32]
         self.type = "trader"
